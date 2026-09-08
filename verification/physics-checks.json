@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-09-08T11:02:48.388Z",
+  "checks": [
+    "Dragging through a fixed sphere is blocked; release pins the resolved position.",
+    "Fast-moving sphere cannot tunnel through a fixed sphere.",
+    "A dragged sphere physically displaces a free sphere.",
+    "An unobstructed 3D drag reaches within 1.5 units of its target in half a second.",
+    "A quick pointer release finishes its last physical movement before saving the pin.",
+    "Dragging a hub draws its child group after it in x, y and z.",
+    "Gravity restores displaced free nodes and preserves fixed pins.",
+    "All 3,520 nodes move in three dimensions with zero sampled visible-core overlap in orbital, float and breathing modes."
+  ],
+  "nodes": 3520,
+  "edges": 14520,
+  "physicalSprings": 2756,
+  "sampledOverlaps": 0,
+  "averageHeadlessStepMs": 14.038391527777776,
+  "note": "Native physics tests, not a browser FPS benchmark. Screen projection may occlude spheres at different depths."
+}

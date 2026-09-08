@@ -1,0 +1,18 @@
+{
+  "shadergradientCommit": "974a230b1e6c3ec375fbe17a8ea1c89edbc48019",
+  "upstreamFilesVerified": 120,
+  "outputs": {
+    "graph-3d.js": {
+      "bytes": 690399,
+      "sha256": "d478395b82c19160392f4106f45aeb2517ba1d7fb32b576d6fc36f628ee53076"
+    },
+    "graph-physics-worker.js": {
+      "bytes": 2859814,
+      "sha256": "8300e99a76c8e3ab7aa74d11317218b6fc0b547a3a70306e902c21e54658ec18"
+    },
+    "astral-background.js": {
+      "bytes": 1342710,
+      "sha256": "c1cc0df2ffe29555bdb841a7b445acef498751d5c6e0c1b9a05f951e1bd3fdfb"
+    }
+  }
+}

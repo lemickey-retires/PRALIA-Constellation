@@ -1,0 +1,10 @@
+__pycache__/
+node_modules/
+.venv/
+build/
+dist/
+*.spec
+*.exe
+*.log
+*.blend1
+.DS_Store

@@ -1,0 +1,266 @@
+[
+  {
+    "name": "@babel/runtime",
+    "version": "7.29.7",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/babel__runtime/LICENSE"
+    ]
+  },
+  {
+    "name": "@dimforge/rapier3d-compat",
+    "version": "0.20.0",
+    "license": "Apache-2.0",
+    "files": [
+      "licenses/npm/dimforge__rapier3d-compat/LICENSE"
+    ]
+  },
+  {
+    "name": "@esbuild/win32-x64",
+    "version": "0.28.2",
+    "license": "MIT",
+    "files": []
+  },
+  {
+    "name": "@react-three/fiber",
+    "version": "9.7.0",
+    "license": "MIT",
+    "files": []
+  },
+  {
+    "name": "@shadergradient/react",
+    "version": "2.4.20",
+    "license": "MIT",
+    "files": []
+  },
+  {
+    "name": "@types/draco3d",
+    "version": "1.4.10",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/types__draco3d/LICENSE"
+    ]
+  },
+  {
+    "name": "@types/offscreencanvas",
+    "version": "2019.7.3",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/types__offscreencanvas/LICENSE"
+    ]
+  },
+  {
+    "name": "@types/react",
+    "version": "19.2.18",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/types__react/LICENSE"
+    ]
+  },
+  {
+    "name": "@types/react-reconciler",
+    "version": "0.28.9",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/types__react-reconciler/LICENSE"
+    ]
+  },
+  {
+    "name": "@types/webxr",
+    "version": "0.5.24",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/types__webxr/LICENSE"
+    ]
+  },
+  {
+    "name": "base64-js",
+    "version": "1.5.1",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/base64-js/LICENSE"
+    ]
+  },
+  {
+    "name": "buffer",
+    "version": "6.0.3",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/buffer/LICENSE"
+    ]
+  },
+  {
+    "name": "camera-controls",
+    "version": "3.1.2",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/camera-controls/LICENSE"
+    ]
+  },
+  {
+    "name": "csstype",
+    "version": "3.2.3",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/csstype/LICENSE"
+    ]
+  },
+  {
+    "name": "decode-uri-component",
+    "version": "0.2.2",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/decode-uri-component/license"
+    ]
+  },
+  {
+    "name": "draco3d",
+    "version": "1.5.7",
+    "license": "Apache-2.0",
+    "files": []
+  },
+  {
+    "name": "esbuild",
+    "version": "0.28.2",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/esbuild/LICENSE.md"
+    ]
+  },
+  {
+    "name": "fflate",
+    "version": "0.6.11",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/fflate/LICENSE"
+    ]
+  },
+  {
+    "name": "filter-obj",
+    "version": "1.1.0",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/filter-obj/license"
+    ]
+  },
+  {
+    "name": "ieee754",
+    "version": "1.2.1",
+    "license": "BSD-3-Clause",
+    "files": [
+      "licenses/npm/ieee754/LICENSE"
+    ]
+  },
+  {
+    "name": "its-fine",
+    "version": "2.0.0",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/its-fine/LICENSE"
+    ]
+  },
+  {
+    "name": "potpack",
+    "version": "1.0.2",
+    "license": "ISC",
+    "files": [
+      "licenses/npm/potpack/LICENSE"
+    ]
+  },
+  {
+    "name": "query-string",
+    "version": "7.1.3",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/query-string/license"
+    ]
+  },
+  {
+    "name": "react",
+    "version": "19.2.8",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/react/LICENSE"
+    ]
+  },
+  {
+    "name": "react-dom",
+    "version": "19.2.8",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/react-dom/LICENSE"
+    ]
+  },
+  {
+    "name": "react-use-measure",
+    "version": "2.1.7",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/react-use-measure/LICENSE"
+    ]
+  },
+  {
+    "name": "scheduler",
+    "version": "0.27.0",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/scheduler/LICENSE"
+    ]
+  },
+  {
+    "name": "split-on-first",
+    "version": "1.1.0",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/split-on-first/license"
+    ]
+  },
+  {
+    "name": "strict-uri-encode",
+    "version": "2.0.0",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/strict-uri-encode/license"
+    ]
+  },
+  {
+    "name": "suspend-react",
+    "version": "0.1.3",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/suspend-react/LICENSE"
+    ]
+  },
+  {
+    "name": "three",
+    "version": "0.185.1",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/three/LICENSE"
+    ]
+  },
+  {
+    "name": "three-stdlib",
+    "version": "2.36.1",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/three-stdlib/LICENSE"
+    ]
+  },
+  {
+    "name": "use-sync-external-store",
+    "version": "1.6.0",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/use-sync-external-store/LICENSE"
+    ]
+  },
+  {
+    "name": "zustand",
+    "version": "5.0.15",
+    "license": "MIT",
+    "files": [
+      "licenses/npm/zustand/LICENSE"
+    ]
+  }
+]

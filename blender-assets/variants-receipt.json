@@ -1,0 +1,18 @@
+{
+  "blender": "5.2.1 LTS",
+  "scene": "Constellation variants",
+  "preserved_previous_scene": true,
+  "assets": [
+    "crystal-core.glb",
+    "orbital-ring.glb",
+    "universe-shell.glb",
+    "universe-stars.json"
+  ],
+  "crystal_faces": 20,
+  "shell_faces": 5120,
+  "surrounding_stars": 1800,
+  "star_distance_range": [
+    1800,
+    8000
+  ]
+}

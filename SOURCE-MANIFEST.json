@@ -1,0 +1,887 @@
+{
+  "format": "pralia-constellation-source-manifest",
+  "version": 1,
+  "snapshot_captured_at": "2026-09-08T12:14:40.730Z",
+  "files": {
+    ".gitattributes": {
+      "bytes": 87,
+      "sha256": "a0027fcaec5b7c0747f497ae0f538d1ff34e356cf6a4914766a6059b49e0e0c2"
+    },
+    ".gitignore": {
+      "bytes": 85,
+      "sha256": "819ed4902aee49fbae4d367403dce2c8958b017f427d564dd5046497f12809d1"
+    },
+    "README.md": {
+      "bytes": 4681,
+      "sha256": "327f47571bce0a17ea3d13b026fb3e7a20a22328eceef754400e74d7f2d5ff6a"
+    },
+    "THIRD-PARTY-NOTICES.md": {
+      "bytes": 2056,
+      "sha256": "7c28451e21237cbe1c8cc83da68acecf9d701e0c72d5be8d2dc3823fc4efc78e"
+    },
+    "VERIFICATION.md": {
+      "bytes": 1872,
+      "sha256": "b9b748223e0e8c8229a8073c9fee8777713eee1a64687768dcfb6ca1ec2b5212"
+    },
+    "run-preview.py": {
+      "bytes": 4875,
+      "sha256": "566d8c344dd85c06614df3e1155d2f9cdc5967c11143a962c729a9bbf08b0107"
+    },
+    "start-windows.cmd": {
+      "bytes": 495,
+      "sha256": "2f17a79dc9757eef22a16863537f74a5132920cd7f28b4148783772b4123ad1c"
+    },
+    "verify-share.py": {
+      "bytes": 1990,
+      "sha256": "94c217053f8ab1c09f219016fe9dde846dc1d72f55380f9e22fa8cf0595aeeb1"
+    },
+    "astral-background/build-receipt.json": {
+      "bytes": 549,
+      "sha256": "44c743f25caa9aee3760de149e89c0e2783672bc7ce27d38858b51a1a4ff41b5"
+    },
+    "astral-background/build-share.mjs": {
+      "bytes": 1833,
+      "sha256": "2a4d90ddcfdf6212bf1369df2f221dc2b27b35fba1455c2d939a76d7887f8015"
+    },
+    "astral-background/graph-3d.mjs": {
+      "bytes": 27631,
+      "sha256": "66e63dcaf37f58fd7131946135f8ef9839f8e842c477a13cf7329dee07965296"
+    },
+    "astral-background/graph-appearance.mjs": {
+      "bytes": 1207,
+      "sha256": "a7a77f0718c983db896b327ebec3384a7a9e1e526377e7e6785711ca83a1c810"
+    },
+    "astral-background/graph-environment.mjs": {
+      "bytes": 3709,
+      "sha256": "6a528384e92be45f589fa740573842b12854d940cb39197c3d45f6d0bc72c8ba"
+    },
+    "astral-background/graph-layouts.mjs": {
+      "bytes": 3174,
+      "sha256": "baaf441366316d0aa5be78b00d5947e901a2a47308bfb871315799d9df52d991"
+    },
+    "astral-background/graph-motion.mjs": {
+      "bytes": 998,
+      "sha256": "4ebec4db4ba1a5b8626a360da99453df2a7d0fa7229ea3b933bb107d6b2dd5e2"
+    },
+    "astral-background/graph-physics-client.mjs": {
+      "bytes": 2169,
+      "sha256": "8500660dc208c202ce9cc82d97c29eb0a932a37920460f7e8990ae9d44dc73ac"
+    },
+    "astral-background/graph-physics-worker.mjs": {
+      "bytes": 2415,
+      "sha256": "3a2aa53681d0fd80e1322ff6f279118840583f3f1c6e81078d5bff82fa97fde4"
+    },
+    "astral-background/graph-physics.mjs": {
+      "bytes": 9658,
+      "sha256": "088b8c07afad0fd554f41ccd329bd09f35b78ce53f0a1a68cb68082adaa95391"
+    },
+    "astral-background/package-lock.json": {
+      "bytes": 28455,
+      "sha256": "e722ea4420f7aed635763fc5d026f6b432f28181d3779c6ff77272246629f28e"
+    },
+    "astral-background/package.json": {
+      "bytes": 495,
+      "sha256": "d409f37cc2175644d2ae9c6024552ec72fef6cdc72cc410afb33862e4e3a21ec"
+    },
+    "astral-background/src.jsx": {
+      "bytes": 3715,
+      "sha256": "1d843b0d5615be1d254a522aeb33fdc6a7b5cc8a721ce3a2c74b95ec2cb1cd56"
+    },
+    "astral-background/verify-graph-physics.mjs": {
+      "bytes": 5592,
+      "sha256": "b703a781792c76095add77f0221aaa3e218f6a55e50bc6129807c5c5486bdf34"
+    },
+    "astral-background/verify-layouts.mjs": {
+      "bytes": 1734,
+      "sha256": "f81d7a40f7fe4871487c3eac4165f96fa4bb68077d371f89caa8da7771df35c4"
+    },
+    "astral-background/upstream-shadergradient/README.md": {
+      "bytes": 7097,
+      "sha256": "d9d2753be6b9ce2116088aff8403c9cc84d97afd9a0d81f95c899e4934ac073f"
+    },
+    "astral-background/upstream-shadergradient/source-manifest.json": {
+      "bytes": 17615,
+      "sha256": "d22e84d4a501093b5ce2c298faf62a1f0aaa03f59a513b584b8c75fb0ed829df"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/package.json": {
+      "bytes": 1695,
+      "sha256": "ddb8cbd9918f98795bcf2536a7d3b540b906cfb6cff91edf4729c8be1970e0a3"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/FramerControls.ts": {
+      "bytes": 10700,
+      "sha256": "ab412f7e165dff6aa102977e95f84a0de0a3f57ed71aa4ce090846fdf25ee64d"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/FramerShaderGradient.tsx": {
+      "bytes": 1192,
+      "sha256": "3ac96138d345827a248e3a29108ff5930179275c25a9dc7acc9bdb9b429c6cef"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradientCanvas.tsx": {
+      "bytes": 2527,
+      "sha256": "da2ddd7d7c57e38927c33ef2fd984dfdd0a0aa2a76592d9f86f86576b35e14e1"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/consts.ts": {
+      "bytes": 2340,
+      "sha256": "6e8dfddbb66ece24ca4ec9d6869ad5079d96d4c9b224d38d211f32fd86a2b274"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/index.ts": {
+      "bytes": 240,
+      "sha256": "ac99ee83ef74eae3c832f14444075a6f2c250c1d62e37fd212f21ebf3296d5ff"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/module.d.ts": {
+      "bytes": 77,
+      "sha256": "d299077b21340a198efa04e1d2815178dae3ac8324587e16485fe615e25cdbc4"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/presets.ts": {
+      "bytes": 10263,
+      "sha256": "9fe232a910059340eaf3fd37938e535bfb6907bbf16ab8f366deeedb532759fd"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/types.ts": {
+      "bytes": 1893,
+      "sha256": "8e9473f83ca43e50df9310e721383e4fdba22e2a02b423cd45f34949fa099957"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/hooks/useInView.ts": {
+      "bytes": 733,
+      "sha256": "305ec0e83d2ac42f601bcf229dc3b05c8a2d11a735b105d68077a7b16011734e"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/ShaderGradient.tsx": {
+      "bytes": 1139,
+      "sha256": "a61f6b3ce95f28efd9e11be27d9645633e6d42f1b413c894f239b4f588358058"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/index.ts": {
+      "bytes": 34,
+      "sha256": "dcbe90770f5c4f02a7cc23b18ea4a372215fc5de54e7cda127944083d08649d1"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Axis/Axis.tsx": {
+      "bytes": 1312,
+      "sha256": "541469708a0aa965cc97f5d77c299a9b53d5293f524dc2038ce714c514970cfc"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Axis/CubicBezierLine.tsx": {
+      "bytes": 1218,
+      "sha256": "87966a1c820bf0841d942efb986970b334dc9f50ccb937bcf447baa39360700f"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Axis/GizmoHelper.tsx": {
+      "bytes": 6406,
+      "sha256": "cbc3f4290468ec7936707e0c793687a513da9150e47387920f6acd6ed462157e"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Axis/GizmoViewport.tsx": {
+      "bytes": 5082,
+      "sha256": "598fca136e4d4325b51632917c9f990d0d34e1c9992731751b36ec3cfd3c6e98"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Axis/Line.tsx": {
+      "bytes": 2808,
+      "sha256": "c676ffb2e25291f35d9219d028e3b0e173e909bbe0f97333331151ed0a5c320a"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Axis/OrthographicCamera.tsx": {
+      "bytes": 3351,
+      "sha256": "17ddeeaabe06421884b95b1d5d1ef12e097b45d1632b64c9623284cea7c8e601"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Axis/index.ts": {
+      "bytes": 24,
+      "sha256": "f899209483c7172021776dc6a8df15b7557bac3189bcf6a017112c098e68e09f"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Axis/mergeRefs.ts": {
+      "bytes": 537,
+      "sha256": "bcee0f02d2889d1ca8717823ee6335310d2716e5aaf53acde7ed63d5d68ebd88"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Axis/useCamera.tsx": {
+      "bytes": 1025,
+      "sha256": "20bc7c444dd8e4d9d2fd62e9539a0c534744c6deccd98692868863a252e53d9b"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Axis/useFBO.tsx": {
+      "bytes": 1495,
+      "sha256": "66a6648932f401f69da5e21fb3169247c9cc38465a9526dcc2cce1efec9d3b63"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Controls/CameraControl.tsx": {
+      "bytes": 3384,
+      "sha256": "0d903fa58f161f51973a9378b04055deefbd03f52d83754d380ce1fc8062293f"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Controls/Controls.tsx": {
+      "bytes": 159,
+      "sha256": "e97ff351a594f1079bc866e0b2d404af9d675890df6e4e18d4567b912e4035f4"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Controls/index.ts": {
+      "bytes": 28,
+      "sha256": "68ef4334336d7960ceefa3ba7ba405aa7e551da96ac47786dbf15d1a5f02d24c"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Controls/useCameraAnimation.ts": {
+      "bytes": 1659,
+      "sha256": "f25e3bc3cc8c65053b6d9a93acb8de52a64189648ab6becd4bdd0d023adcbb83"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Lights/Lights.tsx": {
+      "bytes": 844,
+      "sha256": "9e453a002af27e4a78a694c12c9a57012b8725b7a2c0f9dbe1fc52e1d69e8f34"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Lights/index.ts": {
+      "bytes": 26,
+      "sha256": "e80b2a0fadd95de7d38f8b0675688285b3b84ce75e5fc81f8430560b8461050e"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Lights/Environment/EnvironmentMap.tsx": {
+      "bytes": 1814,
+      "sha256": "63af9b6be999359d3ba9a42f4bdcc1640aab612286b9e9ddfa8239b87cc0a037"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Lights/Environment/environment-assets.ts": {
+      "bytes": 440,
+      "sha256": "52f1b06867d848b05ae704b037dccfbaa8a9826fe984a3056210753c29d75ed5"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Lights/Environment/index.ts": {
+      "bytes": 34,
+      "sha256": "c96a1f8ef27ddf8003b3765fd175156606891ae1e6c15b50c627c9280718528f"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Lights/Environment/useRGBELoader.ts": {
+      "bytes": 427,
+      "sha256": "815de8ce2b8932fcb81274c43212ca039676899c96df875cd49bbfa1ec4bbcf4"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Mesh/Geometry.tsx": {
+      "bytes": 487,
+      "sha256": "7d485e062ad43614b6a5479ed0a3eb0b604f8a0708285b1a90420bc7efb3cde7"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Mesh/Materials.tsx": {
+      "bytes": 4790,
+      "sha256": "e4f425477c5c6589c0745de1d51e6f239e998f7758e453af29bd13fcb8a943be"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Mesh/Mesh.tsx": {
+      "bytes": 2455,
+      "sha256": "efb5f0983a8813851d2a515adbf6d595f081a9b8c6357043969d47b763a548f0"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/Mesh/index.ts": {
+      "bytes": 24,
+      "sha256": "5d03fc517b592951f48135f0fa4a0ae041e2eafdc866781a2262b1b0d3ba6c40"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/PostProcessing.tsx": {
+      "bytes": 2374,
+      "sha256": "6800eb6736a32d320d56041c56381e26caeb91664db26a481003982d2efa985b"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/index.ts": {
+      "bytes": 34,
+      "sha256": "56fe3a748e1db74e88303972c1f4641f6323efdd4e160688a44e9d9f39d2cb53"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/BlendFunction.js": {
+      "bytes": 1633,
+      "sha256": "b4f67e28f53738fa76446efb21c6f3bbe2aacdc09aca421a8055991ec0719f1e"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/HalftonePass.ts": {
+      "bytes": 2677,
+      "sha256": "f4804a5d9876723ca84ecf4db5b430fc400a49e1e50845c0b4bab38a7191f8a0"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/HalftoneShader.js": {
+      "bytes": 9952,
+      "sha256": "debdde3a8e86d70364199226b095b0b1eb58bb402f854b7e4c117265b74a3385"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/Pass.js": {
+      "bytes": 1614,
+      "sha256": "5bb3f81b07c0ed7f9afb8b4354d6d0374aaf7196427c05b0d04f6876c3a000c2"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/BlendFunction.js": {
+      "bytes": 1633,
+      "sha256": "b4f67e28f53738fa76446efb21c6f3bbe2aacdc09aca421a8055991ec0719f1e"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/BlendMode.js": {
+      "bytes": 3653,
+      "sha256": "8cd26eee785a5928d5a2fda5aff55d8bd8b1ce38fbd6719e4cec149f247a1e73"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/index.js": {
+      "bytes": 90,
+      "sha256": "65d0882e395b67d3d24614f76250f96b48f2d8adec635a53d7f022a0cb187431"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/add/shader.frag": {
+      "bytes": 137,
+      "sha256": "e3faacaabbdf8dc11abd0cf9ac20301d3c9ca5df90e8b70aa9623c9202102b1d"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/alpha/shader.frag": {
+      "bytes": 289,
+      "sha256": "4d27ba9b696b4cd7174e1b6082ce921cf4fb3064a7ffe409127c5ad261cbcbda"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/average/shader.frag": {
+      "bytes": 135,
+      "sha256": "0c05aab8c0b7f2cbaccad712f19579f75fc17da3f10c6f906b23fdc672f343f2"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/color-burn/shader.frag": {
+      "bytes": 343,
+      "sha256": "1409eb58d56181ad01005aa8fd777470388b6c76ccbb387885a4ab625fd29385"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/color-dodge/shader.frag": {
+      "bytes": 337,
+      "sha256": "a3da7a1f6905922ed684d0e1170e1e699b78f7b813f1dcf8a34773464dfa9771"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/darken/shader.frag": {
+      "bytes": 131,
+      "sha256": "e9c659420e81d12e7a4a8102d1689a76bb2061c3d370a5465837cc6604b99569"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/difference/shader.frag": {
+      "bytes": 132,
+      "sha256": "2b46e10801c6f67f49ce41b016c3dd6113f7d42d07ab16531c0c239cbcc14535"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/divide/shader.frag": {
+      "bytes": 330,
+      "sha256": "aa826a0749bdf2eb9f6c180d6487e1d3326d8e0dc474a31c4738da4f601758ba"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/exclusion/shader.frag": {
+      "bytes": 143,
+      "sha256": "c41c19803369203827fdc4c772021284ec479b8c0f83785d2eb75f0cd78b59de"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/lighten/shader.frag": {
+      "bytes": 131,
+      "sha256": "0fdf9356cfa64cdda8d6615f6b10ecf0517d0d72570417bc8cf7e0e38b6502c3"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/multiply/shader.frag": {
+      "bytes": 127,
+      "sha256": "d7eabfbd74c834fd28a80155502432fb5fd85cbf6bf6d32d3911b8ef7cad069c"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/negation/shader.frag": {
+      "bytes": 146,
+      "sha256": "b866ca1d3753ad4af824f1055bc7486bff752251ab316f193e86198e823c1fb8"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/normal/shader.frag": {
+      "bytes": 123,
+      "sha256": "bde2d10e3252213adb877af8c3b0df8817c5ec4f1106220069ff423a9115ee4a"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/overlay/shader.frag": {
+      "bytes": 360,
+      "sha256": "60b9a91a7a4d2912a02bd6684262e83a3570cf4680553c60789fa2a09a902b90"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/reflect/shader.frag": {
+      "bytes": 341,
+      "sha256": "d4f3ce71ad58a0d55c61a93299fbfccf9cf2224ca3b8064849470371ad0cf229"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/screen/shader.frag": {
+      "bytes": 151,
+      "sha256": "22f8e1aad647de8cd542b53485f0a7697166aa1e2ca9f320aa62ce253604c1cd"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/soft-light/shader.frag": {
+      "bytes": 406,
+      "sha256": "6c6ba9c8d85d322fd72f2e069118f2953dfe2f217474a978490ca6ba0cdf3eaa"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/blending/glsl/subtract/shader.frag": {
+      "bytes": 143,
+      "sha256": "8ad2cf643ec3854fb4ce356e278cdadedbece124377b09477e08783d52bf14e8"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/from-threejs/postprocessing/EffectComposer.js": {
+      "bytes": 6966,
+      "sha256": "d57b355a38b1459b39394f585dbf4193b7e63af18f40ea1f01c42ffa3d7ca234"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/from-threejs/postprocessing/MaskPass.js": {
+      "bytes": 2245,
+      "sha256": "2d29a93a4f16b6633a4a17997088bc5b170ee4cc9977e2419028063c21daeff6"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/from-threejs/postprocessing/Pass.js": {
+      "bytes": 1614,
+      "sha256": "5bb3f81b07c0ed7f9afb8b4354d6d0374aaf7196427c05b0d04f6876c3a000c2"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/from-threejs/postprocessing/RenderPass.js": {
+      "bytes": 1863,
+      "sha256": "78c607263a1fd63322d2a6e97bc969f1bb253704e7cc9dc28503026cad054522"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/from-threejs/postprocessing/ShaderPass.js": {
+      "bytes": 1553,
+      "sha256": "820c355662edddf021389e9bbae47b84a0eb797154b0f0af7b0ed09dcbba1248"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/ShaderGradient/PostProcessing/lib/pp/from-threejs/shaders/CopyShader.js": {
+      "bytes": 586,
+      "sha256": "4ed30482c2f42b248faf794454cccd89037af8dabb6e410b16885b0c57733e14"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/index.ts": {
+      "bytes": 356,
+      "sha256": "cdbb5f81ad9be2abc6022b16085c58cb78819326e1ac3a5fd341c9fda223a700"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/shaderMaterial.ts": {
+      "bytes": 3381,
+      "sha256": "541613fc07ca0a6c847fc913fb801b5c0c6e91a3a5060f68b6ef3427555ebdbb"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/base/fragment.glsl": {
+      "bytes": 824,
+      "sha256": "c3fe1cf7b360117984b8473532bf3017216797cf1e67b7ede62b7bb62e416a6d"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/base/index.ts": {
+      "bytes": 131,
+      "sha256": "169348a2f54356a82f8961a049285195843e91f2450a33985aae3126ca081a9b"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/base/vertex.glsl": {
+      "bytes": 486,
+      "sha256": "6cb4dcc42af9a32496ce18ecf9105aebac7e1c678f8063845c6bf16354d68399"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/cosmic/index.ts": {
+      "bytes": 132,
+      "sha256": "9ad2eb6f8c7c2c50aad131ada2b28696bf6334edd8d3d878c5bd53b448203045"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/cosmic/plane/fragment.glsl": {
+      "bytes": 6783,
+      "sha256": "16f88e639e0ca169f94c605fe12bf90d17852d5a454c60ecca10867a894ecab8"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/cosmic/plane/index.ts": {
+      "bytes": 107,
+      "sha256": "af0e4dd1ecf3fb024e801c8a7c6540fed87987ff96b0d2a6f60237fde3c07739"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/cosmic/plane/vertex.glsl": {
+      "bytes": 6905,
+      "sha256": "8d4a30ca8ce3457f2fe4a2a1af407d35482a2ab1610467a6336935b112617a43"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/cosmic/sphere/fragment.glsl": {
+      "bytes": 8278,
+      "sha256": "4974890cb8515497e23ba09cc05b3a79d696f893a77199de3ca925a869fda7fc"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/cosmic/sphere/index.ts": {
+      "bytes": 107,
+      "sha256": "af0e4dd1ecf3fb024e801c8a7c6540fed87987ff96b0d2a6f60237fde3c07739"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/cosmic/sphere/vertex.glsl": {
+      "bytes": 7768,
+      "sha256": "65f4965ef14a9ee81cfd137beee7de5a204b0be8a8205735029c1ccd3d6be8f0"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/cosmic/waterPlane/fragment.glsl": {
+      "bytes": 8901,
+      "sha256": "d6754b679c5e66c18fae8c57c9ece306f251fbfd24c7c06ed67285955462116d"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/cosmic/waterPlane/index.ts": {
+      "bytes": 107,
+      "sha256": "af0e4dd1ecf3fb024e801c8a7c6540fed87987ff96b0d2a6f60237fde3c07739"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/cosmic/waterPlane/vertex.glsl": {
+      "bytes": 7559,
+      "sha256": "fbc06c828558eef06ac64a259f45b837b57b9a7b84cd9ed47c16fc3842660ac3"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/defaults/index.ts": {
+      "bytes": 132,
+      "sha256": "9ad2eb6f8c7c2c50aad131ada2b28696bf6334edd8d3d878c5bd53b448203045"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/defaults/plane/fragment.glsl": {
+      "bytes": 6040,
+      "sha256": "ca290358fc0aa40d4c4a08f8530439894e91e0392ffc61fa0be2ca76dda3c9fe"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/defaults/plane/index.ts": {
+      "bytes": 107,
+      "sha256": "af0e4dd1ecf3fb024e801c8a7c6540fed87987ff96b0d2a6f60237fde3c07739"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/defaults/plane/vertex.glsl": {
+      "bytes": 7451,
+      "sha256": "476e9387356af72b32faf250c5068fd5080dfd837a465957f719fccd4002a5c1"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/defaults/sphere/fragment.glsl": {
+      "bytes": 4980,
+      "sha256": "a960b33398a8af99bc0b7f8d31b1f3bf8a3cdb25d8159aa9134c241184fa87c0"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/defaults/sphere/index.ts": {
+      "bytes": 107,
+      "sha256": "af0e4dd1ecf3fb024e801c8a7c6540fed87987ff96b0d2a6f60237fde3c07739"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/defaults/sphere/vertex.glsl": {
+      "bytes": 7696,
+      "sha256": "162e2ced59f4e24c2d8b77e1f4371df6f078845c3b553ade37e822b51ca63d10"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/defaults/waterPlane/fragment.glsl": {
+      "bytes": 6102,
+      "sha256": "f2a67274318bfefa09139b51ed1a27bfdf36ddf0ac7e00f02c8dac1326731d41"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/defaults/waterPlane/index.ts": {
+      "bytes": 107,
+      "sha256": "af0e4dd1ecf3fb024e801c8a7c6540fed87987ff96b0d2a6f60237fde3c07739"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/defaults/waterPlane/vertex.glsl": {
+      "bytes": 7013,
+      "sha256": "04633d6964000662885cad219a96584ece99a7e3c405fb895c6dcb61ee69091b"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/glass/index.ts": {
+      "bytes": 132,
+      "sha256": "9ad2eb6f8c7c2c50aad131ada2b28696bf6334edd8d3d878c5bd53b448203045"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/glass/plane/fragment.glsl": {
+      "bytes": 5594,
+      "sha256": "eff9d4d8006486f98185c915668c39478f496dbaa40cf8527b7d03be811d9b7f"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/glass/plane/index.ts": {
+      "bytes": 107,
+      "sha256": "af0e4dd1ecf3fb024e801c8a7c6540fed87987ff96b0d2a6f60237fde3c07739"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/glass/plane/vertex.glsl": {
+      "bytes": 5083,
+      "sha256": "9bb950b95fc45dd9ca5a9eced2367a78b16b88a22fb5bb957074a8d3853bb58f"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/glass/sphere/fragment.glsl": {
+      "bytes": 6798,
+      "sha256": "1066f3f7ae3bfa2059f5648b11dff48724164b8632cc42609fc615ce038e8b8e"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/glass/sphere/index.ts": {
+      "bytes": 107,
+      "sha256": "af0e4dd1ecf3fb024e801c8a7c6540fed87987ff96b0d2a6f60237fde3c07739"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/glass/sphere/vertex.glsl": {
+      "bytes": 5413,
+      "sha256": "d290e7260e8d6551d1c39023cd96e71578d1d1e2af1ed61aa5547b55406aa28e"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/glass/waterPlane/fragment.glsl": {
+      "bytes": 8118,
+      "sha256": "1ae8fadc6cb3531131545691a5e71e4ae0701e74380b985c9a0f2fe09e803125"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/glass/waterPlane/index.ts": {
+      "bytes": 107,
+      "sha256": "af0e4dd1ecf3fb024e801c8a7c6540fed87987ff96b0d2a6f60237fde3c07739"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/glass/waterPlane/vertex.glsl": {
+      "bytes": 6497,
+      "sha256": "d3abbb1d61bf2090534b165877bb1ed40bae93891bdb3a7bf83025eb9899fb29"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/positionMix/index.ts": {
+      "bytes": 132,
+      "sha256": "9ad2eb6f8c7c2c50aad131ada2b28696bf6334edd8d3d878c5bd53b448203045"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/positionMix/plane/fragment.glsl": {
+      "bytes": 464,
+      "sha256": "2749f441a6083df310694ab8033dad69feb09ff8d0b4b2ee758a8fc4dfbe5a4d"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/positionMix/plane/index.ts": {
+      "bytes": 107,
+      "sha256": "af0e4dd1ecf3fb024e801c8a7c6540fed87987ff96b0d2a6f60237fde3c07739"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/positionMix/plane/vertex.glsl": {
+      "bytes": 5474,
+      "sha256": "74c3c0a52c601638e73b64441439decbb0a55a26daee10523ed99cb3f4380c92"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/positionMix/sphere/fragment.glsl": {
+      "bytes": 4711,
+      "sha256": "99d1f429fc8828df8d0c616bdc81e9dc1171d2b3bde21422ad222cce9d2321c7"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/positionMix/sphere/index.ts": {
+      "bytes": 107,
+      "sha256": "af0e4dd1ecf3fb024e801c8a7c6540fed87987ff96b0d2a6f60237fde3c07739"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/positionMix/sphere/vertex.glsl": {
+      "bytes": 5525,
+      "sha256": "add40133f8d5bc4c39ca1d5f4f906d885bafb1109ba4599f6384f50c99aa5625"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/positionMix/waterPlane/fragment.glsl": {
+      "bytes": 464,
+      "sha256": "2749f441a6083df310694ab8033dad69feb09ff8d0b4b2ee758a8fc4dfbe5a4d"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/positionMix/waterPlane/index.ts": {
+      "bytes": 107,
+      "sha256": "af0e4dd1ecf3fb024e801c8a7c6540fed87987ff96b0d2a6f60237fde3c07739"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/shaders/positionMix/waterPlane/vertex.glsl": {
+      "bytes": 5474,
+      "sha256": "74c3c0a52c601638e73b64441439decbb0a55a26daee10523ed99cb3f4380c92"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/utils/color.ts": {
+      "bytes": 826,
+      "sha256": "171d4536eb989ce206f1d0fc6837de75cc1d40a5e15842249ee1d107678533de"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/utils/debug.ts": {
+      "bytes": 1100,
+      "sha256": "9aa0729046a1d0c066c2ee5795312377e23f527a87b6b79ef2e8adc07295fffc"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/utils/index.ts": {
+      "bytes": 2584,
+      "sha256": "fb0b396292b4312c9f2277b27056df7761914b59d33eb1c0f1c107125e8428a1"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/utils/platform.ts": {
+      "bytes": 587,
+      "sha256": "78b003659777aa25175060ec1840285dd8fbccee5a5766316b1d73274fd237d9"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/utils/live-reload/bootstrap.ts": {
+      "bytes": 599,
+      "sha256": "b575320a5a3d1800291bd9a5a43e82b62d350f67e9b2eac23067b171f0dcdbb0"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/utils/live-reload/socket.ts": {
+      "bytes": 1058,
+      "sha256": "9d8eaa1090da81ec3b298b45209d5ca49287cd77a83265952cc2d3dcc328d23e"
+    },
+    "astral-background/upstream-shadergradient/packages/shadergradient/src/utils/live-reload/useRealtimeComponent.ts": {
+      "bytes": 1703,
+      "sha256": "a8c92856ceaaf56c15edc08e9823731b310457311c2ef4173c261048de2a97ba"
+    },
+    "blender-assets/blender-receipt.json": {
+      "bytes": 382,
+      "sha256": "cb9cbe507b00f9d6adf567455e4fe2af622fc470d9d5722a91dd06cd2bd62a06"
+    },
+    "blender-assets/constellation-star-kit.blend": {
+      "bytes": 624708,
+      "sha256": "c532cf49531c4b53aeadb21084e4c3a25aca3700a624c19b1eda6cae4a35771d"
+    },
+    "blender-assets/constellation-variants.blend": {
+      "bytes": 1060360,
+      "sha256": "3c8a9000d899bfa9112f8f5b51f83d4f4e42894a205d38625a429c28e2bb4e84"
+    },
+    "blender-assets/create-star-kit.py": {
+      "bytes": 3773,
+      "sha256": "2550628b8ced5c73c574cf06684c967c2dc2806cf526bf721e014a8e30e0d069"
+    },
+    "blender-assets/create-variants.py": {
+      "bytes": 2841,
+      "sha256": "2c73b0cf544ff1305e1a240304ab870cacd84774c2f8eb692155c1a29ba1727e"
+    },
+    "blender-assets/variants-receipt.json": {
+      "bytes": 363,
+      "sha256": "6c15d9047e3636a2207e97b497a44ed6d3cb922acdd502ed11cd6667f7a30111"
+    },
+    "data/full-graph.json.gz": {
+      "bytes": 12978570,
+      "sha256": "9df55fadc1f6b03bbedc9158bb8415967dd61439d0e22064f6d26569abef3db9"
+    },
+    "graphify-out/graph-3d-data.json": {
+      "bytes": 4157566,
+      "sha256": "6e1a89228f0718f56c54ac0a9d5d0946750638b938bfca5d8cb7fdd8f2600f34"
+    },
+    "graphify-out/graph-3d.css": {
+      "bytes": 3922,
+      "sha256": "88b3c57dab46c872a01bd446692df17548449aa081779de709d723345fa23769"
+    },
+    "graphify-out/graph-3d.html": {
+      "bytes": 6717,
+      "sha256": "15d2ed1d7430f037ef68fe7420b9084189b61f102aa94c9ab7f3e40906bed975"
+    },
+    "graphify-out/graph.html": {
+      "bytes": 4757415,
+      "sha256": "924dd8561aa9e833ad525f5e9c9f1f3dcb00d19bcea471f57171df129b008706"
+    },
+    "graphify-out/shared-view.js": {
+      "bytes": 2228990,
+      "sha256": "a29f509f97f6db0f511c9eecaf980081ceae4aa16331bda1efb8d797e848380c"
+    },
+    "graphify-out/shared-view.json": {
+      "bytes": 2228449,
+      "sha256": "528108385ef0f734afae49e014468a5c70791f14c83e0579936eeee36c8a5517"
+    },
+    "graphify-out/assets/crystal-core.glb": {
+      "bytes": 3052,
+      "sha256": "64f07fe833c2518dec7988dc1f9c3dad16346f0254ac3a4286893c8165f3f875"
+    },
+    "graphify-out/assets/orbital-ring.glb": {
+      "bytes": 46748,
+      "sha256": "98978c7dd7946679acb7a899ef983cae72c967775414d69300a741785ba3708d"
+    },
+    "graphify-out/assets/star-core.glb": {
+      "bytes": 9768,
+      "sha256": "c617beba13f034ae6a286741555fd329d23aef3f2b2e3c0613bc3747e93ee24b"
+    },
+    "graphify-out/assets/star-glow.png": {
+      "bytes": 89713,
+      "sha256": "f54ad38333ba31ffd4528b8c4d98f7c23c21dbc9d1afafb2a4b463b5bcfbcc3e"
+    },
+    "graphify-out/assets/universe-shell.glb": {
+      "bytes": 119336,
+      "sha256": "ff2f2016645c7694cf2a392603eb15f95424fb98c3755ea18bb79adb25fffba9"
+    },
+    "graphify-out/assets/universe-stars.json": {
+      "bytes": 107386,
+      "sha256": "3518e946457db44ea7c2d4812590939f8fe0b9103d01c51e2a9d00eeae65b74e"
+    },
+    "graphify-out/vendor/astral-background.js": {
+      "bytes": 1342710,
+      "sha256": "c1cc0df2ffe29555bdb841a7b445acef498751d5c6e0c1b9a05f951e1bd3fdfb"
+    },
+    "graphify-out/vendor/astral-background.js.LEGAL.txt": {
+      "bytes": 3439,
+      "sha256": "33af5b06802c400969d3ac8fe45adeb7cdaab355cbb9f196e27383e9968c5497"
+    },
+    "graphify-out/vendor/graph-3d.js": {
+      "bytes": 690399,
+      "sha256": "d478395b82c19160392f4106f45aeb2517ba1d7fb32b576d6fc36f628ee53076"
+    },
+    "graphify-out/vendor/graph-3d.js.LEGAL.txt": {
+      "bytes": 188,
+      "sha256": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674"
+    },
+    "graphify-out/vendor/graph-physics-worker.js": {
+      "bytes": 2859814,
+      "sha256": "8300e99a76c8e3ab7aa74d11317218b6fc0b547a3a70306e902c21e54658ec18"
+    },
+    "graphify-out/vendor/vis-network.min.js": {
+      "bytes": 702611,
+      "sha256": "576bb887733eb01bb52ee75b90ef46d818454de5fddb5b616fb8a298d307ca12"
+    },
+    "licenses/npm-packages.json": {
+      "bytes": 5122,
+      "sha256": "5d572b4948bfc3926c713c98f34e1bfdd06699aa3ab9c77b4d3f9235b2ebd84c"
+    },
+    "licenses/graphify/LICENSE": {
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    "licenses/graphify/LICENSE-MIT": {
+      "bytes": 1068,
+      "sha256": "36ecff6bbb97aca1be64e95f42538cf796adde5864edac583e620643c096931a"
+    },
+    "licenses/graphify/NOTICE": {
+      "bytes": 335,
+      "sha256": "3448ea175bba09f6fed8a743000139fb4c7112de83f164355b5540b158576621"
+    },
+    "licenses/hermes/LICENSE": {
+      "bytes": 1091,
+      "sha256": "e29dfaf6905a8d396a58ea4bd84ad27057756bbd9599b5bec0971ae34d2a2118"
+    },
+    "licenses/npm/babel__runtime/LICENSE": {
+      "bytes": 1106,
+      "sha256": "117da2af0d4ce0fe1c8e19b5cff9dcd806adf973d328d27b11d4448c4ff24f76"
+    },
+    "licenses/npm/base64-js/LICENSE": {
+      "bytes": 1081,
+      "sha256": "5b37224c080cdcc97c871ada971c224e9926370fe74f11b539aa1cf9f3b1aca1"
+    },
+    "licenses/npm/buffer/LICENSE": {
+      "bytes": 1106,
+      "sha256": "06bafa45fdad2579ba0e43b0c9b2c6290287c99c4203c300254a462b38a307f6"
+    },
+    "licenses/npm/camera-controls/LICENSE": {
+      "bytes": 1065,
+      "sha256": "d175c34ca3b4fb17d0568627ef8fd9363ae6f63f9ffdc97d4da71f0d7f3473ee"
+    },
+    "licenses/npm/csstype/LICENSE": {
+      "bytes": 1062,
+      "sha256": "11d55bd4541c75ee7879547ac49089c489163dae49551389713c3d026cab383e"
+    },
+    "licenses/npm/decode-uri-component/license": {
+      "bytes": 1139,
+      "sha256": "ed7a9a0f74e43951b2520efe1a4349cb9ed5f3dff0b0f268e2e51a4d38df7ea4"
+    },
+    "licenses/npm/dimforge__rapier3d-compat/LICENSE": {
+      "bytes": 11343,
+      "sha256": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519"
+    },
+    "licenses/npm/esbuild/LICENSE.md": {
+      "bytes": 1069,
+      "sha256": "b40ec5baec7bb34fa5b1c09521fa3cd52d5fad7adafed74932a2010d3612a681"
+    },
+    "licenses/npm/fflate/LICENSE": {
+      "bytes": 1069,
+      "sha256": "62249119bb7df6e54300f37a37145c26a6d4420410aac8881a119c5b427cf751"
+    },
+    "licenses/npm/filter-obj/license": {
+      "bytes": 1119,
+      "sha256": "6fb9754611c20f6649f68805e8c990e83261f29316e29de9e6cedae607b8634c"
+    },
+    "licenses/npm/ieee754/LICENSE": {
+      "bytes": 1465,
+      "sha256": "18d45466ba3253deae04667e267a91ea8de8548f18c1125264d1c9db28194cc1"
+    },
+    "licenses/npm/its-fine/LICENSE": {
+      "bytes": 1093,
+      "sha256": "506bca9e41227d2ae1fbea8342a1fcff853af8198e9e1f37693a635e86efc539"
+    },
+    "licenses/npm/potpack/LICENSE": {
+      "bytes": 738,
+      "sha256": "2c620eaf6c3ee3e33b07f3b6ef0dfd0a9e0a52c93a46aa4ccf7773dbb562daec"
+    },
+    "licenses/npm/query-string/license": {
+      "bytes": 1116,
+      "sha256": "846c2349412e40c3c33095b2903f6a311ef4b30ccd26c214044a2cdc24fdc5cc"
+    },
+    "licenses/npm/react/LICENSE": {
+      "bytes": 1088,
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"
+    },
+    "licenses/npm/react-dom/LICENSE": {
+      "bytes": 1088,
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"
+    },
+    "licenses/npm/react-use-measure/LICENSE": {
+      "bytes": 1093,
+      "sha256": "1f9038eff8dbd6505a26f9d6830cc6da2b87ab1a9305d1100884986e9c11a31a"
+    },
+    "licenses/npm/scheduler/LICENSE": {
+      "bytes": 1088,
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"
+    },
+    "licenses/npm/split-on-first/license": {
+      "bytes": 1109,
+      "sha256": "48da2f39e100d4085767e94966b43f4fa95ff6a0698fba57ed460914e35f94a0"
+    },
+    "licenses/npm/strict-uri-encode/license": {
+      "bytes": 1125,
+      "sha256": "e6fdf7ac2af533b4436d99aa75df32aa78690510f7d68a3e73e8576967298d2f"
+    },
+    "licenses/npm/suspend-react/LICENSE": {
+      "bytes": 1070,
+      "sha256": "997e79b828d8b85d6f18730c8dbf58074811360a199506bd84e1263e17c227a2"
+    },
+    "licenses/npm/three/LICENSE": {
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    "licenses/npm/three-stdlib/LICENSE": {
+      "bytes": 1072,
+      "sha256": "28eb7edf059a39094aa3d169db1fec46ac4a6279c921a90f965828d92ec86e79"
+    },
+    "licenses/npm/types__draco3d/LICENSE": {
+      "bytes": 1141,
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+    },
+    "licenses/npm/types__offscreencanvas/LICENSE": {
+      "bytes": 1141,
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+    },
+    "licenses/npm/types__react/LICENSE": {
+      "bytes": 1141,
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+    },
+    "licenses/npm/types__react-reconciler/LICENSE": {
+      "bytes": 1141,
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+    },
+    "licenses/npm/types__webxr/LICENSE": {
+      "bytes": 1141,
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+    },
+    "licenses/npm/use-sync-external-store/LICENSE": {
+      "bytes": 1088,
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"
+    },
+    "licenses/npm/zustand/LICENSE": {
+      "bytes": 1070,
+      "sha256": "c1e6e266563517467b1bf874817d23e426f3149252bd7d42758cd697514b8417"
+    },
+    "licenses/shadergradient/MIT.txt": {
+      "bytes": 1176,
+      "sha256": "88b2dc312f65d0c0471c909ad3fecc4190c158f50cfaefd374f0d730a6e0241f"
+    },
+    "licenses/shadergradient/package.json": {
+      "bytes": 1695,
+      "sha256": "ddb8cbd9918f98795bcf2536a7d3b540b906cfb6cff91edf4729c8be1970e0a3"
+    },
+    "licenses/vis-network/LICENSE-APACHE-2.0": {
+      "bytes": 10171,
+      "sha256": "1509904280a272780fd69c04b858f512cf216f8e3464a0dd98d8f34416feced9"
+    },
+    "licenses/vis-network/LICENSE-MIT": {
+      "bytes": 1084,
+      "sha256": "1f65085e54c036645082257618db2c7b787e68c3b02485e214ecd09e0834ee8f"
+    },
+    "licenses/windows-runtime/Python-LICENSE.txt": {
+      "bytes": 25066,
+      "sha256": "886a0ead2d89030ee62dbff52b04e47ab91998341295bb9c56fb952b4e081c7a"
+    },
+    "licenses/windows-runtime/altgraph-LICENSE": {
+      "bytes": 1002,
+      "sha256": "6c194d6db0c64d45535d10c95142b9b0cda7b7dcc7f1ddee302b3d536f3dbe46"
+    },
+    "licenses/windows-runtime/pefile-LICENSE": {
+      "bytes": 1083,
+      "sha256": "b44409c067c6da52bfb54bb6624fb11a7b52157c3a13ae1400232f8196e86ad3"
+    },
+    "licenses/windows-runtime/pyinstaller-COPYING.txt": {
+      "bytes": 32138,
+      "sha256": "dcf75fdb959db1e3b41c0f8505069d2ece781b5ec6b3d0a4d30975cfc6580245"
+    },
+    "licenses/windows-runtime/pywin32-ctypes-LICENSE.txt": {
+      "bytes": 1644,
+      "sha256": "dfa83b3e2709adfcdb838d9ad55823ca674abb780e60563d9dd9544ccbf785e9"
+    },
+    "verification/launcher-checks.json": {
+      "bytes": 251,
+      "sha256": "bd4ea65496077c4343aadfdbfdf75948717a21f50923abc60b38b781362c4d43"
+    },
+    "verification/layout-checks.json": {
+      "bytes": 1047,
+      "sha256": "63bc7ce80f463233f7fccd53e4582bf737dfa5be66643e480da6bab4fbcd1713"
+    },
+    "verification/physics-checks.json": {
+      "bytes": 973,
+      "sha256": "bcced75cd4e89007b409f2d0f07820c07715d4cf63f2d0cc439c64192d0d6175"
+    }
+  },
+  "data": {
+    "display_nodes": 3520,
+    "display_links": 14520,
+    "full_nodes": 165539,
+    "full_links": 365648,
+    "uncompressed_full_graph_sha256": "5b9410783ef6e32d7e955e25247ec4e3fa25272fdc460d397da984b897c8e421",
+    "graph_3d_data_sha256": "6e1a89228f0718f56c54ac0a9d5d0946750638b938bfca5d8cb7fdd8f2600f34"
+  }
+}

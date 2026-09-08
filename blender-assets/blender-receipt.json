@@ -1,0 +1,15 @@
+{
+  "blender": "5.2.1 LTS",
+  "mesh": "star-core.glb",
+  "glow": "star-glow.png",
+  "meshVertices": 162,
+  "meshFaces": 320,
+  "glowPixels": [
+    512,
+    512
+  ],
+  "glowOrthoScale": 16,
+  "compositor": "Native Fog Glow with luminance alpha",
+  "source": "constellation-star-kit.blend",
+  "scope": "Factory-startup background scene; no existing user scene opened."
+}

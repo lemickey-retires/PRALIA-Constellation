@@ -1,0 +1,9 @@
+{
+  "standalone_exe_started": true,
+  "runtime_files_served": 9,
+  "directory_listing_disabled": true,
+  "external_host_rejected": true,
+  "no_write_endpoint": true,
+  "press_enter_stops_launcher": true,
+  "requires_external_python": false
+}

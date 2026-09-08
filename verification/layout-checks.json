@@ -1,0 +1,50 @@
+{
+  "checkedAt": "2026-09-08T11:02:37.701Z",
+  "results": [
+    {
+      "name": "constellation",
+      "nodes": 3520,
+      "sampledOverlaps": 0,
+      "maxPenetration": 0,
+      "extent": {
+        "x": 1042.7174682617188,
+        "y": 1041.6605834960938,
+        "z": 1047.5037231445312
+      }
+    },
+    {
+      "name": "galaxy",
+      "nodes": 3520,
+      "sampledOverlaps": 0,
+      "maxPenetration": 0,
+      "extent": {
+        "x": 1072.710693359375,
+        "y": 304.80487060546875,
+        "z": 1067.0203857421875
+      }
+    },
+    {
+      "name": "globe",
+      "nodes": 3520,
+      "sampledOverlaps": 0,
+      "maxPenetration": 0,
+      "extent": {
+        "x": 906.538818359375,
+        "y": 758.4278869628906,
+        "z": 930.7749328613281
+      }
+    },
+    {
+      "name": "helix",
+      "nodes": 3520,
+      "sampledOverlaps": 0,
+      "maxPenetration": 0,
+      "extent": {
+        "x": 487.5195770263672,
+        "y": 898.73486328125,
+        "z": 493.3893737792969
+      }
+    }
+  ],
+  "originalArrangementUnchanged": true
+}
