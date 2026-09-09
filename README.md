@@ -37,11 +37,11 @@ uses only the standard library and does not install packages.
 - The Blender-created sphere, crystal, orbital rings, glow and surrounding stars.
 - The locally bundled ShaderGradient shaders, original 2D view and motion controls.
 
-The first visit opens the shared **Constellation / Orbital / Amethyst** view,
-with **Universe / Cosmic nebula** at **0.05× speed**, matching the captured view.
-Your subsequent changes stay in your own browser. Animation continues, so the
-scene moves after opening; screen size, graphics hardware and reduced-motion
-settings can affect rendering. The included graph data is unchanged.
+The refreshed viewer starts in a live **Constellation / Starlight** view with
+the universe effect on. Constellation is deliberately one continuous field: it
+does not turn route groups into visual blobs. Relationships remain available in
+the links, selection details and unchanged graph data. Your saved **My layout**
+and any existing colour-palette or pin-on-drop choice are retained separately.
 
 The files are a frozen graph snapshot. Running this viewer does not scan your
 computer or regenerate the graph. The full underlying graph is included as data,
@@ -50,20 +50,26 @@ credentials or personal conversations.
 
 ## Explore
 
-Drag empty space to orbit, right-drag to pan, and scroll to zoom. Drag a node to
-move it. Search reveals the actual node metadata and its connections.
+Drag empty space to orbit and right-drag to pan. **Scroll over the graph to
+spread nodes apart or bring them closer; hold Shift while scrolling to zoom the
+camera.** Dragging a node activates solid collision physics for the drag and
+drop. Every rendered node normally moves in the lightweight live field instead.
+Search reveals the actual node metadata and its connections.
 
 | Control | Choices |
 | --- | --- |
-| Layout | My layout, Constellation, Galaxy, Globe, Helix |
+| Layout | My layout, Constellation, Galaxy, Globe, Helix. A layout change gathers the stars through the centre, lets them squirm, then resolves the selected form. |
 | Design | Starlight, Crystal, Orbital, Minimal |
 | Colours | Celestial, Aurora, Ember, Amethyst, Silver |
 | Universe | Cosmic nebula or Soft gradient, with six colour presets |
-| Movement | 3D orbital flow, Float, Breathe, gravity, bounce and camera orbit |
+| Graph spread | Scroll to expand/contract the graph, or use the spread slider; Shift + scroll zooms the camera |
+| Live field | Starts on for all 3,520 visible stars; preserves each named layout while animating an efficient sparse force network |
+| Graph physics | Center, Repel, Link and Link-distance forces; node spacing, relation tether, and a cursor field that deflects nearby stars |
+| Movement | 3D orbital flow, Float, Breathe, collision bounce during drag and optional camera orbit |
 
-The universe shares the graph's 3D camera. Its clouds cover an enclosing sphere;
-1,800 surrounding stars occupy different depths. **Universe speed** changes
-independently of graph motion; zero holds the shader still.
+The optional universe shares the graph's 3D camera. Its clouds cover an
+enclosing sphere; 1,800 surrounding stars occupy different depths. **Universe
+speed** changes independently of graph motion; zero holds the shader still.
 **Export view** downloads your current settings and arrangements as JSON.
 
 ## Source and verification
@@ -86,9 +92,10 @@ The ShaderGradient source is pinned at
 each build. Normal use needs no build step.
 
 Run `python verify-share.py` to verify every listed file hash, the snapshot and
-the compressed full graph. Optional native physics checks are
-`node verify-graph-physics.mjs` and `node verify-layouts.mjs` in
-`astral-background/` after installing the build dependencies.
+the compressed full graph. Optional native checks are
+`node verify-graph-physics.mjs`, `node verify-layouts.mjs` and
+`node verify-visual-motion.mjs` in `astral-background/` after installing the
+build dependencies.
 
 ## Repository access and notices
 
