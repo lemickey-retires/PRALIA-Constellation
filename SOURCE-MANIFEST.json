@@ -12,8 +12,8 @@
       "sha256": "819ed4902aee49fbae4d367403dce2c8958b017f427d564dd5046497f12809d1"
     },
     "README.md": {
-      "bytes": 4681,
-      "sha256": "327f47571bce0a17ea3d13b026fb3e7a20a22328eceef754400e74d7f2d5ff6a"
+      "bytes": 5468,
+      "sha256": "5e25cbd7fc1e16344696f8485052d92a877e6801242094d301ee762111f5483b"
     },
     "THIRD-PARTY-NOTICES.md": {
       "bytes": 2056,
@@ -37,15 +37,15 @@
     },
     "astral-background/build-receipt.json": {
       "bytes": 549,
-      "sha256": "44c743f25caa9aee3760de149e89c0e2783672bc7ce27d38858b51a1a4ff41b5"
+      "sha256": "2e0b9f2d48dfdeba994522fa052ea581a6b17489de65ca425b341712131b683e"
     },
     "astral-background/build-share.mjs": {
       "bytes": 1833,
       "sha256": "2a4d90ddcfdf6212bf1369df2f221dc2b27b35fba1455c2d939a76d7887f8015"
     },
     "astral-background/graph-3d.mjs": {
-      "bytes": 27631,
-      "sha256": "66e63dcaf37f58fd7131946135f8ef9839f8e842c477a13cf7329dee07965296"
+      "bytes": 34773,
+      "sha256": "cd62b8d14eaec13b4ba43851cc12bf2c23fcca6540e7df60b484751951704711"
     },
     "astral-background/graph-appearance.mjs": {
       "bytes": 1207,
@@ -56,24 +56,28 @@
       "sha256": "6a528384e92be45f589fa740573842b12854d940cb39197c3d45f6d0bc72c8ba"
     },
     "astral-background/graph-layouts.mjs": {
-      "bytes": 3174,
-      "sha256": "baaf441366316d0aa5be78b00d5947e901a2a47308bfb871315799d9df52d991"
+      "bytes": 6436,
+      "sha256": "ce10fd51c1e6ce63fd647346b1948970468b22c164770b573afffad49bbb4611"
     },
     "astral-background/graph-motion.mjs": {
       "bytes": 998,
       "sha256": "4ebec4db4ba1a5b8626a360da99453df2a7d0fa7229ea3b933bb107d6b2dd5e2"
     },
+    "astral-background/graph-visual-motion.mjs": {
+      "bytes": 15418,
+      "sha256": "4b2825b819c7d04094f51366d1bf2a9a53df2abb8b9c00762fee458e827b518a"
+    },
     "astral-background/graph-physics-client.mjs": {
-      "bytes": 2169,
-      "sha256": "8500660dc208c202ce9cc82d97c29eb0a932a37920460f7e8990ae9d44dc73ac"
+      "bytes": 2476,
+      "sha256": "37df2b48e4a6fe1873516200a8b4ddcf4dbc88be482b248646bae87b8f47dafc"
     },
     "astral-background/graph-physics-worker.mjs": {
-      "bytes": 2415,
-      "sha256": "3a2aa53681d0fd80e1322ff6f279118840583f3f1c6e81078d5bff82fa97fde4"
+      "bytes": 2794,
+      "sha256": "5fb6fb7ed3ac7488cdc9d61bde5009064478d5e8f201dbf39f62a95dcaab3fcf"
     },
     "astral-background/graph-physics.mjs": {
-      "bytes": 9658,
-      "sha256": "088b8c07afad0fd554f41ccd329bd09f35b78ce53f0a1a68cb68082adaa95391"
+      "bytes": 14129,
+      "sha256": "8910382f2cdcca360b0ab6fd67cca05458109cabeffdc9de2a94a714f6038573"
     },
     "astral-background/package-lock.json": {
       "bytes": 28455,
@@ -88,12 +92,16 @@
       "sha256": "1d843b0d5615be1d254a522aeb33fdc6a7b5cc8a721ce3a2c74b95ec2cb1cd56"
     },
     "astral-background/verify-graph-physics.mjs": {
-      "bytes": 5592,
-      "sha256": "b703a781792c76095add77f0221aaa3e218f6a55e50bc6129807c5c5486bdf34"
+      "bytes": 7388,
+      "sha256": "f2259a39b3086d068198985e996e8db9d66850755029cdf436a15a5b699e2d84"
     },
     "astral-background/verify-layouts.mjs": {
-      "bytes": 1734,
-      "sha256": "f81d7a40f7fe4871487c3eac4165f96fa4bb68077d371f89caa8da7771df35c4"
+      "bytes": 3008,
+      "sha256": "a35ccd4c15c21d41afa5cbbbe7fc30e7cc0ee3d9e1a2976ff5d9dc598b25b7b6"
+    },
+    "astral-background/verify-visual-motion.mjs": {
+      "bytes": 4248,
+      "sha256": "ec6ed2203fb641cd627b1690d538d62975a888807b0f62b5fccd218e87b59765"
     },
     "astral-background/upstream-shadergradient/README.md": {
       "bytes": 7097,
@@ -624,8 +632,8 @@
       "sha256": "88b3c57dab46c872a01bd446692df17548449aa081779de709d723345fa23769"
     },
     "graphify-out/graph-3d.html": {
-      "bytes": 6717,
-      "sha256": "15d2ed1d7430f037ef68fe7420b9084189b61f102aa94c9ab7f3e40906bed975"
+      "bytes": 8975,
+      "sha256": "0fe4a65f3bc65cffc9d6ad4ab3eee6ac9f8747ed06f9fd79c64f68005dde3469"
     },
     "graphify-out/graph.html": {
       "bytes": 4757415,
@@ -672,16 +680,16 @@
       "sha256": "33af5b06802c400969d3ac8fe45adeb7cdaab355cbb9f196e27383e9968c5497"
     },
     "graphify-out/vendor/graph-3d.js": {
-      "bytes": 690399,
-      "sha256": "d478395b82c19160392f4106f45aeb2517ba1d7fb32b576d6fc36f628ee53076"
+      "bytes": 702900,
+      "sha256": "af9b88ae48a3f5933bac08dc12aab0f1a90c7b5be3c2033b38bd65d3d69f8778"
     },
     "graphify-out/vendor/graph-3d.js.LEGAL.txt": {
       "bytes": 188,
       "sha256": "cc7cc7e2f53d5db0235ab2226e85fc6e91655161573b39813b41bb00e5919674"
     },
     "graphify-out/vendor/graph-physics-worker.js": {
-      "bytes": 2859814,
-      "sha256": "8300e99a76c8e3ab7aa74d11317218b6fc0b547a3a70306e902c21e54658ec18"
+      "bytes": 2862175,
+      "sha256": "81daf959d6ce874bfdfda783893b51947e76dbb2fa57e438c505f8a14e95077d"
     },
     "graphify-out/vendor/vis-network.min.js": {
       "bytes": 702611,

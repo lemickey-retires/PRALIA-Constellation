@@ -41,11 +41,12 @@ export class GraphPhysics {
     this.world = new RAPIER.World({x:0,y:0,z:0});
     const p = this.world.integrationParameters;
     p.dt = 1/60;
-    // Extra native contact-solving iterations support the restored orbital
-    // forces and fast dragging; verified with the complete moving graph.
-    p.numSolverIterations = 12;
-    p.normalizedAllowedLinearError = 0.0001;
-    p.maxCcdSubsteps = 4;
+    // This is an interactive graph, not an offline rigid-body solve. Four
+    // iterations preserve the visible solid contacts while leaving headroom
+    // for camera interaction on an ordinary laptop.
+    p.numSolverIterations = 4;
+    p.normalizedAllowedLinearError = 0.001;
+    p.maxCcdSubsteps = 2;
     this.bodies = nodes.map(n => {
       const body = this.world.createRigidBody(RAPIER.RigidBodyDesc.dynamic()
         .setTranslation(n.x,n.y,n.z).setLinearDamping(2.6).lockRotations()
@@ -63,6 +64,13 @@ export class GraphPhysics {
       this.readPositions();
     }
     if(this.clearance().overlaps)throw new Error('Initial collision layout could not settle safely.');
+    // Thousands of simultaneously moving rigid bodies are neither readable nor
+    // responsive in this graph. The rendered set remains complete, but on a
+    // large graph a stable representative core moves until a person drags a
+    // particular node, at which point that node always becomes fully physical.
+    const limitFullSimulation=nodes.length<=600;
+    this.mobile=nodes.map(n=>limitFullSimulation||n.tier!=='blue'||hash(n.id+'|mobile')<.1);
+    this.mobile.forEach((mobile,i)=>{if(!mobile&&!nodes[i].pinned)this.bodies[i].setBodyType(RAPIER.RigidBodyType.Fixed,false);});
     this.home = nodes.map(n => ({x:n.x,y:n.y,z:n.z}));
     this.anchors = nodes.map(n => this.index.get(routes[n.id]?.anchor) ?? -1);
     this.offsets = nodes.map((n,i) => {
@@ -80,31 +88,24 @@ export class GraphPhysics {
       return .12+Math.min(routes[n.id]?.hops||0,6)/6*.2+wave*.42;
     });
     this.rebound=.28;
+    this.pointer=null;
     const strong = new Set(attraction);
-    // One real path between connected nodes is enough to hold each component
-    // together. Keep every original edge for viewing; avoid thousands of
-    // redundant physical spring constraints on the same connected component.
-    const parents = nodes.map((_,i)=>i);
-    const find = i => {while(parents[i]!==i){parents[i]=parents[parents[i]];i=parents[i];}return i;};
-    const physicalEdges = [];
+    // Keep the visual layer faithful to every original edge, but do not turn
+    // every one of 14,520 edges into a per-frame physical spring. A spanning
+    // force network keeps each real connected component together (prioritising
+    // attraction edges), while Link force and Link distance remain genuinely
+    // live and useful rather than making the whole viewer unusable.
+    const parents=nodes.map((_,i)=>i);
+    const find=i=>{while(parents[i]!==i){parents[i]=parents[parents[i]];i=parents[i];}return i;};
+    const physical=[];
     for(const i of [...attraction,...edges.map((_,i)=>i).filter(i=>!strong.has(i))]) {
-      const e=edges[i],a=this.index.get(e.from),b=this.index.get(e.to);
-      if(a===undefined||b===undefined)continue;
+      const edge=edges[i],a=this.index.get(edge.from),b=this.index.get(edge.to);
+      if(a===undefined||b===undefined||a===b)continue;
       const pa=find(a),pb=find(b);if(pa===pb)continue;
-      parents[pa]=pb;physicalEdges.push(i);
+      parents[pa]=pb;physical.push({a,b,strong:strong.has(i)});
     }
-    this.jointCount = 0;
-    for(const i of physicalEdges) {
-      const e = edges[i], ai = this.index.get(e.from), bi = this.index.get(e.to);
-      if(ai === undefined || bi === undefined || ai === bi) continue;
-      const a=nodes[ai],b=nodes[bi];
-      const rest = Math.max(a.radius+b.radius+2,Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z));
-      const joint = this.world.createImpulseJoint(
-        RAPIER.JointData.spring(rest,strong.has(i)?0.16:0.04,0.025,
-          {x:0,y:0,z:0},{x:0,y:0,z:0}),this.bodies[ai],this.bodies[bi],true);
-      joint.setContactsEnabled(true);
-      this.jointCount++;
-    }
+    this.links=physical;
+    this.jointCount=this.links.length;
     this.drag = null;
     this.time = 0;
     nodes.forEach((n,i) => { if(n.pinned) this.pin(i,true); });
@@ -114,6 +115,7 @@ export class GraphPhysics {
   }
   pin(i, pinned) {
     const body = this.bodies[i];
+    this.mobile[i] = !pinned;
     body.setBodyType(pinned ? RAPIER.RigidBodyType.Fixed : RAPIER.RigidBodyType.Dynamic,true);
     body.setLinvel({x:0,y:0,z:0},true);
     this.nodes[i].pinned = pinned;
@@ -124,6 +126,9 @@ export class GraphPhysics {
     this.drag = {index:i,target:{...this.bodies[i].translation()}};
   }
   moveDrag(target) { if(this.drag) this.drag.target = {...target}; }
+  setPointer(pointer) {
+    this.pointer=pointer&&pointer.active?{...pointer,life:.45,origin:{...pointer.origin},direction:{...pointer.direction}}:null;
+  }
   endDrag(pin = true) {
     if(!this.drag) return;
     // Let the physical body finish the last short pointer movement before
@@ -138,7 +143,71 @@ export class GraphPhysics {
     // Pin the contact-resolved position, never teleport to the pointer target.
     this.pin(i,pinned);
   }
-  step({pull = 1, drift = true, animation='depth', speed=1, orbit=1, rebound=.28} = {}) {
+  applyRepulsion(repulsion,spacing) {
+    if(repulsion<=0)return;
+    // A spatial hash keeps the force local and predictable: every node only
+    // compares itself with nearby cells instead of all 3,520 bodies.
+    const range=Math.max(22,(32+repulsion*2)*spacing),cell=range,grid=new Map();
+    const key=(x,y,z)=>`${x},${y},${z}`;
+    this.nodes.forEach((node,i)=>{
+      // Static display nodes are still colliders for a dragged node, but they
+      // do not need to spend CPU repelling one another every simulation step.
+      if(!this.mobile[i])return;
+      const cx=Math.floor(node.x/cell),cy=Math.floor(node.y/cell),cz=Math.floor(node.z/cell);
+      for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)for(let dz=-1;dz<=1;dz++) {
+        for(const j of grid.get(key(cx+dx,cy+dy,cz+dz))||[]) {
+          const other=this.nodes[j],x=node.x-other.x,y=node.y-other.y,z=node.z-other.z;
+          let distance=Math.hypot(x,y,z);
+          if(distance>=range)continue;
+          // Two bodies can start at exactly the same point. A stable hashed
+          // direction lets them separate without a random simulation jump.
+          let ux=x,uy=y,uz=z;
+          if(distance<.001) {
+            const angle=hash(node.id+'|'+other.id)*Math.PI*2;ux=Math.cos(angle);uy=Math.sin(angle);uz=Math.sin(angle*.73);distance=1;
+          }
+          const falloff=1-distance/range,force=repulsion*9*falloff*falloff;
+          const length=Math.hypot(ux,uy,uz)||1;
+          ux=ux/length*force;uy=uy/length*force;uz=uz/length*force;
+          this.bodies[i].addForce({x:ux,y:uy,z:uz},true);
+          this.bodies[j].addForce({x:-ux,y:-uy,z:-uz},true);
+        }
+      }
+      const own=key(cx,cy,cz);if(!grid.has(own))grid.set(own,[]);grid.get(own).push(i);
+    });
+  }
+  applyLinkForces(linkForce,linkDistance) {
+    if(linkForce<=0)return;
+    for(const link of this.links) {
+      const a=this.nodes[link.a],b=this.nodes[link.b],x=b.x-a.x,y=b.y-a.y,z=b.z-a.z;
+      const distance=Math.hypot(x,y,z)||.001;
+      const desired=Math.max(a.radius+b.radius+3,linkDistance*(link.strong?.72:1));
+      const degree=Math.sqrt(Math.max(1,(a.degree||0)+1)*Math.max(1,(b.degree||0)+1));
+      const raw=(distance-desired)*linkForce*(link.strong?1.5:1)*.5/degree;
+      const force=Math.max(-100,Math.min(100,raw));
+      const fx=x/distance*force,fy=y/distance*force,fz=z/distance*force;
+      if(this.mobile[link.a])this.bodies[link.a].addForce({x:fx,y:fy,z:fz},true);
+      if(this.mobile[link.b])this.bodies[link.b].addForce({x:-fx,y:-fy,z:-fz},true);
+    }
+  }
+  applyPointerForce(cursor,spacing,pointerReach) {
+    const pointer=this.pointer;if(!pointer||cursor<=0)return;
+    pointer.life-=1/60;if(pointer.life<=0){this.pointer=null;return;}
+    const range=Math.max(70,170*spacing*pointerReach),{origin,direction}=pointer;
+    this.nodes.forEach((node,i)=>{
+      if(!this.mobile[i]||this.drag?.index===i)return;
+      const ox=node.x-origin.x,oy=node.y-origin.y,oz=node.z-origin.z;
+      const along=ox*direction.x+oy*direction.y+oz*direction.z;
+      if(along<0)return;
+      const px=origin.x+direction.x*along,py=origin.y+direction.y*along,pz=origin.z+direction.z*along;
+      let x=node.x-px,y=node.y-py,z=node.z-pz,distance=Math.hypot(x,y,z);
+      if(distance>=range)return;
+      if(distance<.001){const angle=hash(node.id+'pointer')*Math.PI*2;x=Math.cos(angle);y=Math.sin(angle);z=Math.sin(angle*.61);distance=1;}
+      const falloff=1-distance/range,force=cursor*520*falloff*falloff,length=Math.hypot(x,y,z)||1;
+      this.bodies[i].addForce({x:x/length*force,y:y/length*force,z:z/length*force},true);
+    });
+  }
+  step({pull = 1, drift = true, animation='depth', speed=1, orbit=1, rebound=.28,
+    spacing=1,cohesion=1,repulsion=8,cursor=1.2,pointerReach=1.5,linkForce=.45,linkDistance=75} = {}) {
     this.readPositions();
     if(drift) {this.time += speed/60;this.motionAmount=orbit;}
     const amount=this.motionAmount??0;
@@ -151,10 +220,13 @@ export class GraphPhysics {
       const a=this.nodes[this.anchors[i]],blend=1-Math.exp(-1/60/this.followLags[i]);
       centre.x+=(a.x-centre.x)*blend;centre.y+=(a.y-centre.y)*blend;centre.z+=(a.z-centre.z)*blend;
     });
+    this.nodes.forEach((n,i) => {if(this.mobile[i])this.bodies[i].resetForces(false);});
+    this.applyRepulsion(repulsion,spacing);
+    this.applyLinkForces(linkForce,linkDistance);
+    this.applyPointerForce(cursor,spacing,pointerReach);
     this.nodes.forEach((n,i) => {
       const body = this.bodies[i];
-      if(n.pinned) return;
-      body.resetForces(false);
+      if(!this.mobile[i]) return;
       const v = body.linvel();
       let target, gain, damping;
       if(this.drag?.index === i) {
@@ -163,14 +235,14 @@ export class GraphPhysics {
         const centre=this.followCentres[i],phase=this.phases[i];
         if(centre) {
           const offset=orbitOffset(this.offsets[i],this.time,phase,animation,amount);
-          target={x:centre.x+offset.x,y:centre.y+offset.y,z:centre.z+offset.z};
+          target={x:centre.x+offset.x*spacing,y:centre.y+offset.y*spacing,z:centre.z+offset.z*spacing};
         }else {
-          const home=this.home[i],amplitude=amount*(n.tier==='yellow'?5:11);
-          target={x:home.x+amplitude*Math.sin(this.time*.6+phase),
-            y:home.y+amplitude*Math.cos(this.time*.48+phase),
-            z:home.z+amplitude*Math.sin(this.time*.38+phase)};
+          const home=this.home[i],amplitude=amount*(n.tier==='yellow'?8:16);
+          target={x:home.x*spacing+amplitude*Math.sin(this.time*.6+phase),
+            y:home.y*spacing+amplitude*Math.cos(this.time*.48+phase),
+            z:home.z*spacing+amplitude*Math.sin(this.time*.38+phase)};
         }
-        gain=(centre?1.6:.3)*pull;damping=.6;
+        gain=(centre?2.5*cohesion:.7)*pull;damping=.72;
       }
       let fx=(target.x-n.x)*gain-v.x*damping,
         fy=(target.y-n.y)*gain-v.y*damping,
