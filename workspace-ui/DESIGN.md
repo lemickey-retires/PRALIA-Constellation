@@ -174,3 +174,19 @@ Motion runs only in response to interaction. Reduced-motion uses 60–80 ms opac
 feedback and immediate panel layout changes. Hidden documents settle animations;
 no repeating tweens, animated scene or permanent animation loop is introduced.
 Native dialog focus and Escape behaviour remain intact through animated exits.
+
+## Custom controls and floating help
+
+Inputs and dropdown triggers use the interactive charcoal surface and a 1 px
+strong border. Hover increases border contrast; focus uses lavender. Menus are
+viewport-aware popovers with compact title/description pairs, a selected tick
+and a distinct keyboard highlight. Text fields use matching caret, selection,
+autofill, clear-icon and inline error states. Checkboxes and sliders retain their
+native input semantics with custom visual parts.
+
+Floating tooltips use the same charcoal and border vocabulary, an outlined info
+icon, a short explanation and optional shortcut badge. They appear on hover or
+keyboard focus; dedicated setting help buttons also support tapping. Explanations
+must remain concise and clarify actual behaviour. Avoid browser title bubbles.
+Tooltip and menu entrances use the existing 160 ms GSAP ease; reduced motion
+uses a 60 ms fade. Existing scene assets and rendering responsibilities are unchanged.

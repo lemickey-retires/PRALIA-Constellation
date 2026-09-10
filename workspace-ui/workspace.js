@@ -1,3 +1,4 @@
+import {controls} from './workspace-controls.js';
 import {motion} from './workspace-motion.js';
 import {scenePort} from './scene-port.js';
 
@@ -137,6 +138,7 @@ function renderControls(){
   $('source-summary').textContent=state.sources.length+' '+(state.sources.length===1?'source':'sources')+' enabled';
   $('filter-summary').textContent=state.sources.length===8?'No filters applied':(8-state.sources.length)+' sources hidden';
   $('no-sources').hidden=state.sources.length>0;
+  controls.sync();
 }
 function changed(message){activeView=null;persist();render();if(message)notice(message);}
 function render(){renderSources();renderSavedViews();renderTitle();renderControls();renderRecords();emit();}
@@ -237,5 +239,5 @@ $('scene-image').addEventListener('error',()=>{$('image-error').hidden=false;});
 $('scene-image').addEventListener('load',()=>{$('image-error').hidden=true;});
 $('retry-image').onclick=()=>{$('scene-image').src='./assets/universe-still.png?retry='+Date.now();};
 if(/Mac|iPhone|iPad/.test(navigator.platform))$('command-shortcut').textContent='⌘ K';
-paintIcons();motion.init();applyPanels(false);render();
+paintIcons();controls.init();motion.init();applyPanels(false);render();
 document.documentElement.dataset.ready='true';

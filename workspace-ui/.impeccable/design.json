@@ -205,6 +205,12 @@
           "oklch(from #828fff 0.95 c h)"
         ]
       }
+    },
+    "customControls": {
+      "menus": "Viewport-aware listbox popovers; checkmarks, descriptions, keyboard selection and focus return.",
+      "fields": "Custom charcoal surfaces, lavender focus, clear icons and inline validation.",
+      "help": "Hover/focus tooltips with info icon and shortcut; tappable setting help.",
+      "inputs": "Custom checkbox, switch and slider appearance with native input semantics."
     }
   },
   "components": [

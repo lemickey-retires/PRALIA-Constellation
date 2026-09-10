@@ -56,8 +56,7 @@ reference and Operate-mode allowance.
 
 UI interactions use locally bundled GSAP 3.15.0 and Flip. Try Focus view, the side
 panel controls, View/Details tabs and Ctrl/Cmd+K. Buttons acknowledge hover and
-press; dialogs and record search animate in and out. Native select menus retain
-the browser's standard behaviour. The existing Motion setting is for the future
+press; dialogs and record search animate in and out. Custom dropdown panels retain keyboard selection and focus restoration. The existing Motion setting is for the future
 scene; UI animation follows the system reduced-motion preference.
 
 Desktop, phone and reduced-motion checks passed, including interrupted panel
@@ -68,3 +67,21 @@ The bounded style scan also reports pre-existing palette/type documentation
 advisories; the motion pass preserves the established visual values. A local
 650 ms panel-transition sample measured 16.6 ms median frame spacing and 17.2 ms
 at the 95th percentile; this is a local check, not a cross-device benchmark.
+
+## Custom controls and help
+
+Buttons, text fields, search fields, checkboxes, switches and the label-size
+slider share custom hover, pressed, focus and error treatments. Connections,
+Layout and Background use custom popover menus with selected checkmarks and
+option descriptions. Arrow keys, Home/End, typing to find an option, Enter,
+Escape and Tab are supported. The original setting values remain the data source.
+
+Hover or keyboard-focus icon controls for floating help; tap the information
+buttons beside settings on touchscreens. Tooltips stay within the viewport and
+can be hovered or dismissed with Escape. Browser title bubbles are removed.
+Scene motion is labelled explicitly to distinguish it from interface motion.
+Save-view validation uses an inline message and field styling.
+
+Verified at desktop and phone sizes, including reduced motion: option selection,
+Escape focus restoration, help placement, custom validation and saved-view reload.
+No JavaScript errors or horizontal overflow were observed.
