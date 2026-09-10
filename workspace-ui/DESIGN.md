@@ -11,8 +11,8 @@ colors:
   ink: "#f7f8f8"
   muted: "#d0d6e0"
   subtle: "#8a8f98"
-  accent: "#5e6ad2"
-  accent-hover: "#828fff"
+  accent: "#d0d1ce"
+  accent-hover: "#eeefeb"
 typography:
   body:
     fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
@@ -75,7 +75,7 @@ components:
 
 **Creative North Star: "A quiet, precise workspace"**
 
-The surrounding interface uses the owner's Linear palette and Obsidian-style workspace structure. Compact navigation, sources and an inspector support the central scene. Tonal surfaces, grey text and scarce lavender establish hierarchy.
+The surrounding interface uses the owner's Linear palette and Obsidian-style workspace structure. Compact navigation, sources and an inspector support the central scene. Tonal surfaces, grey text and scarce the selected accent establish hierarchy.
 
 This record describes the implemented HTML and CSS. System UI sans is intentional in this Operate surface. The dramatic still belongs to the scene; its warm colour does not become a second interface accent.
 
@@ -83,20 +83,20 @@ This record describes the implemented HTML and CSS. System UI sans is intentiona
 
 - Near-black canvas and charcoal working surfaces.
 - Compact sentence-case controls.
-- Lavender for action, selection and keyboard focus.
+- The selected accent for action, selection and keyboard focus.
 - Collapsible panels around a continuous central view.
 
 ## Colors
 
 ### Primary
 
-Lavender action (`accent`) identifies primary actions, the brand mark and checked switches. Lavender emphasis (`accent-hover`) supplies keyboard outlines, caret and related-record hover. Despite its source name, it is not the primary button's hover fill.
+The selected accent action (`accent`) identifies primary actions, the brand mark and checked switches. The selected accent emphasis (`accent-hover`) supplies keyboard outlines, caret and related-record hover. Despite its source name, it is not the primary button's hover fill.
 
 ### Neutral
 
 Deep canvas (`canvas`) anchors the scene. Charcoal (`surface`) holds the header, panels and dialogs. Raised charcoal (`surface-2`) identifies fields and secondary buttons; interactive charcoal (`surface-3`) indicates hovered rows and quiet pressed controls. Hairline and strong hairline separate panels and outline fields. Bright ink, muted ink and subtle grey distinguish principal, working and supporting text.
 
-**The Scarce Accent Rule.** Use lavender for meaningful interface state and action; keep large working surfaces neutral.
+**The Scarce Accent Rule.** Use the selected accent for meaningful interface state and action; keep large working surfaces neutral.
 
 ## Typography
 
@@ -124,17 +124,17 @@ Controls and rows use compact rounded corners; shortcut hints and status tags ar
 
 ### Buttons
 
-Primary, secondary and quiet actions share compact padding, medium weight and a 33px minimum height. Primary actions use lavender and white, with local hover (#707ce2) and pressed (#515cc0) fills. Secondary actions use a strong border; quiet actions gain interactive charcoal on hover or pressed state. State transitions last 150ms.
+Primary, secondary and quiet actions share compact padding, medium weight and a 33px minimum height. Primary actions use the selected accent and white, with local hover (#707ce2) and pressed (#515cc0) fills. Secondary actions use a strong border; quiet actions gain interactive charcoal on hover or pressed state. State transitions last 150ms.
 
-Keyboard focus uses a 2px lavender-emphasis outline offset by 3px. Icon-only controls retain accessible names.
+Keyboard focus uses a 2px the selected accent-emphasis outline offset by 3px. Icon-only controls retain accessible names.
 
 ### Inputs / Fields
 
-Stacked fields use raised charcoal, strong borders and control corners. Their desktop minimum height is 34px. Search fields sit directly in the containing surface. Preserve visible focus and the lavender caret.
+Stacked fields use raised charcoal, strong borders and control corners. Their desktop minimum height is 34px. Search fields sit directly in the containing surface. Preserve visible focus and the the selected accent caret.
 
 ### Navigation
 
-Compact rows combine stroke icons with working labels. Active navigation uses a local selected fill and lavender icon; hover uses interactive charcoal. Saved-view deletion appears on hover or keyboard focus and stays visible on smaller screens. Tabs use bright text and a thin underline for selection.
+Compact rows combine stroke icons with working labels. Active navigation uses a local selected fill and the selected accent icon; hover uses interactive charcoal. Saved-view deletion appears on hover or keyboard focus and stays visible on smaller screens. Tabs use bright text and a thin underline for selection.
 
 ### Chips
 
@@ -144,13 +144,13 @@ Preview and sample labels are compact outlined tags that clarify content status.
 
 Panels use charcoal and a single dividing edge. Search results use rounded rows in a bordered overlay. Dialogs use the shared surface, strong border and restrained padding. No decorative card grid is present.
 
-Switches change from grey to lavender and translate their white checked thumb. Disclosures rotate a chevron. Reduced-motion preferences replace spatial GSAP movement with brief opacity feedback. Focus view collapses the surrounding panels. The static preview image has no engine or nodes; saved settings do not imply a running scene.
+Switches change from grey to the selected accent and translate their white checked thumb. Disclosures rotate a chevron. Reduced-motion preferences replace spatial GSAP movement with brief opacity feedback. Focus view collapses the surrounding panels. The static preview image has no engine or nodes; saved settings do not imply a running scene.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** keep large working surfaces neutral and reserve lavender for action and state.
+- **Do** keep large working surfaces neutral and reserve the selected accent for action and state.
 - **Do** retain keyboard focus and accessible names on icon controls.
 - **Do** use compact sentence-case labels and internally scrolling panels.
 - **Do** distinguish preview content from connected application state.
@@ -178,7 +178,7 @@ Native dialog focus and Escape behaviour remain intact through animated exits.
 ## Custom controls and floating help
 
 Inputs and dropdown triggers use the interactive charcoal surface and a 1 px
-strong border. Hover increases border contrast; focus uses lavender. Menus are
+strong border. Hover increases border contrast; focus uses the selected accent. Menus are
 viewport-aware popovers with compact title/description pairs, a selected tick
 and a distinct keyboard highlight. Text fields use matching caret, selection,
 autofill, clear-icon and inline error states. Checkboxes and sliders retain their
@@ -190,3 +190,21 @@ keyboard focus; dedicated setting help buttons also support tapping. Explanation
 must remain concise and clarify actual behaviour. Avoid browser title bubbles.
 Tooltip and menu entrances use the existing 160 ms GSAP ease; reduced motion
 uses a 60 ms fade. Existing scene assets and rendering responsibilities are unchanged.
+
+## Colourways
+
+The header selector compares Graphite (default), Moss, Copper and Steel. Each
+remaps action, hover, pressed, focus, selection and supporting accent roles.
+The charcoal workspace surfaces stay neutral. Filled accents use dark text and
+marks; the former purple accent is retired. Preferences persist per browser,
+independently of saved scene settings.
+
+| Colourway | Action | Hover / focus | Pressed |
+| --- | --- | --- | --- |
+| Graphite | #d0d1ce | #eeefeb | #b0b3ac |
+| Moss | #a9bba0 | #c4d3bc | #91a587 |
+| Copper | #d4ae91 | #e9c6ac | #b99174 |
+| Steel | #a4b8c7 | #c1d1dc | #8aa0b1 |
+
+Action text is #101311. Default action-button contrast measured 9.13:1–12.19:1
+across these colourways. Colourway names and swatches make selection explicit.

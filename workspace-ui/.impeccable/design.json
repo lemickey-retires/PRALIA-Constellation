@@ -181,36 +181,44 @@
         "displayName": "accent",
         "role": "primary",
         "tonalRamp": [
-          "oklch(from #5e6ad2 0.15 c h)",
-          "oklch(from #5e6ad2 0.26 c h)",
-          "oklch(from #5e6ad2 0.37 c h)",
-          "oklch(from #5e6ad2 0.49 c h)",
-          "oklch(from #5e6ad2 0.61 c h)",
-          "oklch(from #5e6ad2 0.73 c h)",
-          "oklch(from #5e6ad2 0.85 c h)",
-          "oklch(from #5e6ad2 0.95 c h)"
+          "oklch(from #d0d1ce 0.15 c h)",
+          "oklch(from #d0d1ce 0.26 c h)",
+          "oklch(from #d0d1ce 0.37 c h)",
+          "oklch(from #d0d1ce 0.49 c h)",
+          "oklch(from #d0d1ce 0.61 c h)",
+          "oklch(from #d0d1ce 0.73 c h)",
+          "oklch(from #d0d1ce 0.85 c h)",
+          "oklch(from #d0d1ce 0.95 c h)"
         ]
       },
       "accent-hover": {
         "displayName": "accent hover",
         "role": "primary",
         "tonalRamp": [
-          "oklch(from #828fff 0.15 c h)",
-          "oklch(from #828fff 0.26 c h)",
-          "oklch(from #828fff 0.37 c h)",
-          "oklch(from #828fff 0.49 c h)",
-          "oklch(from #828fff 0.61 c h)",
-          "oklch(from #828fff 0.73 c h)",
-          "oklch(from #828fff 0.85 c h)",
-          "oklch(from #828fff 0.95 c h)"
+          "oklch(from #eeefeb 0.15 c h)",
+          "oklch(from #eeefeb 0.26 c h)",
+          "oklch(from #eeefeb 0.37 c h)",
+          "oklch(from #eeefeb 0.49 c h)",
+          "oklch(from #eeefeb 0.61 c h)",
+          "oklch(from #eeefeb 0.73 c h)",
+          "oklch(from #eeefeb 0.85 c h)",
+          "oklch(from #eeefeb 0.95 c h)"
         ]
       }
     },
     "customControls": {
       "menus": "Viewport-aware listbox popovers; checkmarks, descriptions, keyboard selection and focus return.",
-      "fields": "Custom charcoal surfaces, lavender focus, clear icons and inline validation.",
+      "fields": "Custom charcoal surfaces, the selected accent focus, clear icons and inline validation.",
       "help": "Hover/focus tooltips with info icon and shortcut; tappable setting help.",
       "inputs": "Custom checkbox, switch and slider appearance with native input semantics."
+    },
+    "colourways": {
+      "default": "graphite",
+      "graphite": "#d0d1ce",
+      "moss": "#a9bba0",
+      "copper": "#d4ae91",
+      "steel": "#a4b8c7",
+      "onAccent": "#101311"
     }
   },
   "components": [
@@ -247,7 +255,7 @@
       "kind": "input"
     },
     {
-      "css": ".ds-nav{font-family:Inter,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;height:35px;display:flex;align-items:center;gap:10px;padding:0 9px;border:0;border-radius:6px;text-align:left;font-size:12px;background:#202127;color:var(--ink);cursor:pointer}.ds-nav svg{width:16px;height:16px;fill:none;stroke:#a4aaff;stroke-width:1.6}.ds-nav:hover{background:var(--surface-3)}.ds-nav:focus-visible{outline:2px solid var(--accent-hover);outline-offset:3px}",
+      "css": ".ds-nav{font-family:Inter,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;height:35px;display:flex;align-items:center;gap:10px;padding:0 9px;border:0;border-radius:6px;text-align:left;font-size:12px;background:#202127;color:var(--ink);cursor:pointer}.ds-nav svg{width:16px;height:16px;fill:none;stroke:#e0e1dc;stroke-width:1.6}.ds-nav:hover{background:var(--surface-3)}.ds-nav:focus-visible{outline:2px solid var(--accent-hover);outline-offset:3px}",
       "name": "Navigation row",
       "html": "<button class=\"ds-nav\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"8\"/></svg>Universe</button>",
       "refersTo": "navigation-row",
@@ -264,12 +272,12 @@
     }
   ],
   "narrative": {
-    "overview": "The surrounding interface uses the owner's Linear palette and Obsidian-style workspace structure. Compact navigation, sources and an inspector support the central scene. Tonal surfaces, grey text and scarce lavender establish hierarchy.\n\nThis record describes the implemented HTML and CSS. System UI sans is intentional in this Operate surface. The dramatic still belongs to the scene; its warm colour does not become a second interface accent.",
+    "overview": "The surrounding interface uses the owner's Linear palette and Obsidian-style workspace structure. Compact navigation, sources and an inspector support the central scene. Tonal surfaces, grey text and scarce the selected accent establish hierarchy.\n\nThis record describes the implemented HTML and CSS. System UI sans is intentional in this Operate surface. The dramatic still belongs to the scene; its warm colour does not become a second interface accent.",
     "northStar": "A quiet, precise workspace",
     "rules": [
       {
         "name": "The Scarce Accent Rule",
-        "body": "Use lavender for meaningful interface state and action; keep large working surfaces neutral.",
+        "body": "Use the selected accent for meaningful interface state and action; keep large working surfaces neutral.",
         "section": "colors"
       },
       {
@@ -286,7 +294,7 @@
     "keyCharacteristics": [
       "Near-black canvas and charcoal working surfaces.",
       "Compact sentence-case controls.",
-      "Lavender for action, selection and keyboard focus.",
+      "The selected accent for action, selection and keyboard focus.",
       "Collapsible panels around a continuous central view."
     ],
     "donts": [
@@ -296,7 +304,7 @@
       "**Don't** represent saved preview settings as proof of a working graph engine."
     ],
     "dos": [
-      "**Do** keep large working surfaces neutral and reserve lavender for action and state.",
+      "**Do** keep large working surfaces neutral and reserve the selected accent for action and state.",
       "**Do** retain keyboard focus and accessible names on icon controls.",
       "**Do** use compact sentence-case labels and internally scrolling panels.",
       "**Do** distinguish preview content from connected application state."

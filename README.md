@@ -1,5 +1,11 @@
 # PRALIA Constellation
 
+## Glass workspace preview
+
+The second [glass workspace](workspace-glass/README.md) floats real Liquid Glass
+components over the universe still. Run `python workspace-glass/run-preview.py`
+and open http://127.0.0.1:51423/workspace-glass/. The original UI remains alongside it.
+
 ## Workspace UI preview
 
 The separate [workspace interface](workspace-ui/README.md) uses a static universe

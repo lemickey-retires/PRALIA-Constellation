@@ -21,3 +21,7 @@ Continuity: tab marker, panel content, search and native dialog transitions.
 Feedback: brief icon hover, button press and saved-state acknowledgment.
 Budget: 100–320 ms interaction-driven effects; bounded list stagger; no loops;
 reduced-motion uses opacity and immediate layout; static universe unchanged.
+
+Colourway revision: the user rejected the purple accent. Keep the charcoal
+workspace and compare Graphite, Moss, Copper and Steel using shared accent roles.
+Graphite is the new default. The original Linear document remains reference history.

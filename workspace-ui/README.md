@@ -85,3 +85,9 @@ Save-view validation uses an inline message and field styling.
 Verified at desktop and phone sizes, including reduced motion: option selection,
 Escape focus restoration, help placement, custom validation and saved-view reload.
 No JavaScript errors or horizontal overflow were observed.
+
+## Colourway comparison
+
+Use the header selector to compare Graphite, Moss, Copper and Steel. The default
+is Graphite. The choice persists in this browser and updates every interface
+accent; scene imagery and saved graph settings are unchanged.

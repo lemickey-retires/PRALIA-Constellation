@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>2nd Brain · Glass workspace</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23d0d1ce'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23101311' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../workspace-ui/workspace.css">
+  <link rel="stylesheet" href="./glass-workspace.css">
+  <script src="../workspace-ui/vendor/gsap.min.js"></script>
+  <script src="../workspace-ui/vendor/Flip.min.js"></script>
+  <script src="./vendor/liquid-glass/container.js"></script>
+  <script src="./vendor/liquid-glass/button.js"></script>
+  <script src="./glass-material.js"></script>
+  <script type="module" src="./glass-workspace.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace-main">Skip to workspace</a>
+  <div class="app" id="app">
+    <header class="app-header">
+      <a class="brand" href="./" aria-label="2nd Brain workspace"><span class="brand-mark" data-icon="orbit"></span><span>2nd Brain</span></a>
+      <span class="header-divider"></span>
+      <span class="workspace-name"><span>Personal workspace</span><span class="preview-tag">Glass edition</span></span>
+      <label class="stacked-control colourway-control" for="ui-colourway">Colourway<select id="ui-colourway"><option value="graphite">Graphite</option><option value="moss">Moss</option><option value="copper">Copper</option><option value="steel">Steel</option></select></label>
+      <div class="header-actions"><a class="previous-version" href="../workspace-ui/" title="Open the original workspace">Original UI</a><label class="material-picker"><span class="sr-only">Surface material</span><select id="material-mode" class="material-mode" aria-label="Surface material"><option value="clear">Clear glass</option><option value="soft" selected>Soft glass</option><option value="liquid">Liquid glass</option><option value="frost">CSS frost</option><option value="solid">Solid</option></select></label>
+        <button class="command-trigger" id="open-command"><span data-icon="search"></span><span>Search anything</span><kbd id="command-shortcut">Ctrl K</kbd></button>
+        <button class="icon-button" id="open-help" aria-label="Keyboard shortcuts" title="Keyboard shortcuts"><span data-icon="help"></span></button>
+      </div>
+    </header>
+
+      <nav class="workspace-rail" data-glass aria-label="Workspace views">
+        <button class="nav-row active" id="universe-nav" title="Universe" aria-label="Universe" aria-current="page"><span data-icon="orbit"></span><span>Universe</span></button>
+        <button class="nav-row" id="find-records" title="Find a record" aria-label="Find a record"><span data-icon="search"></span><span>Find a record</span><kbd>/</kbd></button>
+              <button class="icon-button" data-action="toggle-left" id="show-navigation" aria-label="Toggle navigation" aria-controls="left-panel" aria-expanded="true" title="Toggle navigation"><span data-icon="panel-left"></span></button></nav>
+    <aside class="left-panel" data-glass id="left-panel" aria-label="Workspace navigation">
+      <div class="panel-heading"><span>Library</span><button class="icon-button" data-action="toggle-left" aria-label="Collapse navigation" title="Collapse navigation"><span data-icon="panel-left"></span></button></div>
+
+      <section class="saved-section" aria-labelledby="saved-heading">
+        <div class="section-heading"><h2 id="saved-heading">Saved views</h2><button class="icon-button small" data-action="save-view" aria-label="Save a new view" title="Save a view"><span data-icon="plus"></span></button></div>
+        <div id="saved-views"></div>
+      </section>
+      <section class="sources-section" aria-labelledby="sources-heading">
+        <div class="section-heading"><h2 id="sources-heading">Sources</h2><button class="text-button" id="toggle-sources">Hide all</button></div>
+        <div id="source-list"></div>
+      </section>
+      <div class="sidebar-bottom"><span class="local-indicator"></span><div><span>Local workspace</span><small>Sample content · no app connection</small></div></div>
+    </aside>
+
+    <main id="workspace-main" class="workspace-main" tabindex="-1">
+      <div class="scene" id="scene-mount" aria-label="Static universe preview">
+        <img class="scene-image" id="scene-image" src="../workspace-ui/assets/universe-still.png" alt="A still Blender render of a golden accretion ring around a dark black hole. No knowledge nodes are shown." draggable="false">
+        <div class="scene-topline"><span class="scene-label"><span data-icon="image"></span>Static scene</span><span id="source-summary">8 sources enabled</span></div>
+        <div class="scene-empty" id="no-sources" hidden><span data-icon="filter"></span><h2>All sources are hidden</h2><p>Show a source to include it in this view.</p><button class="secondary-button" id="restore-sources">Show all sources</button></div>
+        <div class="scene-bottomline"><span>Explore your universe</span><span>Still image · Sample workspace</span></div>
+        <div class="image-error" id="image-error" hidden><span data-icon="image"></span><p>The preview image couldn’t load.</p><button class="secondary-button" id="retry-image">Try again</button></div>
+      </div>
+      <footer class="workspace-status"><span><span class="status-dot"></span><span id="save-status">Workspace ready</span></span><span class="status-right"><span id="filter-summary">No filters applied</span><span class="status-separator">·</span><button id="reset-view" class="text-button">Reset view</button></span></footer>
+    </main>
+      <div class="workspace-toolbar" data-glass>
+
+        <div class="view-title"><h1 id="view-title">Universe</h1><span id="view-subtitle">All sources</span></div>
+        <div class="toolbar-actions">
+          <button class="quiet-button" id="focus-view" aria-pressed="false"><span data-icon="expand"></span><span>Focus view</span></button>
+          <button class="primary-button" data-glass-button data-action="save-view"><span data-icon="bookmark-plus"></span><span>Save view</span></button>
+          <span class="toolbar-divider"></span>
+          <button class="icon-button" data-action="toggle-right" id="toggle-inspector" aria-label="Toggle view panel" aria-controls="right-panel" aria-expanded="true" title="Toggle view panel"><span data-icon="panel-right"></span></button>
+        </div>
+      </div>
+      <div class="search-drawer" id="search-drawer" hidden>
+        <div class="search-drawer-top"><label class="search-field"><span data-icon="search"></span><input id="record-query" type="search" placeholder="Search sample records…" aria-label="Search sample records" autocomplete="off"></label><button class="icon-button" id="close-search" aria-label="Close record search"><span data-icon="close"></span></button></div>
+        <div class="search-results" id="record-results"></div>
+      </div>
+
+
+    <aside class="right-panel" data-glass id="right-panel" aria-label="View settings and record details">
+      <div class="right-panel-top"><div class="panel-tabs" role="tablist" aria-label="Panel"><button class="panel-tab selected" id="view-tab" role="tab" aria-selected="true" aria-controls="view-panel">View</button><button class="panel-tab" id="details-tab" role="tab" aria-selected="false" aria-controls="details-panel" tabindex="-1">Details</button></div><button class="icon-button" data-action="toggle-right" aria-label="Close view panel" title="Close view panel"><span data-icon="panel-right"></span></button></div>
+      <div class="right-panel-content" id="view-panel" role="tabpanel" aria-labelledby="view-tab">
+        <div class="panel-intro"><h2>View options</h2><p>Shape what you want to see.</p></div>
+        <section class="settings-group" aria-labelledby="display-heading"><h3 id="display-heading">Display</h3>
+          <label class="setting-row"><span>Record labels</span><span class="switch"><input id="show-labels" type="checkbox" checked><span></span></span></label>
+          <label class="setting-row"><span>Source names</span><span class="switch"><input id="show-sources" type="checkbox" checked><span></span></span></label>
+          <label class="stacked-control" for="links-mode">Connections<select id="links-mode"><option value="off">Hidden</option><option value="selected">Selected record only</option><option value="overview">Overview</option><option value="all">All connections</option></select></label>
+          <p class="control-note" id="links-note">Keep the workspace clear of connection lines.</p>
+        </section>
+        <section class="settings-group" aria-labelledby="arrangement-heading"><h3 id="arrangement-heading">Arrangement</h3>
+          <label class="stacked-control" for="layout-mode">Layout<select id="layout-mode"><option value="atlas">Source sections</option><option value="constellation">Constellation</option><option value="galaxy">Galaxy</option><option value="globe">Globe</option><option value="helix">Helix</option></select></label>
+          <label class="setting-row"><span>Motion</span><span class="switch"><input id="motion-enabled" type="checkbox" checked><span></span></span></label>
+        </section>
+        <details class="settings-disclosure"><summary><span data-icon="chevron-right"></span>Appearance</summary><div class="disclosure-content">
+          <label class="stacked-control" for="background-mode">Background<select id="background-mode"><option value="horizon">Event horizon</option><option value="planetary">Planetary surface</option><option value="universe">Universe</option><option value="off">None</option></select></label>
+          <label class="range-heading" for="label-size">Label size<output id="label-size-value">100%</output></label><input type="range" id="label-size" min="75" max="150" step="5" value="100">
+        </div></details>
+        <p class="preview-note"><span data-icon="info"></span><span>Settings are saved for this view. The scene stays still in this UI preview.</span></p>
+      </div>
+      <div class="right-panel-content" id="details-panel" role="tabpanel" aria-labelledby="details-tab" hidden>
+        <div class="inspector-empty" id="inspector-empty"><span class="empty-icon" data-icon="scan"></span><h2>Room for a closer look</h2><p>Find a sample record to preview its details and connections here.</p><button class="secondary-button" id="browse-samples"><span data-icon="search"></span>Browse sample records</button></div>
+        <article id="record-detail" hidden></article>
+      </div>
+    </aside>
+    <button class="panel-scrim" id="panel-scrim" aria-label="Close open panel" hidden></button>
+  </div>
+
+  <dialog id="save-dialog" class="small-dialog" aria-labelledby="save-dialog-title"><form id="save-form"><div class="dialog-heading"><h2 id="save-dialog-title">Save this view</h2><button type="button" class="icon-button" data-close-dialog aria-label="Close save view"><span data-icon="close"></span></button></div><p>Keep these sources and display settings together.</p><label class="stacked-control" for="view-name">View name<input id="view-name" name="name" required maxlength="48" placeholder="e.g. Research workspace" autocomplete="off"></label><p class="form-error" id="save-error" hidden></p><div class="dialog-actions"><button type="button" class="secondary-button" data-close-dialog>Cancel</button><button type="submit" class="primary-button">Save view</button></div></form></dialog>
+  <dialog id="command-dialog" class="command-dialog" aria-label="Search workspace"><div class="command-search"><span data-icon="search"></span><input id="command-query" type="search" placeholder="Search records or actions…" aria-label="Search records or actions" autocomplete="off"><button class="key-button" data-close-dialog aria-label="Close search">Esc</button></div><div id="command-results" class="command-results"></div><footer>Sample records and workspace actions<span>↑ ↓ to move · Enter to open</span></footer></dialog>
+  <dialog id="help-dialog" class="small-dialog" aria-labelledby="help-title"><div class="dialog-heading"><h2 id="help-title">Keyboard shortcuts</h2><button class="icon-button" data-close-dialog aria-label="Close keyboard shortcuts"><span data-icon="close"></span></button></div><dl class="shortcut-list"><div><dt>Search workspace</dt><dd><kbd>Ctrl / ⌘</kbd> <kbd>K</kbd></dd></div><div><dt>Find a record</dt><dd><kbd>/</kbd></dd></div><div><dt>Focus view</dt><dd><kbd>F</kbd></dd></div><div><dt>Close panel or dialog</dt><dd><kbd>Esc</kbd></dd></div></dl></dialog>
+  <div id="announcement" class="sr-only" aria-live="polite"></div>
+</body>
+</html>

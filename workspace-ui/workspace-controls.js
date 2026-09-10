@@ -3,6 +3,7 @@ const chevron=svg('<path d="m8 10 4 4 4-4"/>');
 const check=svg('<path d="m5 12 4 4L19 6"/>');
 const info=svg('<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.01"/>');
 const descriptions={
+  'ui-colourway':{title:'Colourway',text:'Compare interface accents. The universe image stays unchanged.',options:{graphite:'Neutral silver on charcoal.',moss:'Quiet botanical green.',copper:'Warm, muted copper.',steel:'Cool, desaturated blue-grey.'}},
   'links-mode':{title:'Connections',text:'Choose which relationships the future scene will show. This preview saves the setting while the image stays still.',options:{off:'A clear view without lines.',selected:'Only the selected record’s relationships.',overview:'A selective overview of relationships.',all:'Every available relationship.'}},
   'layout-mode':{title:'Layout',text:'Choose how records will be arranged when the 3D scene is connected.',options:{atlas:'Group records by their source.',constellation:'Cluster related records together.',galaxy:'A broad spiral arrangement.',globe:'Distribute records around a sphere.',helix:'Arrange records along a winding path.'}},
   'background-mode':{title:'Background',text:'Save a backdrop preference for the future scene. The placeholder image stays the same.',options:{horizon:'Black hole and accretion ring.',planetary:'An illuminated planetary surface.',universe:'An open star field.',off:'A plain, dark scene.'}}
@@ -80,7 +81,7 @@ function openMenu(binding,edge){
   const {select,button}=binding,config=descriptions[select.id];
   menu.setAttribute('aria-label',config.title);menu.replaceChildren();
   [...select.options].forEach((option,index)=>{
-    const row=document.createElement('button');row.type='button';row.className='control-option';row.setAttribute('role','option');row.setAttribute('aria-selected',String(option.selected));row.tabIndex=-1;
+    const row=document.createElement('button');row.type='button';row.className='control-option';row.setAttribute('role','option');row.setAttribute('aria-selected',String(option.selected));row.tabIndex=-1;if(select.id==='ui-colourway')row.dataset.colourway=option.value;
     const copy=document.createElement('span'),title=document.createElement('strong'),description=document.createElement('small');title.textContent=option.text;description.textContent=config.options[option.value]||'';copy.append(title,description);
     const mark=document.createElement('span');mark.className='option-check';mark.innerHTML=check;row.append(copy,mark);row.onclick=()=>choose(index);menu.append(row);
   });
@@ -111,6 +112,10 @@ export const controls={
     for(const [id,[title,text,key]] of Object.entries(hints)){const el=document.getElementById(id);el.dataset.tipTitle=title;el.dataset.tipText=text;if(key)el.dataset.tipKey=key;el.removeAttribute('title');}
     const sceneMotion=document.getElementById('motion-enabled').closest('label');sceneMotion.querySelector(':scope>span').textContent='Scene motion';
     const help=document.createElement('button');help.type='button';help.className='control-help scene-motion-help';help.setAttribute('aria-label','About scene motion');help.dataset.tipTitle='Scene motion';help.dataset.tipText='Saves motion for the future 3D scene. Interface animations follow your system’s reduced-motion preference.';help.innerHTML=info;sceneMotion.after(help);
+    const colourway=document.getElementById('ui-colourway');
+    try{const saved=localStorage.getItem('second-brain-ui-colourway');if(['graphite','moss','copper','steel'].includes(saved))colourway.value=saved;}catch{}
+    const applyColourway=()=>{document.documentElement.dataset.colourway=colourway.value;try{localStorage.setItem('second-brain-ui-colourway',colourway.value);}catch{}controls.sync();};
+    colourway.addEventListener('change',applyColourway);applyColourway();
     applyHints();
     new MutationObserver(()=>applyHints()).observe(document.getElementById('app'),{childList:true,subtree:true});
     document.addEventListener('pointerover',e=>{if(e.pointerType==='touch')return;const owner=tipTarget(e.target);if(!owner||owner.contains(e.relatedTarget))return;clearTimeout(hideTimer);clearTimeout(tipTimer);tipTimer=setTimeout(()=>showTip(owner),360);});
