@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-10T05:31:56.4343839Z",
+  "title": "Design System: 2nd Brain workspace",
+  "extensions": {
+    "motion": [
+      {
+        "name": "state-transition",
+        "purpose": "Control colours, switch thumb and disclosure chevron.",
+        "value": "150ms ease"
+      },
+      {
+        "name": "reduced-motion",
+        "purpose": "Disable transitions when reduced motion is requested.",
+        "value": "none"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "1200px"
+      },
+      {
+        "name": "overlay-panels",
+        "value": "960px"
+      },
+      {
+        "name": "mobile",
+        "value": "600px"
+      }
+    ],
+    "shadows": [],
+    "colorMeta": {
+      "canvas": {
+        "displayName": "canvas",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(from #010102 0.15 c h)",
+          "oklch(from #010102 0.26 c h)",
+          "oklch(from #010102 0.37 c h)",
+          "oklch(from #010102 0.49 c h)",
+          "oklch(from #010102 0.61 c h)",
+          "oklch(from #010102 0.73 c h)",
+          "oklch(from #010102 0.85 c h)",
+          "oklch(from #010102 0.95 c h)"
+        ]
+      },
+      "surface": {
+        "displayName": "surface",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(from #0f1011 0.15 c h)",
+          "oklch(from #0f1011 0.26 c h)",
+          "oklch(from #0f1011 0.37 c h)",
+          "oklch(from #0f1011 0.49 c h)",
+          "oklch(from #0f1011 0.61 c h)",
+          "oklch(from #0f1011 0.73 c h)",
+          "oklch(from #0f1011 0.85 c h)",
+          "oklch(from #0f1011 0.95 c h)"
+        ]
+      },
+      "surface-2": {
+        "displayName": "surface 2",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(from #141516 0.15 c h)",
+          "oklch(from #141516 0.26 c h)",
+          "oklch(from #141516 0.37 c h)",
+          "oklch(from #141516 0.49 c h)",
+          "oklch(from #141516 0.61 c h)",
+          "oklch(from #141516 0.73 c h)",
+          "oklch(from #141516 0.85 c h)",
+          "oklch(from #141516 0.95 c h)"
+        ]
+      },
+      "surface-3": {
+        "displayName": "surface 3",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(from #18191a 0.15 c h)",
+          "oklch(from #18191a 0.26 c h)",
+          "oklch(from #18191a 0.37 c h)",
+          "oklch(from #18191a 0.49 c h)",
+          "oklch(from #18191a 0.61 c h)",
+          "oklch(from #18191a 0.73 c h)",
+          "oklch(from #18191a 0.85 c h)",
+          "oklch(from #18191a 0.95 c h)"
+        ]
+      },
+      "line": {
+        "displayName": "line",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(from #23252a 0.15 c h)",
+          "oklch(from #23252a 0.26 c h)",
+          "oklch(from #23252a 0.37 c h)",
+          "oklch(from #23252a 0.49 c h)",
+          "oklch(from #23252a 0.61 c h)",
+          "oklch(from #23252a 0.73 c h)",
+          "oklch(from #23252a 0.85 c h)",
+          "oklch(from #23252a 0.95 c h)"
+        ]
+      },
+      "line-strong": {
+        "displayName": "line strong",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(from #34343a 0.15 c h)",
+          "oklch(from #34343a 0.26 c h)",
+          "oklch(from #34343a 0.37 c h)",
+          "oklch(from #34343a 0.49 c h)",
+          "oklch(from #34343a 0.61 c h)",
+          "oklch(from #34343a 0.73 c h)",
+          "oklch(from #34343a 0.85 c h)",
+          "oklch(from #34343a 0.95 c h)"
+        ]
+      },
+      "ink": {
+        "displayName": "ink",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(from #f7f8f8 0.15 c h)",
+          "oklch(from #f7f8f8 0.26 c h)",
+          "oklch(from #f7f8f8 0.37 c h)",
+          "oklch(from #f7f8f8 0.49 c h)",
+          "oklch(from #f7f8f8 0.61 c h)",
+          "oklch(from #f7f8f8 0.73 c h)",
+          "oklch(from #f7f8f8 0.85 c h)",
+          "oklch(from #f7f8f8 0.95 c h)"
+        ]
+      },
+      "muted": {
+        "displayName": "muted",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(from #d0d6e0 0.15 c h)",
+          "oklch(from #d0d6e0 0.26 c h)",
+          "oklch(from #d0d6e0 0.37 c h)",
+          "oklch(from #d0d6e0 0.49 c h)",
+          "oklch(from #d0d6e0 0.61 c h)",
+          "oklch(from #d0d6e0 0.73 c h)",
+          "oklch(from #d0d6e0 0.85 c h)",
+          "oklch(from #d0d6e0 0.95 c h)"
+        ]
+      },
+      "subtle": {
+        "displayName": "subtle",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(from #8a8f98 0.15 c h)",
+          "oklch(from #8a8f98 0.26 c h)",
+          "oklch(from #8a8f98 0.37 c h)",
+          "oklch(from #8a8f98 0.49 c h)",
+          "oklch(from #8a8f98 0.61 c h)",
+          "oklch(from #8a8f98 0.73 c h)",
+          "oklch(from #8a8f98 0.85 c h)",
+          "oklch(from #8a8f98 0.95 c h)"
+        ]
+      },
+      "accent": {
+        "displayName": "accent",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(from #5e6ad2 0.15 c h)",
+          "oklch(from #5e6ad2 0.26 c h)",
+          "oklch(from #5e6ad2 0.37 c h)",
+          "oklch(from #5e6ad2 0.49 c h)",
+          "oklch(from #5e6ad2 0.61 c h)",
+          "oklch(from #5e6ad2 0.73 c h)",
+          "oklch(from #5e6ad2 0.85 c h)",
+          "oklch(from #5e6ad2 0.95 c h)"
+        ]
+      },
+      "accent-hover": {
+        "displayName": "accent hover",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(from #828fff 0.15 c h)",
+          "oklch(from #828fff 0.26 c h)",
+          "oklch(from #828fff 0.37 c h)",
+          "oklch(from #828fff 0.49 c h)",
+          "oklch(from #828fff 0.61 c h)",
+          "oklch(from #828fff 0.73 c h)",
+          "oklch(from #828fff 0.85 c h)",
+          "oklch(from #828fff 0.95 c h)"
+        ]
+      }
+    }
+  },
+  "components": [
+    {
+      "css": ".ds-button-primary{font-family:Inter,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:33px;border-radius:6px;font-size:12px;font-weight:500;padding:6px 11px;cursor:pointer;transition:background 150ms,color 150ms;background:var(--accent);color:#fff;border:0;}.ds-button-primary:hover{background:#707ce2;}.ds-button-primary:focus-visible{outline:2px solid var(--accent-hover);outline-offset:3px}.ds-button-primary:active{background:#515cc0}@media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none}}",
+      "name": "primary button",
+      "html": "<button class=\"ds-button-primary\">Save view</button>",
+      "refersTo": "button-primary",
+      "description": "Compact workspace action.",
+      "kind": "button"
+    },
+    {
+      "css": ".ds-button-secondary{font-family:Inter,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:33px;border-radius:6px;font-size:12px;font-weight:500;padding:6px 11px;cursor:pointer;transition:background 150ms,color 150ms;background:var(--surface-2);color:var(--muted);border:1px solid var(--line-strong);}.ds-button-secondary:hover{background:var(--surface-3);color:var(--ink);}.ds-button-secondary:focus-visible{outline:2px solid var(--accent-hover);outline-offset:3px}@media(prefers-reduced-motion:reduce){.ds-button-secondary{transition:none}}",
+      "name": "secondary button",
+      "html": "<button class=\"ds-button-secondary\">Save view</button>",
+      "refersTo": "button-secondary",
+      "description": "Compact workspace action.",
+      "kind": "button"
+    },
+    {
+      "css": ".ds-button-quiet{font-family:Inter,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:33px;border-radius:6px;font-size:12px;font-weight:500;padding:6px 11px;cursor:pointer;transition:background 150ms,color 150ms;background:none;color:var(--subtle);border:0;}.ds-button-quiet:hover{background:var(--surface-3);color:var(--ink);}.ds-button-quiet:focus-visible{outline:2px solid var(--accent-hover);outline-offset:3px}@media(prefers-reduced-motion:reduce){.ds-button-quiet{transition:none}}",
+      "name": "quiet button",
+      "html": "<button class=\"ds-button-quiet\">Save view</button>",
+      "refersTo": "button-quiet",
+      "description": "Compact workspace action.",
+      "kind": "button"
+    },
+    {
+      "css": ".ds-field-label{font-family:Inter,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;display:flex;flex-direction:column;gap:7px;color:var(--subtle);font-size:11px}.ds-field{font-family:Inter,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;min-height:34px;background:var(--surface-2);border:1px solid var(--line-strong);border-radius:6px;padding:6px 9px;color:var(--muted);font-size:12px;caret-color:var(--accent-hover)}.ds-field::placeholder{color:var(--subtle)}.ds-field:focus-visible{outline:2px solid var(--accent-hover);outline-offset:3px}",
+      "name": "Text field",
+      "html": "<label class=\"ds-field-label\">View name<input class=\"ds-field\" placeholder=\"Research workspace\"></label>",
+      "refersTo": "text-field",
+      "description": "Named workspace setting.",
+      "kind": "input"
+    },
+    {
+      "css": ".ds-nav{font-family:Inter,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;height:35px;display:flex;align-items:center;gap:10px;padding:0 9px;border:0;border-radius:6px;text-align:left;font-size:12px;background:#202127;color:var(--ink);cursor:pointer}.ds-nav svg{width:16px;height:16px;fill:none;stroke:#a4aaff;stroke-width:1.6}.ds-nav:hover{background:var(--surface-3)}.ds-nav:focus-visible{outline:2px solid var(--accent-hover);outline-offset:3px}",
+      "name": "Navigation row",
+      "html": "<button class=\"ds-nav\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"8\"/></svg>Universe</button>",
+      "refersTo": "navigation-row",
+      "description": "Selected workspace destination.",
+      "kind": "nav"
+    },
+    {
+      "css": ".ds-tag{font-family:Inter,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;display:inline-block;font-size:10px;line-height:20px;border:1px solid var(--line-strong);border-radius:4px;color:var(--subtle);padding:0 6px;white-space:nowrap}",
+      "name": "Preview tag",
+      "html": "<span class=\"ds-tag\">UI preview</span>",
+      "refersTo": "preview-tag",
+      "description": "Quiet content-status label.",
+      "kind": "chip"
+    }
+  ],
+  "narrative": {
+    "overview": "The surrounding interface uses the owner's Linear palette and Obsidian-style workspace structure. Compact navigation, sources and an inspector support the central scene. Tonal surfaces, grey text and scarce lavender establish hierarchy.\n\nThis record describes the implemented HTML and CSS. System UI sans is intentional in this Operate surface. The dramatic still belongs to the scene; its warm colour does not become a second interface accent.",
+    "northStar": "A quiet, precise workspace",
+    "rules": [
+      {
+        "name": "The Scarce Accent Rule",
+        "body": "Use lavender for meaningful interface state and action; keep large working surfaces neutral.",
+        "section": "colors"
+      },
+      {
+        "name": "The Working Type Rule",
+        "body": "Use sentence-case labels and compact headings; derive hierarchy from weight, spacing and tone before increasing size.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tonal Depth Rule",
+        "body": "Establish depth with the existing surface ladder and hairline edges, retaining the flat workspace.",
+        "section": "elevation"
+      }
+    ],
+    "keyCharacteristics": [
+      "Near-black canvas and charcoal working surfaces.",
+      "Compact sentence-case controls.",
+      "Lavender for action, selection and keyboard focus.",
+      "Collapsible panels around a continuous central view."
+    ],
+    "donts": [
+      "**Don't** turn warm scene imagery into a second interface accent.",
+      "**Don't** import the reference's marketing display scale into this workspace.",
+      "**Don't** add decorative shadows or atmospheric gradients to controls.",
+      "**Don't** represent saved preview settings as proof of a working graph engine."
+    ],
+    "dos": [
+      "**Do** keep large working surfaces neutral and reserve lavender for action and state.",
+      "**Do** retain keyboard focus and accessible names on icon controls.",
+      "**Do** use compact sentence-case labels and internally scrolling panels.",
+      "**Do** distinguish preview content from connected application state."
+    ]
+  }
+}

@@ -1,6 +1,12 @@
 # PRALIA Constellation
 
-## Latest branch: 2nd Brain Event horizon
+## Workspace UI preview
+
+The separate [workspace interface](workspace-ui/README.md) uses a static universe
+still for lightweight design review. Run `python workspace-ui/run-preview.py`,
+then open http://127.0.0.1:51422/. Its controls use invented sample records.
+
+## 2nd Brain Event horizon
 
 This branch adds the [2nd Brain viewer](second-brain/README.md): a native Blender
 black hole, detailed gas ring, camera-aligned halo, physical nodes and optional
