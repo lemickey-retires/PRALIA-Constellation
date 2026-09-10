@@ -10,9 +10,29 @@
         "value": "150ms ease"
       },
       {
+        "name": "workspace-layout",
+        "purpose": "GSAP Flip panel opening, closing and focus restoration.",
+        "value": "320ms power3.inOut"
+      },
+      {
+        "name": "overlay-enter",
+        "purpose": "Dialog and search entrance; tab content continuity.",
+        "value": "200-240ms power3.out"
+      },
+      {
+        "name": "overlay-exit",
+        "purpose": "Dismissal with preserved dialog focus.",
+        "value": "140ms power2.in"
+      },
+      {
+        "name": "button-feedback",
+        "purpose": "96% press scale with 180ms return.",
+        "value": "100-180ms power3.out"
+      },
+      {
         "name": "reduced-motion",
-        "purpose": "Disable transitions when reduced motion is requested.",
-        "value": "none"
+        "purpose": "Immediate panel layout with brief opacity feedback; no spatial motion.",
+        "value": "60-80ms"
       }
     ],
     "breakpoints": [

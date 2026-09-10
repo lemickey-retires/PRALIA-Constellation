@@ -45,9 +45,26 @@ implemented design system is recorded in DESIGN.md after visual review.
 Checked on 10 September 2026 at desktop and phone sizes: source filtering,
 keyboard focus, panel restoration, sample search and details, saved-view reload,
 preset reload, duplicate-name feedback and settings export. No JavaScript errors
-were observed. The preview requested only its stylesheet, two small JavaScript
+were observed. The preview requested its stylesheet, the UI JavaScript
 modules and the static PNG; no canvas, graph data or renderer was loaded.
 Visual finish review: ship. The automated style detector used its reduced regex
 mode because optional parsers were unavailable; browser review supplied the
 layout evidence. The system-font warning is covered by the supplied product UI
 reference and Operate-mode allowance.
+
+## Motion preview
+
+UI interactions use locally bundled GSAP 3.15.0 and Flip. Try Focus view, the side
+panel controls, View/Details tabs and Ctrl/Cmd+K. Buttons acknowledge hover and
+press; dialogs and record search animate in and out. Native select menus retain
+the browser's standard behaviour. The existing Motion setting is for the future
+scene; UI animation follows the system reduced-motion preference.
+
+Desktop, phone and reduced-motion checks passed, including interrupted panel
+transitions, tab switching, search-to-save-dialog handoff and Escape dismissal.
+No active tweens remain after settling. Vendor provenance is in vendor/README.md.
+
+The bounded style scan also reports pre-existing palette/type documentation
+advisories; the motion pass preserves the established visual values. A local
+650 ms panel-transition sample measured 16.6 ms median frame spacing and 17.2 ms
+at the 95th percentile; this is a local check, not a cross-device benchmark.

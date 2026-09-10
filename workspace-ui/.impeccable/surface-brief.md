@@ -14,3 +14,10 @@ static universe centre; right View/Details panel; a quiet truthful status bar.
 FORM: User-pinned desktop workbench. Signature interaction is collapsing both
 panels into Focus view and restoring their previous visibility. Only short
 state transitions; no animated scene, particle system or per-frame loop.
+
+Motion pass: User requested GSAP feedback across the existing workspace.
+Focal moment: closing or restoring both panels preserves layout continuity.
+Continuity: tab marker, panel content, search and native dialog transitions.
+Feedback: brief icon hover, button press and saved-state acknowledgment.
+Budget: 100–320 ms interaction-driven effects; bounded list stagger; no loops;
+reduced-motion uses opacity and immediate layout; static universe unchanged.

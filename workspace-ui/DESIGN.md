@@ -144,7 +144,7 @@ Preview and sample labels are compact outlined tags that clarify content status.
 
 Panels use charcoal and a single dividing edge. Search results use rounded rows in a bordered overlay. Dialogs use the shared surface, strong border and restrained padding. No decorative card grid is present.
 
-Switches change from grey to lavender and translate their white checked thumb. Disclosures rotate a chevron. Reduced-motion preferences disable all transitions. Focus view collapses the surrounding panels. The static preview image has no engine or nodes; saved settings do not imply a running scene.
+Switches change from grey to lavender and translate their white checked thumb. Disclosures rotate a chevron. Reduced-motion preferences replace spatial GSAP movement with brief opacity feedback. Focus view collapses the surrounding panels. The static preview image has no engine or nodes; saved settings do not imply a running scene.
 
 ## Do's and Don'ts
 
@@ -161,3 +161,16 @@ Switches change from grey to lavender and translate their white checked thumb. D
 - **Don't** import the reference's marketing display scale into this workspace.
 - **Don't** add decorative shadows or atmospheric gradients to controls.
 - **Don't** represent saved preview settings as proof of a working graph engine.
+
+## UI motion
+
+GSAP 3.15.0 and Flip are bundled locally. Panel layout changes use a 320 ms
+power3.inOut transition. Tab selection and overlay entrances settle in 200–240 ms;
+exits take 140 ms. Buttons compress to 96% on press and return in 180 ms. Hover
+feedback gently enlarges the icon, keeping button labels and layout stable.
+Search results use a bounded 12 ms stagger across at most eight rows.
+
+Motion runs only in response to interaction. Reduced-motion uses 60–80 ms opacity
+feedback and immediate panel layout changes. Hidden documents settle animations;
+no repeating tweens, animated scene or permanent animation loop is introduced.
+Native dialog focus and Escape behaviour remain intact through animated exits.
