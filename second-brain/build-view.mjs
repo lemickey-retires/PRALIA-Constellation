@@ -1,0 +1,14 @@
+import {build} from '../astral-background/node_modules/esbuild/lib/main.js';
+import {resolve} from 'node:path';
+import {writeFile,readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+const dependency=resolve('../astral-background/node_modules');
+const upstream=resolve('../astral-background/upstream-shadergradient/packages/shadergradient/src');
+const result=await build({entryPoints:['memory-3d.mjs'],bundle:true,minify:true,format:'iife',target:['chrome110'],outfile:'site/vendor/graph-3d.js',legalComments:'external',metafile:true,nodePaths:[dependency],define:{'process.env.NODE_ENV':'"production"'},jsx:'automatic',tsconfigRaw:{compilerOptions:{jsx:'react-jsx'}},alias:{'@shadergradient/react':resolve(upstream,'index.ts'),'@':upstream},loader:{'.glsl':'text','.vert':'text','.frag':'text','.vs':'text','.fs':'text'}});
+const bytes=await readFile('site/vendor/graph-3d.js');
+const worker=await build({entryPoints:['memory-physics-worker.mjs'],bundle:true,minify:true,format:'iife',target:['chrome110'],outfile:'site/vendor/graph-physics-worker.js',legalComments:'external',metafile:true,nodePaths:[dependency]});
+const workerBytes=await readFile('site/vendor/graph-physics-worker.js');
+const imports=[...Object.values(result.metafile.outputs),...Object.values(worker.metafile.outputs)].flatMap(o=>o.imports);
+if(imports.length)throw new Error('Unexpected external runtime import');
+await writeFile('view-build-receipt.json',JSON.stringify({bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),workerBytes:workerBytes.length,workerSha256:createHash('sha256').update(workerBytes).digest('hex'),gsap:'3.15.0',outputImports:imports},null,2));
+console.log('Built memory constellation '+bytes.length+' bytes; all imports local.');

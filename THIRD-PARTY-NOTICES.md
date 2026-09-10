@@ -1,5 +1,11 @@
 # Third-party notices
 
+The `second-brain/` viewer additionally uses GSAP 3.15.0 for the entrance
+animation. Its licence information is retained under `second-brain/licenses/`; its package
+metadata identifies [GSAP](https://gsap.com) as the upstream project. The new
+native horizon geometry, Blender material studies and volume fields are included
+under `second-brain/horizon-assets/` and `second-brain/site/assets/`.
+
 This is a modified Graphify viewer with PRALIA constellation rendering, physics,
 saved layouts, a 3D environment and portable launchers added on 8 September 2026.
 

@@ -1,5 +1,16 @@
 # PRALIA Constellation
 
+## Latest branch: 2nd Brain Event horizon
+
+This branch adds the [2nd Brain viewer](second-brain/README.md): a native Blender
+black hole, detailed gas ring, camera-aligned halo, physical nodes and optional
+connecting lines. Its public dataset is entirely invented demonstration content.
+
+Run `python second-brain/run-preview.py` (Windows: `py -3 second-brain/run-preview.py`).
+The existing launchers and release below continue to open the original version.
+
+## Original constellation
+
 An interactive, glowing 3D snapshot of the PRALIA code graph, with the original
 2D viewer included. Everything needed to display the graph is bundled locally.
 
