@@ -13,6 +13,7 @@ import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
 import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import {RenderActivity} from './render-activity.mjs';
 
 const $ = id => document.getElementById(id);
 const palettes={sources:{...originalPalettes.celestial,name:'Source colours',line:'#92aabe',hub:'#f0cb8a'},...originalPalettes};
@@ -50,6 +51,7 @@ let physics, renderer, controls, nodes, camera, selected=-1, mesh, haloMaterial,
 let changingLayout=false;
 let universeUI;
 let raf, dirty=true, frames=0, sampleStart=performance.now();
+let renderActivity,wakeRendering;
 
 function syncSettings() {
   linkSelect.value=settings.links;
@@ -73,7 +75,7 @@ function syncSettings() {
   $('background-status').textContent=settings.background==='off'?'Environment off.':
     environmentNames[settings.background]+' · 3D surround · '+(settings.paused||settings.shaderSpeed===0?'still':String(settings.shaderSpeed)+'× speed');
   if(controls) controls.autoRotate=settings.autoOrbit&&!settings.paused&&!reduced.matches;
-  physics?.configure({running:!settings.paused,visible:!document.hidden,pull:settings.pull,
+  physics?.configure({running:!settings.paused,visible:!document.hidden&&!renderActivity?.idle,pull:settings.pull,
     drift:!reduced.matches,animation:settings.animation,speed:settings.speed,orbit:settings.orbit,rebound:settings.rebound});
   write(SETTINGS,settings);dirty=true;
   universeUI?.syncSettings(settings);
@@ -203,6 +205,7 @@ async function start() {
   controls.addEventListener('change',()=>{dirty=true;});
   controls.addEventListener('end',save);
   function resize() {
+    wakeRendering?.();
     const host=$('graph-3d'),w=host.clientWidth,h=host.clientHeight;
     renderer.setSize(w,h);composer.setSize(w,h);camera.aspect=w/h;
     if(w>760)camera.setViewOffset(w,h,-130,-60,w,h);else camera.setViewOffset(w,h,0,-40,w,h);
@@ -449,11 +452,43 @@ async function start() {
   replay(false);$('replay-entrance').disabled=false;
   updateObjects();
   const renderTimer=new THREE.Timer();renderTimer.connect(document);
+  renderActivity=new RenderActivity(performance.now());
+  const heldPointers=new Set();let renderedFrames=0,renderTicks=0;
+  function requestRender() {if(!raf&&!document.hidden)raf=requestAnimationFrame(tick);}
+  wakeRendering=()=>{
+    const now=performance.now(),waking=renderActivity.touch(now);
+    if(waking||!raf){
+      renderTimer.reset();renderActivity.nextFrame=now;
+      sampleStart=now;frames=0;dirty=true;
+      physics.configure({visible:!document.hidden});
+    }
+    $('graph-stage').dataset.renderState=document.hidden?'hidden':'active';
+    if(waking)$('motion-status').textContent=settings.paused?'Motion paused':'Motion on';
+    requestRender();
+  };
+  const activityOptions={capture:true,passive:true};
+  for(const name of ['pointermove','pointerenter','wheel','keydown','input','change'])
+    document.addEventListener(name,wakeRendering,activityOptions);
+  document.addEventListener('pointerdown',event=>{heldPointers.add(event.pointerId);wakeRendering();},activityOptions);
+  for(const name of ['pointerup','pointercancel'])window.addEventListener(name,event=>{heldPointers.delete(event.pointerId);wakeRendering();},activityOptions);
+  window.addEventListener('blur',()=>heldPointers.clear());
+  window.addEventListener('focus',wakeRendering);
+  Object.assign($('graph-stage').dataset,{renderState:'active',idleAfterSeconds:'30',frameLimit:'60',renderedFrames:'0',renderTicks:'0'});
   function tick(now) {
-    raf=requestAnimationFrame(tick);if(document.hidden)return;
+    raf=0;if(document.hidden)return;
+    renderTicks++;
+    if(renderActivity.checkIdle(now,dragging||changingLayout||heldPointers.size>0)){
+      // Leave the browser's composited canvas untouched. No screenshot copy,
+      // repeated scene draw or post-processing is needed to hold this image.
+      physics.configure({visible:false});
+      Object.assign($('graph-stage').dataset,{renderState:'idle',fps:'0',renderedFrames:String(renderedFrames),renderTicks:String(renderTicks),environmentTime:environment.time.toFixed(3)});
+      $('motion-status').textContent='Idle · image held to save GPU';
+      return;
+    }
+    requestRender();if(!renderActivity.frameDue(now))return;
     renderTimer.update(now);
     const backgroundMoving=environment.update(renderTimer.getDelta(),settings,!settings.paused&&!reduced.matches);
-    controls.update();
+    controls.update(renderTimer.getDelta());
     const entrance=physics.entrance;
     const paused=entrance.active&&settings.paused;
     const entranceText=entrance.active
@@ -462,19 +497,24 @@ async function start() {
     if($('entrance-status').textContent!==entranceText)$('entrance-status').textContent=entranceText;
     if($('skip-entrance').hidden===entrance.active)$('skip-entrance').hidden=!entrance.active;
     Object.assign($('graph-stage').dataset,{entrance:entrance.phase,revealed:String(entrance.revealed),entranceTime:String(entrance.elapsed??0)});
-    if(dirty||controls.autoRotate||backgroundMoving){updateObjects();if(settings.background==='horizon'||settings.background==='planetary')composer.render();else renderer.render(scene,camera);frames++;dirty=false;}
+    if(dirty||controls.autoRotate||backgroundMoving){updateObjects();environment.prepareRender(renderer,camera);if(settings.background==='horizon'||settings.background==='planetary')composer.render();else renderer.render(scene,camera);frames++;renderedFrames++;dirty=false;}
     if(now-sampleStart>=1500){
       const fps=Math.round(frames*1000/(now-sampleStart)),clearance=physics.clearance();
+      $('graph-stage').dataset.activeFps=String(fps);
       $('motion-status').textContent=settings.paused&&!dragging?'Motion paused':`Motion on · ${fps} fps`;
       const status=$('collision-status');status.textContent='Solid sphere collisions on';
       Object.assign(status.dataset,{overlaps:String(clearance.overlaps),maxPenetration:String(clearance.maxPenetration),physicsMs:clearance.physicsMs.toFixed(2)});
-      Object.assign($('graph-stage').dataset,{fps:String(fps),drawCalls:String(renderer.info.render.calls),physicalSprings:String(physics.jointCount),camera:camera.position.toArray().join(','),steps:String(physics.steps),environmentTime:environment.time.toFixed(3)});
+      Object.assign($('graph-stage').dataset,{fps:String(fps),drawCalls:String(renderer.info.render.calls),physicalSprings:String(physics.jointCount),camera:camera.position.toArray().join(','),steps:String(physics.steps),environmentTime:environment.time.toFixed(3),renderedFrames:String(renderedFrames),renderTicks:String(renderTicks),auraFieldCache:String(environment.fieldCacheActive)});
       if(selected>=0){const n=nodes[selected];Object.assign($('node-info').dataset,{x:n.x.toFixed(3),y:n.y.toFixed(3),z:n.z.toFixed(3),pinned:String(n.pinned)});}
       frames=0;sampleStart=now;
     }
   }
-  raf=requestAnimationFrame(tick);
-  document.addEventListener('visibilitychange',()=>{save();physics.configure({visible:!document.hidden});dirty=true;});
+  requestRender();
+  document.addEventListener('visibilitychange',()=>{
+    save();
+    if(document.hidden){cancelAnimationFrame(raf);raf=0;heldPointers.clear();physics.configure({visible:false});$('graph-stage').dataset.renderState='hidden';}
+    else wakeRendering();
+  });
   window.addEventListener('pagehide',()=>{save();physics.dispose();});
   window.addEventListener('pageshow',e=>{if(e.persisted)location.reload();});
 }

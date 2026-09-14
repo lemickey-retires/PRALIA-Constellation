@@ -1,6 +1,8 @@
 import * as THREE from 'three';
-import {createNativeVolume} from './native-horizon-volume.mjs';
+import {createNativeVolume,setNativeVolumeExtent} from './native-horizon-volume.mjs';
 import {createOpticalMaterial,lensedHaloVertex} from './native-horizon-optics.mjs';
+import {createEnclosingCorona} from './enclosing-corona.mjs';
+import {createHorizonFlares} from './horizon-flares.mjs';
 import {GraphEnvironment as OriginalEnvironment,environmentNames as originalNames} from './rendering/graph-environment.mjs';
 
 export const environmentNames={horizon:'Event horizon',planetary:'Planetary surface',...originalNames};
@@ -110,12 +112,35 @@ export class GraphEnvironment extends OriginalEnvironment {
      }
    });
    this.spaceLayer=new THREE.Group();
+   this.legacyCorona=[this.horizon.getObjectByName('LensedCorona'),nativeAssets.optics.scene];
+   this.continuousCorona=createEnclosingCorona(nativeAssets.corona,{sharedField:true,singlePass:true});
+   this.continuousCorona.traverse(o=>{
+     if(!o.isMesh)return;
+     o.frustumCulled=false;o.renderOrder=-25;
+     this.materials.push(o.material);
+   });
+   this.horizon.add(this.continuousCorona);
+   this.horizonFlares=createHorizonFlares(nativeAssets.corona.spec);
+   this.horizonFlares.traverse(o=>{if(o.isMesh)this.materials.push(o.material);});
+   this.horizon.add(this.horizonFlares);
    this.spaceLayer.name='Native Blender ring haze and sparse space depth';
    this.horizon.add(this.spaceLayer);
+   this.nativeVolumes=[];
+   this.diskExtent=nativeAssets.corona.spec.diskRadialStretch;
    for(const field of nativeAssets.volumes){
      const volume=createNativeVolume(field);
+     this.nativeVolumes.push({mesh:volume,id:field.spec.id,emission:volume.material.uniforms.uEmission.value});
      (field.spec.id==='haze'?this.spaceLayer:this.horizon).add(volume);this.materials.push(volume.material);
    }
+   // Reuse the preserved native gas texture for a newly shaded, darker outer
+   // envelope. The old disk and crossing stream remain hidden in this preset.
+   this.outerAura=createNativeVolume(nativeAssets.volumes.find(field=>field.spec.id==='disk'));
+   this.outerAura.name='Dark transparent outer aura — full front and back annulus';
+   const outer=this.outerAura.material.uniforms;
+   outer.uOuterAura.value=1;outer.uDensityScale.value*=.60;
+   outer.uEmission.value*=.65;outer.uHeatBias.value=.03;
+   setNativeVolumeExtent(this.outerAura,nativeAssets.corona.spec.outerAura.radialStretch);
+   this.horizon.add(this.outerAura);this.materials.push(this.outerAura.material);
    const particles=nativeAssets.particles;
    const particleGeometry=new THREE.BufferGeometry();
    particleGeometry.setAttribute('position',new THREE.Float32BufferAttribute(particles.positions,3));
@@ -157,10 +182,34 @@ export class GraphEnvironment extends OriginalEnvironment {
    const active=settings.background==='horizon'||settings.background==='planetary';
    this.horizon.visible=active;this.horizonStars.visible=active&&settings.surroundStars;
    this.planetaryGround.visible=settings.background==='planetary';
+   const continuous=settings.background==='horizon';
+   this.continuousCorona.visible=continuous;
+   this.horizonFlares.visible=continuous;
+   // Retained only as a colour/shape reference for a later outer-layer phase.
+   this.outerAura.visible=false;
+   this.legacyCorona.forEach(o=>o.visible=!continuous);
+   // Tilt the whole physical system together; preserve the planetary composition.
+   this.horizon.rotation.set(continuous?.20:0,0,continuous?.25:0);
+   this.horizon.scale.setScalar(continuous?6500:7600);
+   this.horizon.position.y=continuous?250:-850;
+   for(const {mesh,id,emission} of this.nativeVolumes){
+     // The user removed the old horizontal ring from Event horizon. Keep its
+     // recoverable assets and the original Planetary presentation intact.
+     mesh.visible=!continuous;
+     const gas=id==='disk'||id==='stream';
+     setNativeVolumeExtent(mesh,continuous&&gas?this.diskExtent:1);
+     mesh.material.uniforms.uHeatBias.value=continuous&&gas?.15:0;
+     mesh.material.uniforms.uUnifiedGlow.value=continuous&&gas?1:0;
+     mesh.material.uniforms.uEmission.value=emission*(continuous&&gas?1.25:1);
+   }
    this.spaceLayer.visible=settings.background==='horizon';
    this.spaceParticles.visible=settings.surroundStars;
    if(active){this.shell.visible=false;this.stars.visible=false;this.light.intensity=Math.PI;return;}
    super.configure(settings);
+ }
+ prepareRender(renderer,camera){
+   this.fieldCacheActive=this.horizon.visible&&this.continuousCorona.visible
+     ?this.continuousCorona.userData.fieldCache.prepare(renderer,camera):false;
  }
  update(delta,settings,playing){
    if(settings.background!=='horizon'&&settings.background!=='planetary')return super.update(delta,settings,playing);
