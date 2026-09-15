@@ -67,7 +67,8 @@ if revision_path.exists():
         assert digest((root / name).read_bytes()) == expected, f'Revision hash differs: {name}'
         revision_count += 1
 graph = json.loads((root / 'site/graph-3d-data.json').read_text('utf8'))
-assert len(graph['nodes']) == 1057 and len(graph['edges']) == 4021
+assert len(graph['nodes']) == 1097 and len(graph['edges']) == 4101
+assert graph['inventory']['counts']['agent'] == 24 and graph['inventory']['counts']['archive'] == 24
 protected_count = 0
 publication_mismatches = []
 if args.baseline:

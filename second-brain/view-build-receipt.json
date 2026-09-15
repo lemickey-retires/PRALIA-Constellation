@@ -1,8 +1,8 @@
 {
-  "bytes": 786034,
-  "sha256": "0d7b0434e8e24c765942f8d13d366b047d0a26f55e67fc34a93ccf68c59dafd3",
-  "workerBytes": 2935675,
-  "workerSha256": "e7acaa6e6bfdb65a80fc21f356406f45f81a4132157fe577c5e8b798085ae4cf",
+  "bytes": 803010,
+  "sha256": "5fcb2e884cecb83c02854f8d005aab518f489ca6f57e29bd4092762012d9a944",
+  "workerBytes": 2952162,
+  "workerSha256": "228ab5a3228a9c837be41f527fa2d2e1d61eff21d08f6a9d5abc36a2eb188b3e",
   "gsap": "3.15.0",
   "outputImports": []
 }
