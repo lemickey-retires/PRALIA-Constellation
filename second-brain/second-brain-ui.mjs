@@ -5,6 +5,8 @@ const make=(tag,props={},text)=>{const n=document.createElement(tag);Object.entr
 
 export function installSecondBrain(data,actions){
   document.body.classList.add('second-brain');
+  const embedded=new URLSearchParams(location.search).get('embed')==='open-method';
+  document.body.classList.toggle('open-method-embed',embedded);
   const active=new Set(sources.map(s=>s.id));
   const inspector=document.querySelector('aside');inspector.id='memory-inspector';inspector.hidden=true;
   inspector.querySelector('h1').textContent='Inspector';
@@ -16,8 +18,25 @@ export function installSecondBrain(data,actions){
   const header=make('header',{id:'universe-header'}),title=make('h1',{},'2nd Brain');
   header.append(title,$('view-controls'));
   const inspect=make('button',{type:'button',id:'inspector-toggle','aria-expanded':'false','aria-controls':'memory-inspector'},'Inspector');
+  if(embedded)inspect.textContent='Details';
   inspect.onclick=()=>{inspector.hidden=!inspector.hidden;inspect.setAttribute('aria-expanded',String(!inspector.hidden));};
   header.append(inspect);document.body.prepend(header);
+
+  const toolsToggle=make('button',{type:'button',id:'open-method-tools-toggle','aria-label':'Show constellation controls','aria-expanded':'false','aria-controls':'universe-header source-panel'},'•••');
+  const setToolsOpen=open=>{
+    document.body.classList.toggle('open-method-tools-open',open);
+    toolsToggle.setAttribute('aria-expanded',String(open));
+    toolsToggle.setAttribute('aria-label',(open?'Hide':'Show')+' constellation controls');
+    if(!open){inspector.hidden=true;inspect.setAttribute('aria-expanded','false');}
+    actions.refresh();
+  };
+  toolsToggle.onclick=()=>setToolsOpen(!document.body.classList.contains('open-method-tools-open'));
+  document.body.append(toolsToggle);
+  document.addEventListener('keydown',event=>{
+    if(embedded&&event.key==='Escape'&&document.body.classList.contains('open-method-tools-open')){
+      setToolsOpen(false);toolsToggle.focus();event.preventDefault();
+    }
+  });
 
   const panel=make('div',{id:'source-panel','aria-label':'Sources and scene controls'});
   panel.append(make('h2',{},'Demonstration universe'),make('p',{class:'source-intro'},'Invented records and connections for exploring the viewer.'));
@@ -42,10 +61,14 @@ export function installSecondBrain(data,actions){
   panel.append(view,linkFootnote);
   document.body.append(panel);
 
-  const captions=make('div',{id:'source-captions','aria-hidden':'true'});$('graph-stage').append(captions);
-  const captionNodes=new Map(sources.map(s=>{const el=make('span',{class:'source-caption'},s.name);el.style.setProperty('--source-colour',s.colour);captions.append(el);return [s.id,el];}));
+  const captions=make('div',{id:'source-captions'});$('graph-stage').append(captions);
+  const captionNodes=new Map(sources.map(s=>{
+    const el=make('button',{type:'button',class:'source-caption','aria-label':'Drag '+s.name+' group'},s.name);
+    el.style.setProperty('--source-colour',s.colour);
+    el.addEventListener('pointerdown',event=>actions.startGroupDrag?.(s.id,event,el));
+    captions.append(el);return [s.id,el];
+  }));
   const recordLabels=new Map(recordHubs(data.nodes).map(id=>{const n=data.nodes.find(n=>n.id===id),el=make('span',{class:'record-caption',title:n.label},n.label);captions.append(el);return [id,el];}));
-  const shortNames={notes:'Notes',memory:'Memory',conversations:'Conversations',sessions:'Sessions',graph:'Knowledge graph',mirrors:'Mirrors',agents:'Agents',archive:'Archive'};
   const empty=make('div',{id:'source-empty',hidden:'',role:'status'});empty.append(make('h2',{},'No records shown'),make('p',{},'Choose a source or reset the filters.'));
   const reset=make('button',{type:'button'},'Show all sources');empty.append(reset);$('graph-stage').append(empty);
   reset.onclick=()=>{sources.forEach(s=>active.add(s.id));group.querySelectorAll('input').forEach(n=>n.checked=true);$('record-scope').value='all';$('record-scope').dispatchEvent(new Event('change'));actions.refresh();};
@@ -53,15 +76,15 @@ export function installSecondBrain(data,actions){
   let indexedNodes,sourceGroups,recordIndices;
   return {
     visible:n=>active.has(sourceId(n)),
-    selected(n){if(n){if(!active.has(sourceId(n))){active.add(sourceId(n));group.querySelector('input[value="'+sourceId(n)+'"]').checked=true;actions.refresh();}inspector.hidden=false;inspect.setAttribute('aria-expanded','true');}},
+    selected(n){if(n){if(!active.has(sourceId(n))){active.add(sourceId(n));group.querySelector('input[value="'+sourceId(n)+'"]').checked=true;actions.refresh();}if(!embedded||document.body.classList.contains('open-method-tools-open')){inspector.hidden=false;inspect.setAttribute('aria-expanded','true');}}},
     syncSettings(settings){
       $('background-preset-quick').value=settings.background;$('layout-preset-quick').value=settings.layout;
       const text={off:'Links hidden. Select a node to inspect its source and connections.',selected:'Only the selected node’s connections are shown.',overview:'Overview links shown. Select a node to highlight its connections.',all:'All links shown. Select a node to highlight its connections.'}[settings.links];
       if(linkFootnote.textContent!==text)linkFootnote.textContent=text;
     },
     updateCounts(visible){const shown=data.nodes.filter(visible),ids=new Set(shown.map(n=>n.id));const links=data.edges.filter(e=>ids.has(e.from)&&ids.has(e.to)).length;totals.textContent=shown.length.toLocaleString('en-AU')+(shown.length===data.nodes.length?' records':' of '+data.nodes.length.toLocaleString('en-AU')+' records')+' · '+links.toLocaleString('en-AU')+' links';empty.hidden=shown.length>0;},
-    updateLabels(camera,nodes,visibility,layout,revealed){
-      const show=layout==='atlas'&&revealed>.96;
+    updateLabels(camera,nodes,visibility,layout,revealed,scales,groupParents){
+      const show=layout==='atlas'&&revealed>.02;
       captions.hidden=!show;if(!show)return;
       if(indexedNodes!==nodes){
         indexedNodes=nodes;sourceGroups=new Map(sources.map(s=>[s.id,[]]));
@@ -73,7 +96,8 @@ export function installSecondBrain(data,actions){
       const occupied=[];
       const place=(label,x,y,record=false)=>{
         const w=Math.min(220,label.textContent.length*(mobile?5.7:6.4)+16),h=record?22:25;
-        const left=mobile?12:284,minY=mobile?132:96,maxY=height-32;
+        const embeddedFocus=embedded&&!document.body.classList.contains('open-method-tools-open');
+        const left=mobile||embeddedFocus?12:284,minY=mobile?132:96,maxY=height-32;
         if(record){
           // Record names stay beside their actual nodes. If every adjacent
           // position collides, inspection remains available through the node.
@@ -97,18 +121,21 @@ export function installSecondBrain(data,actions){
       };
       for(const source of sources){
         const label=captionNodes.get(source.id);
-        const caption=mobile?shortNames[source.id]:source.name;if(label.textContent!==caption)label.textContent=caption;
+        const caption=source.name;if(label.textContent!==caption)label.textContent=caption;
         let count=0,xSum=0,ySum=0,zSum=0;
-        for(const i of sourceGroups.get(source.id)){if(!visibility[i])continue;const n=nodes[i];xSum+=n.x;ySum+=n.y;zSum+=n.z;count++;}
+        for(const i of sourceGroups.get(source.id)){if(!visibility[i]||(scales&&scales[i]<=.15))continue;const n=nodes[i];xSum+=n.x;ySum+=n.y;zSum+=n.z;count++;}
         if(!count){label.hidden=true;continue;}
-        vector.set(xSum/count,ySum/count+36+Math.cbrt(count)*14,zSum/count).project(camera);
+        if(label.classList.contains('group-dragging')){label.hidden=false;continue;}
+        const parent=groupParents?.get(source.id);
+        vector.set(parent?.x??xSum/count,parent?.y??ySum/count+36+Math.cbrt(count)*14,parent?.z??zSum/count).project(camera);
         const x=(vector.x*.5+.5)*width,y=(-vector.y*.5+.5)*height;
         label.hidden=vector.z<0||vector.z>1||x<-120||x>width+120||y<-120||y>height+120;
         if(!label.hidden)place(label,x,y);
       }
       for(const [id,label] of recordLabels){
+        if(embedded&&!document.body.classList.contains('open-method-tools-open')){label.hidden=true;continue;}
         const i=recordIndices.get(id),n=nodes[i];
-        if(!n||!visibility[i]||(mobile&&!['agent','note'].includes(n.kind))){label.hidden=true;continue;}
+        if(!n||!visibility[i]||(scales&&scales[i]<=.15)||(mobile&&!['agent','note'].includes(n.kind))){label.hidden=true;continue;}
         vector.set(n.x,n.y,n.z).project(camera);
         const x=(vector.x*.5+.5)*width,y=(-vector.y*.5+.5)*height;
         label.hidden=vector.z<0||vector.z>1||x<0||x>width||y<70||y>height-25;

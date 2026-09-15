@@ -9,12 +9,14 @@ export class WorkerPhysics {
     this.ready=new Promise((resolve,reject)=>{
       this.worker.onerror=e=>{reject(new Error(e.message));this.onError(new Error(e.message));};
       this.worker.onmessage=({data:msg})=>{
-        if(msg.type==='error'){const e=new Error(msg.message);reject(e);this.onError(e);return;}
+        if(msg.type==='error'){const e=new Error(msg.message);if(msg.stack)e.stack=msg.stack;reject(e);this.onError(e);return;}
         if(msg.type!=='state')return;
         this.nodes.forEach((n,i)=>{n.x=msg.positions[i*3];n.y=msg.positions[i*3+1];n.z=msg.positions[i*3+2];n.pinned=!!msg.pins[i];});
         this.metrics=msg.metrics;this.steps=msg.steps;this.jointCount=msg.springs;
+        this.groupParents=new Map((msg.groupParents||[]).map(([id,x,y,z])=>[id,{x,y,z}]));
         if(msg.initial)resolve();
         if(msg.action==='dragEnded'){this.releasePending=false;this.onRelease?.();}
+        if(msg.action==='groupEnded')this.onGroupRelease?.();
         this.onUpdate();
       };
     });
@@ -30,6 +32,13 @@ export class WorkerPhysics {
   }
   flushDrag(){if(this.pendingTarget){this.worker.postMessage({type:'moveDrag',target:this.pendingTarget});this.pendingTarget=null;}}
   endDrag(pin){this.flushDrag();this.dragIndex=undefined;this.releasePending=true;this.worker.postMessage({type:'endDrag',pin});}
+  startGroupDrag(indices,centre,groupId,collisionProxies=[]){this.groupDragActive=true;this.worker.postMessage({type:'startGroupDrag',indices,centre,groupId,collisionProxies});}
+  moveGroupDrag(target){
+    this.pendingGroupTarget={x:target.x,y:target.y,z:target.z};
+    if(!this.groupMoveFrame)this.groupMoveFrame=requestAnimationFrame(()=>{this.groupMoveFrame=0;this.flushGroupDrag();});
+  }
+  flushGroupDrag(){if(this.pendingGroupTarget){this.worker.postMessage({type:'moveGroupDrag',target:this.pendingGroupTarget});this.pendingGroupTarget=null;}}
+  endGroupDrag(){this.flushGroupDrag();this.groupDragActive=false;this.worker.postMessage({type:'endGroupDrag'});}
   clearance(){return this.metrics;}
-  dispose(){cancelAnimationFrame(this.moveFrame);this.worker.terminate();}
+  dispose(){cancelAnimationFrame(this.moveFrame);cancelAnimationFrame(this.groupMoveFrame);this.worker.terminate();}
 }

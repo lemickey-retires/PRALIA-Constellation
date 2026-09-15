@@ -50,10 +50,11 @@ export class EntrancePhysics extends GraphPhysics {
     if(!this.targets)return;
     this.timeline?.kill();this.timeline=null;
     this.bodies.forEach((body,i)=>{
+      const interacting=this.drag?.index===i||this.groupDrag?.memberSet.has(i);
       body.setEnabled(this.enabled[i]);
-      body.setTranslation(this.targets[i],true);body.resetForces(false);
+      if(!interacting)body.setTranslation(this.targets[i],true);body.resetForces(false);
       body.collider(0).setRadius(this.nodes[i].radius+COLLISION_MARGIN);
-      super.pin(i,this.originalPins[i]);
+      if(!interacting)this.restoreMobility(i);
       this.scales[i]=this.enabled[i]?1:0;this.links[i]=this.scales[i];
     });
     this.readPositions();this.resetFollowers();
@@ -64,9 +65,17 @@ export class EntrancePhysics extends GraphPhysics {
       if(centre)Object.assign(centre,this.bodies[this.anchors[i]].translation());
     });
   }
-  // Interactions take over the existing engine without competing forces.
+  restoreMobility(i) {
+    const body=this.bodies[i];
+    if(this.originalPins[i]){super.pin(i,true);return;}
+    const moving=this.baseMobile[i]||this.interactionLife[i]>0;
+    this.nodes[i].pinned=false;this.setMobileState(i,moving);
+    body.enableCcd(false);body.setLinvel({x:0,y:0,z:0},true);
+  }
+  // Explicit pin changes still finish the cinematic, but pointer and drag
+  // interaction remain live while stars are appearing.
   pin(i,value) { if(this.entrance?.active)this.finishEntrance();super.pin(i,value); }
-  startDrag(i) { if(this.entrance.active)this.finishEntrance();super.startDrag(i); }
+  startDrag(i) { super.startDrag(i); }
   step(settings={}) {
     if(!this.entrance.active){super.step(settings);return;}
     this.entrance.elapsed+=1/60;
@@ -86,23 +95,29 @@ export class EntrancePhysics extends GraphPhysics {
       }
       const radius=n.radius*state.scale+COLLISION_MARGIN;
       if(radius!==this.colliderRadii[i]){body.collider(0).setRadius(radius);this.colliderRadii[i]=radius;}
-      const pos=body.translation(),v=body.linvel(),target=this.targets[i];
+      const pos=body.translation(),v=body.linvel(),target=this.drag?.index===i?this.drag.target:this.targets[i];
       maxDistance=Math.max(maxDistance,Math.hypot(pos.x-target.x,pos.y-target.y,pos.z-target.z));
-      const force={x:(target.x-pos.x)*52-v.x*11,y:(target.y-pos.y)*52-v.y*11,z:(target.z-pos.z)*52-v.z*11};
+      const dragging=this.drag?.index===i;
+      const gain=dragging?625:52,damping=dragging?47:11;
+      const force={x:(target.x-pos.x)*gain-v.x*damping,y:(target.y-pos.y)*gain-v.y*damping,z:(target.z-pos.z)*gain-v.z*damping};
       // Two arriving bodies can meet head-on. A small sideways force lets
       // them pass around one another instead of resting on opposite targets.
-      if(this.entrance.elapsed-this.delays[i]>1&&Math.hypot(pos.x-target.x,pos.y-target.y,pos.z-target.z)>n.radius*2&&Math.hypot(v.x,v.y,v.z)<5) {
+      if(!dragging&&this.entrance.elapsed-this.delays[i]>1&&Math.hypot(pos.x-target.x,pos.y-target.y,pos.z-target.z)>n.radius*2&&Math.hypot(v.x,v.y,v.z)<5) {
         const dx=target.x-pos.x,dy=target.y-pos.y,dz=target.z-pos.z;
         const tangent={x:-dy+dz*.37,y:dx-dz*.61,z:dy*.61-dx*.37};
         const gain=90/Math.max(.001,Math.hypot(tangent.x,tangent.y,tangent.z));
         force.x+=tangent.x*gain;force.y+=tangent.y*gain;force.z+=tangent.z*gain;
       }
-      const mass=body.mass()*Math.min(1,2200/Math.max(.001,Math.hypot(force.x,force.y,force.z)));
+      const mass=body.mass()*Math.min(1,(dragging?9000:2200)/Math.max(.001,Math.hypot(force.x,force.y,force.z)));
       body.resetForces(false);body.addForce({x:force.x*mass,y:force.y*mass,z:force.z*mass},true);
     });
+    this.applyGroupDrag();
+    this.applyRepulsion(settings.repulsion??8,settings.spacing??1);
+    this.applyLinkForces(settings.linkForce??.45,settings.linkDistance??75);
+    this.applyPointerForce(settings.cursor??1.2,settings.spacing??1,settings.pointerReach??1.5);
     this.entrance.revealed=revealed;
     this.entrance.phase=this.entrance.elapsed<this.duration?'revealing':'settling';
-    this.world.step();this.readPositions();
+    this.world.step();this.readPositions();this.finishPendingDrag();
     const arrived=this.entrance.elapsed>this.duration+.6&&maxDistance<COLLISION_MARGIN*2;
     // Saved targets can compete for the same space. After the full reveal and
     // eight seconds of settling, hand their physical positions back to normal
@@ -114,10 +129,8 @@ export class EntrancePhysics extends GraphPhysics {
       this.timeline.kill();this.timeline=null;
       this.bodies.forEach((body,i)=>{
         body.collider(0).setRadius(this.nodes[i].radius+COLLISION_MARGIN);
-        if(this.originalPins[i]) {
-          body.setTranslation(this.targets[i],true);
-          super.pin(i,true);
-        }
+        const interacting=this.drag?.index===i||this.groupDrag?.memberSet.has(i);
+        if(!interacting){if(this.originalPins[i])body.setTranslation(this.targets[i],true);this.restoreMobility(i);}
       });
       this.readPositions();this.resetFollowers();
       this.entrance.active=false;this.entrance.phase='ready';

@@ -167,6 +167,9 @@ export class GraphEnvironment extends OriginalEnvironment {
    this.spaceParticles.name='Blender-authored ring dust and depth stars';
    this.spaceParticles.renderOrder=-35;
    this.spaceLayer.add(this.spaceParticles);this.materials.push(particleMaterial);
+   // The enclosing surfaces intentionally share one material. Updating that
+   // same uniform once is enough, regardless of the radial sample count.
+   this.materials=[...new Set(this.materials)];
    scene.add(this.horizon);
    const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(horizonStars.positions,3));
    const starMaterial=new THREE.ShaderMaterial({

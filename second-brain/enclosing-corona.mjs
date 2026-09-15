@@ -5,7 +5,11 @@ import {createCoronaFieldCache,sharedFieldGLSL} from './corona-field-cache.mjs';
 
 // Revolve the accepted meridian through every azimuth. Each density surface
 // is closed: its front and back carry exactly the same bulge as its sides.
-export const enclosingGeometry={layers:192,segments:128,bands:128};
+// Keep the accepted 128 x 128 silhouette, but integrate the same continuous
+// radial light field with fewer, wider samples. aLightWeight already contains
+// each sample's radial width, so the accumulated colour and opacity stay
+// stable while transparent fragment overdraw falls by 8x versus 192 shells.
+export const enclosingGeometry={layers:6,segments:128,bands:128};
 const smooth=v=>{const t=Math.max(0,Math.min(1,v/.30));return t*t*(3-2*t);};
 export function enclosingPoint(spec,latitude,azimuth,r){
  const c=Math.max(0,Math.cos(latitude)),s=Math.sin(latitude),side=c**6;
@@ -16,11 +20,11 @@ export function enclosingPoint(spec,latitude,azimuth,r){
 }
 function flowMaterial(asset){
  const mat=createContinuousCoronaMaterial(asset);
- Object.assign(mat.uniforms,{uUseSharedField:{value:false},uSharedField:{value:null},uSharedSize:{value:new THREE.Vector2(1,1)}});
+ Object.assign(mat.uniforms,{uUseSharedField:{value:false},uSharedField:{value:null},uSharedSize:{value:new THREE.Vector2(1,1)},uLocalEye:{value:new THREE.Vector3()}});
  Object.assign(mat.uniforms,{uLayerR:{value:0},uLayerProfile:{value:new THREE.Vector4()}});
  Object.assign(mat.uniforms,colourUniforms(asset.spec),{uInnerRadius:{value:asset.spec.halo.innerRadius},uRadialSpan:{value:asset.spec.halo.radialSpan},uSideSpan:{value:asset.spec.halo.sideSpan},uVerticalSpread:{value:asset.spec.halo.verticalSpread}});
- mat.vertexShader=`attribute float aLightWeight;varying vec2 vUv;varying vec3 vWorld;varying vec3 vNormal;varying float vWeight;varying vec3 vLocal;varying vec3 vEye;
- void main(){vUv=uv;vWeight=aLightWeight;vLocal=position;vEye=(inverse(modelMatrix)*vec4(cameraPosition,1.)).xyz;vec4 world=modelMatrix*vec4(position,1.);vWorld=world.xyz;vNormal=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*viewMatrix*world;}`;
+ mat.vertexShader=`uniform bool uUseSharedField;uniform vec3 uLocalEye;attribute float aLightWeight;varying vec2 vUv;varying vec3 vWorld;varying vec3 vNormal;varying float vWeight;varying vec3 vLocal;varying vec3 vEye;
+ void main(){vUv=uv;vWeight=aLightWeight;vLocal=position;vEye=uUseSharedField?uLocalEye:(inverse(modelMatrix)*vec4(cameraPosition,1.)).xyz;vec4 world=modelMatrix*vec4(position,1.);vWorld=world.xyz;vNormal=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*viewMatrix*world;}`;
  mat.fragmentShader=paletteGLSL+'uniform float uLayerR;uniform vec4 uLayerProfile;uniform bool uUseSharedField;uniform sampler2D uSharedField;uniform vec2 uSharedSize;uniform float uInnerRadius;uniform float uRadialSpan;uniform float uSideSpan;uniform float uVerticalSpread;\nvarying vec3 vWorld;varying vec3 vNormal;varying float vWeight;varying vec3 vLocal;varying vec3 vEye;\n'+mat.fragmentShader
   // Optical extinction preserves the dark apparent core even where the
   // enclosing emission surfaces pass in front of it. Geometry stays fixed.
@@ -29,7 +33,7 @@ function flowMaterial(asset){
   // adding depth averages unrelated texture samples into a featureless glow.
   .replace('vec2 field=texture2D(uField,vec2(fract(vUv.x+uTime*uSpeed),r)).rg;',`
    vec3 sharedField;
-   if(uUseSharedField){vec2 cached=texture2D(uSharedField,gl_FragCoord.xy/uSharedSize).rg;sharedField=vec3(cached.r,0.,cached.g);}
+   if(uUseSharedField){vec2 cached=texture2D(uSharedField,gl_FragCoord.xy/uSharedSize).rg;sharedField=vec3(texture2D(uField,vec2(fract(cached.x+uTime*uSpeed),cached.y)).rg,cached.y);}
    else sharedField=sampleSharedField(vEye,ray);
    float fieldR=sharedField.z;
    vec2 field=sharedField.xy;
@@ -52,7 +56,10 @@ function flowMaterial(asset){
 export function createEnclosingCorona(asset,{sharedField=false,singlePass=false}={}){
  const group=new THREE.Group();group.name='White aura — continuous curved 360 degree body';
  const {layers,segments,bands}=enclosingGeometry;
- const radii=Array.from({length:layers},(_,i)=>.004+.996*(i/(layers-1))**1.8);
+ // Non-uniform quadrature keeps samples on every authored emission peak
+ // (.07, .17, .32 and .50) instead of wasting equal slices in the faint tail.
+ // The neighbouring radial-width weights preserve the integrated energy.
+ const radii=[.004,.07,.17,.32,.50,1];
  const material=flowMaterial(asset);
  // Additive light does not need a separate back-face draw for transparency
  // sorting. Both sides still render, with the same geometry and shading.
@@ -84,7 +91,7 @@ export function createEnclosingCorona(asset,{sharedField=false,singlePass=false}
    vertexShader:'varying vec3 vWorld;varying vec3 vNormal;void main(){vec4 world=modelMatrix*vec4(position,1.);vWorld=world.xyz;vNormal=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*viewMatrix*world;}',
    fragmentShader:'uniform float uTime;uniform float uStrength;uniform vec3 uColour;varying vec3 vWorld;varying vec3 vNormal;void main(){float rim=pow(max(0.,1.-abs(dot(normalize(vNormal),normalize(cameraPosition-vWorld)))),8.);if(rim<.0001)discard;gl_FragColor=vec4(uColour*uStrength,rim);}',
    uniforms:{uTime:{value:0},uStrength:{value:strength},uColour:{value:new THREE.Color(asset.spec.colourDirection.innerShellColours[index])}},transparent:true,depthWrite:false,depthTest:true,toneMapped:false,blending:THREE.AdditiveBlending});
-  const mesh=new THREE.Mesh(new THREE.SphereGeometry(radius,256,128),material);mesh.name='Fine inner emission shell '+(index+1);mesh.renderOrder=-25;group.add(mesh);
+  const mesh=new THREE.Mesh(new THREE.SphereGeometry(radius,128,64),material);mesh.name='Fine inner emission shell '+(index+1);mesh.renderOrder=-25;group.add(mesh);
  }
  return group;
 }

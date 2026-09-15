@@ -33,7 +33,7 @@ A navigable 3D knowledge universe with a native Blender black hole, detailed
 horizontal gas, gold halo, space haze and physical star nodes. This branch saves
 the latest viewer as a separate version alongside the original constellation.
 
-**All 1,057 records and 4,021 relationships here are invented demonstration
+**All 1,097 records and 4,101 relationships here are invented demonstration
 data.** No personal memories, conversations, agent homes, credentials or live
 provider connections are included. The original local preview remains private.
 

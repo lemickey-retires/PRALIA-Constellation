@@ -16,10 +16,11 @@ export class RenderActivity {
     return this.idle;
   }
   frameDue(now) {
-    if(now+.1<this.nextFrame)return false;
+    if(now+1<this.nextFrame)return false;
     // Preserve the average 60 fps budget on 75/120/144 Hz displays without
     // building up a backlog after a slow frame or a suspended tab.
-    this.nextFrame=Math.max(this.nextFrame+this.interval,now+.1);
+    const missed=Math.max(1,Math.floor((now-this.nextFrame)/this.interval)+1);
+    this.nextFrame+=missed*this.interval;
     return true;
   }
 }
