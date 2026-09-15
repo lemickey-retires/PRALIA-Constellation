@@ -1,6 +1,6 @@
 {
-  "bytes": 803010,
-  "sha256": "5fcb2e884cecb83c02854f8d005aab518f489ca6f57e29bd4092762012d9a944",
+  "bytes": 803056,
+  "sha256": "cfbd0ac50b63e2c52ab57e6430a9abf12b8627315908b66f058856dd02b59b0c",
   "workerBytes": 2952162,
   "workerSha256": "228ab5a3228a9c837be41f527fa2d2e1d61eff21d08f6a9d5abc36a2eb188b3e",
   "gsap": "3.15.0",

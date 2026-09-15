@@ -133,6 +133,7 @@ export function installSecondBrain(data,actions){
         if(!label.hidden)place(label,x,y);
       }
       for(const [id,label] of recordLabels){
+        if(embedded&&!document.body.classList.contains('open-method-tools-open')){label.hidden=true;continue;}
         const i=recordIndices.get(id),n=nodes[i];
         if(!n||!visibility[i]||(scales&&scales[i]<=.15)||(mobile&&!['agent','note'].includes(n.kind))){label.hidden=true;continue;}
         vector.set(n.x,n.y,n.z).project(camera);

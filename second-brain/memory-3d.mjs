@@ -210,7 +210,7 @@ async function start() {
   orbitRings.instanceMatrix.setUsage(THREE.DynamicDrawUsage);orbitRings.frustumCulled=false;scene.add(orbitRings);
   const ringRotations=ringNodes.map((i,k)=>new THREE.Quaternion().setFromEuler(new THREE.Euler(k*.7,k*.31,k*.23)));
   const matrix=new THREE.Matrix4(),pos=new THREE.Vector3(),scale=new THREE.Vector3(),rotation=new THREE.Quaternion();
-  const visualNodes=nodes.map(n=>({...n})),visualSphereOffsets=new Array(nodes.length),formationBlend=new Map(),membersBySource=new Map(),visualHubIndices=new Map();
+  const visualNodes=nodes.map(n=>({...n})),visualSphereOffsets=new Array(nodes.length),formationBlend=new Map(),membersBySource=new Map(),visualHubIndices=new Map(),sourceVisualRadii=new Map();
   const visualBreathSin=new Float32Array(nodes.length),visualBreathCos=new Float32Array(nodes.length),groupMotion=new Map();
   nodes.forEach((n,i)=>{const id=sourceId(n);if(!membersBySource.has(id))membersBySource.set(id,[]);membersBySource.get(id).push(i);});
   for(const [id,members] of membersBySource){
@@ -218,6 +218,7 @@ async function start() {
     visualHubIndices.set(id,[...members].sort((a,b)=>(nodes[b].degree||0)-(nodes[a].degree||0)||nodes[a].id.localeCompare(nodes[b].id))[0]);
     const distances=members.map(i=>Math.hypot(nodes[i].x-parent.x,nodes[i].y-parent.y,nodes[i].z-parent.z)).sort((a,b)=>a-b);
     const radius=Math.max(12,distances[Math.floor((distances.length-1)*.78)]||30),phase=hash(id+'|parent-sphere')*Math.PI*2;
+    sourceVisualRadii.set(id,radius);
     members.forEach((i,k)=>{const vertical=1-2*(k+.5)/members.length,span=Math.sqrt(Math.max(0,1-vertical*vertical)),angle=k*2.39996323+phase;
       const shell=.28+.72*Math.cbrt(hash(nodes[i].id+'|parent-shell')),distance=radius*shell;
       visualSphereOffsets[i]={x:Math.cos(angle)*span*distance,y:vertical*distance,z:Math.sin(angle)*span*distance};
@@ -315,20 +316,22 @@ async function start() {
     }else wheelRemaining=Math.max(-2,Math.min(2,wheelRemaining+delta*.001));
     wakeRendering?.();
   },{capture:true,passive:false});
+  let navigationInset=0;
   function resize() {
     wakeRendering?.();
     const host=$('graph-3d'),w=host.clientWidth,h=host.clientHeight;
     renderer.setSize(w,h);composer.setSize(w,h);camera.aspect=w/h;
     camera.clearViewOffset();
+    if(navigationInset>0)camera.setViewOffset(w,h,-navigationInset/2,0,w,h);
     camera.updateProjectionMatrix();dirty=true;
   }
   new ResizeObserver(resize).observe($('graph-3d'));resize();
-  function frameFor(members,scale=settings.layout==='atlas'?.64:.72) {
+  function frameFor(members,scale=settings.layout==='atlas'?.82:.72) {
     const box=new THREE.Box3();members.forEach(n=>box.expandByPoint(new THREE.Vector3(n.x,n.y,n.z)));
     if(box.isEmpty())return;
     const center=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3());
     const pan=size.clone().multiplyScalar(.18).max(new THREE.Vector3(45,45,45));
-    const availableAspect=$('graph-3d').clientWidth/$('graph-3d').clientHeight;
+    const availableAspect=($('graph-3d').clientWidth-navigationInset)/$('graph-3d').clientHeight;
     const distance=Math.max(80,size.x/Math.max(availableAspect,.4),size.y,size.z)*scale/Math.tan(THREE.MathUtils.degToRad(camera.fov/2));
     const view=settings.layout==='atlas'?new THREE.Vector3(0,-.08,1):settings.layout==='galaxy'?new THREE.Vector3(.15,1,.4):new THREE.Vector3(.25,.18,1);
     return {box,envelope:{min:center.clone().sub(pan),max:center.clone().add(pan)},center,distance,position:center.clone().add(view.normalize().multiplyScalar(distance))};
@@ -371,7 +374,7 @@ async function start() {
     const validFocus=focus==='overview'||sources.some(source=>source.id===focus);
     if(!validFocus)return;
     const members=focus==='overview'?nodes.filter(visible):nodes.filter(n=>visible(n)&&sourceId(n)===focus);
-    const scale=focus==='overview'?(settings.layout==='atlas'?.64:.72):.92;
+    const scale=focus==='overview'?(settings.layout==='atlas'?.82:.72):.92;
     flyToFrame(frameFor(members,scale));
     $('graph-stage').dataset.openMethodFocus=focus;
   }
@@ -500,7 +503,8 @@ async function start() {
     input.id='physics-'+key;input.setAttribute('aria-label',label);row.append(label+' ',value,input);physicsControlAfter.after(row);physicsControlAfter=row;
     input.addEventListener('input',()=>{settings[key]=Number(input.value);value.textContent=input.value;syncSettings();});
   }
-  $('graph-3d').title='Drag a star or group label to tug; wheel to zoom; hold left mouse and scroll to contract or expand the stars; press R to re-centre.';
+  // Instructions belong in the controls, not an OS tooltip over the scene.
+  $('graph-3d').removeAttribute('title');
   reduced.addEventListener('change',()=>{if(reduced.matches){settings.paused=true;physics.skip();syncSettings();}});
   syncSettings();
   const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2(),plane=new THREE.Plane(),hitPoint=new THREE.Vector3(),dragOffset=new THREE.Vector3();
@@ -547,9 +551,15 @@ async function start() {
       raycaster.setFromCamera(new THREE.Vector2(edgeNdc.x,edgeNdc.y),camera);if(!raycaster.ray.intersectPlane(plane,proxyEdge))continue;
       collisionProxies.push({id,x:proxyCentre.x,y:proxyCentre.y,z:proxyCentre.z,radius:Math.max(8,proxyCentre.distanceTo(proxyEdge))});
     }
+    // Collision projection reuses the raycaster. Restore the pointer ray
+    // explicitly before calculating the grab offset.
+    ray(e);
+    if(!raycaster.ray.intersectPlane(plane,hitPoint))return;
     const rect=element.getBoundingClientRect();
     groupDrag={pointerId:e.pointerId,groupId,element,offset:centre.clone().sub(hitPoint),screenOffset:{x:rect.left+rect.width/2-e.clientX,y:rect.top+rect.height/2-e.clientY}};
-    formationBlend.set(groupId,0);
+    // Keep the same rendered formation when grabbed; switching to raw worker
+    // coordinates made the entire group collapse or jump under the pointer.
+    formationBlend.set(groupId,1);
     element.classList.remove('group-settling');
     element.setPointerCapture(e.pointerId);element.classList.add('group-dragging');controls.enabled=false;
     physics.startGroupDrag(indices,centre,groupId,collisionProxies);wakeRendering?.();
@@ -641,7 +651,7 @@ async function start() {
     nodes.forEach((n,i)=>{
       const groupId=sourceId(n),v=visualNodes[i],parent=physics.groupParents?.get(groupId),base=visualSphereOffsets[i],held=groupDrag?.groupId===groupId;
       v.x=n.x;v.y=n.y;v.z=n.z;
-      if(settings.layout==='atlas'&&settings.formation==='sphere'&&parent&&base&&!held){
+      if(settings.layout==='atlas'&&settings.formation==='sphere'&&parent&&base){
         // Coherent two-axis tumble preserves the spherical group silhouette
         // while making front/back depth unmistakable. Individual breathing is
         // radial, so idle motion never flattens the cluster into a disc.
@@ -654,7 +664,8 @@ async function start() {
         // an immovable shell every frame.
         let dx=n.x-(parent.x+base.x),dy=n.y-(parent.y+base.y),dz=n.z-(parent.z+base.z),deformation=Math.hypot(dx,dy,dz);
         if(deformation>16){const cap=16/deformation;dx*=cap;dy*=cap;dz*=cap;}
-        const idealX=parent.x+x1*breath+dx*.72,idealY=parent.y+y2*breath+dy*.72,idealZ=parent.z+z2*breath+dz*.72;
+        const response=held?.2:.45;
+        const idealX=parent.x+x1*breath+dx*response,idealY=parent.y+y2*breath+dy*response,idealZ=parent.z+z2*breath+dz*response;
         const blend=formationBlend.get(groupId)??1;v.x=n.x+(idealX-n.x)*blend;v.y=n.y+(idealY-n.y)*blend;v.z=n.z+(idealZ-n.z)*blend;
       }
       nodeVisibility[i]=visible(n)?1:0;
@@ -688,8 +699,8 @@ async function start() {
     nodes.forEach((n,i)=>{
       if(!nodeVisibility[i]||physics.scales[i]<=.15)return;
       const groupId=sourceId(n),parent=physics.groupParents?.get(groupId),hubIndex=visualHubIndices.get(groupId);if(!parent||hubIndex===undefined)return;
-      const v=visualNodes[i],hub=visualNodes[hubIndex],k=parentCount++*6;parentLinePositions[k]=v.x;parentLinePositions[k+1]=v.y;parentLinePositions[k+2]=v.z;
-      parentLinePositions[k+3]=hub.x;parentLinePositions[k+4]=hub.y;parentLinePositions[k+5]=hub.z;
+      const v=visualNodes[i],k=parentCount++*6;parentLinePositions[k]=v.x;parentLinePositions[k+1]=v.y;parentLinePositions[k+2]=v.z;
+      parentLinePositions[k+3]=parent.x;parentLinePositions[k+4]=parent.y;parentLinePositions[k+5]=parent.z;
       const colour=new THREE.Color(sourceColour(n)),hubColour=colour.clone().lerp(whiteCore,.42);
       parentLineColours[k]=colour.r;parentLineColours[k+1]=colour.g;parentLineColours[k+2]=colour.b;
       parentLineColours[k+3]=hubColour.r;parentLineColours[k+4]=hubColour.g;parentLineColours[k+5]=hubColour.b;
@@ -703,7 +714,7 @@ async function start() {
     let activeCount=0,time=performance.now()*.001;
     for(let k=0;k<activityCount;k++){
       let a,b;
-      if(k%3===0){const i=(k*83)%nodes.length,hubIndex=visualHubIndices.get(sourceId(nodes[i]));if(hubIndex===undefined||!nodeVisibility[i]||!nodeVisibility[hubIndex])continue;a=visualNodes[i];b=visualNodes[hubIndex];}
+      if(k%3===0){const i=(k*83)%nodes.length,parent=physics.groupParents?.get(sourceId(nodes[i]));if(!parent||!nodeVisibility[i])continue;a=visualNodes[i];b=parent;}
       else {const edgeIndex=activityEdges[(k*47)%Math.max(1,activityEdges.length)],edge=links[edgeIndex];if(!edge||!nodeVisibility[edge.a]||!nodeVisibility[edge.b])continue;a=visualNodes[edge.a];b=visualNodes[edge.b];}
       const t=(time*(.16+(k%7)*.018)+hash(String(k)+'activity'))%1,j=activeCount++*3,ease=t*t*(3-2*t);
       activityPositions[j]=a.x+(b.x-a.x)*ease;activityPositions[j+1]=a.y+(b.y-a.y)*ease;activityPositions[j+2]=a.z+(b.z-a.z)*ease;
@@ -756,6 +767,8 @@ async function start() {
   applyOpenMethodSurface=data=>{
     if(data?.type!=='open-method-surface')return;
     surfaceInteractive=data.interactive!==false;
+    const inset=Math.max(0,Math.min($('graph-3d').clientWidth*.4,Number(data.navigationInset)||0));
+    if(inset!==navigationInset){navigationInset=inset;resize();}
     document.body.classList.toggle('open-method-ambient',!surfaceInteractive);
     $('graph-stage').dataset.openMethodInteractive=String(surfaceInteractive);
     focusSource(data.focus);

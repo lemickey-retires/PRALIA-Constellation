@@ -25,7 +25,11 @@ assert.match(rendererSource,/e\.button!==0/,'Left pointer must arm field scaling
 assert.match(rendererSource,/leftPointerHeld\|\|\(e\.buttons&1\)/,'Held-left wheel input must scale the field');
 assert.match(rendererSource,/settings\.spacing\*Math\.exp\(-delta\*\.0015\)/,'Wheel delta must smoothly scale field density');
 assert.match(rendererSource,/settings\.spacing\)\.project\(camera\)/,'Group collision proxy must follow visible sphere spacing');
-assert.match(rendererSource,/dx\*\.72/,'Visible node volume must preserve strong physical agency');
+assert.match(
+  rendererSource,
+  /const response=held\?\.2:\.45/,
+  'Held groups must stay compliant while released groups recover their spherical volume'
+);
 assert.doesNotMatch(rendererSource,/groupShellGeometry|groupHubGeometry/,'Synthetic group shells and hub balls must stay removed');
 assert.match(rendererSource,/dataset\.groupShells!==?'0'/,'Runtime evidence must report that no group shells are rendered');
 assert.match(rendererSource,/visualHubIndices/,'A real record node must anchor each visible group');
