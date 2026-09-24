@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {VolumeRenderShader1} from 'three/addons/shaders/VolumeShader.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {loadNativeOptics} from './native-horizon-optics.mjs';
+import {loadContinuousCorona} from './continuous-corona.mjs';
 
 // Uses Three.js's existing volume-ray vertex setup. The field itself is
 // evaluated by Blender's native shader nodes, then sampled as a 3D array.
@@ -21,6 +22,10 @@ uniform float uPlaneSlope;
 uniform float uHalfHeight;
 uniform float uDensityScale;
 uniform float uEmission;
+uniform float uHeatBias;
+uniform float uUnifiedGlow;
+uniform float uRadialStretch;
+uniform float uOuterAura;
 uniform float uTime;
 uniform mat4 uLocalToClip;
 varying vec3 v_position;
@@ -107,15 +112,24 @@ void main(){
       angle=referenceAngle+t*(1.+t2*(-1./3.+t2*(1./5.-t2/7.)));
     }else angle=atan(native.y,native.x);
     angle+=flowTime*inversesqrt(max(radius,1.));
-    vec3 fieldPosition=vec3(radius,angle,height);
+    // Expand the disk outside the unit core while retaining its central hole,
+    // physical sphere occlusion and every native radial texture sample.
+    float sourceRadius=1.+(radius-1.)/uRadialStretch;
+    vec3 fieldPosition=vec3(sourceRadius,angle,height);
     vec3 q=(fieldPosition-uFieldMin)*inverseFieldSize;
     q.y=fract(q.y);
     vec2 gas=texture(uField,clamp(q,0.,1.)).rg;
-    float density=gas.r*uDensityScale;
+    float innerHeat=exp(-max(0.,radius-1.08)*2.1);
+    float outerFade=1.-smoothstep(1.55,2.74,sourceRadius)*.78*uUnifiedGlow;
+    float density=gas.r*uDensityScale*outerFade;
+    // The replacement outer aura is a quiet, complete annulus. It ramps up
+    // outside the bright centre and dissolves at its outermost edge.
+    if(uOuterAura>.5)density*=smoothstep(1.10,1.45,sourceRadius)*(1.-smoothstep(1.95,2.75,sourceRadius));
     if(density>.004){
       if(first<0.)first=sampleDistance;
       float absorb=1.-exp(-density*stepSize);
-      radiance+=(1.-alpha)*colour(gas.g)*uEmission*absorb;
+      float heat=clamp(gas.g+uHeatBias+innerHeat*.19*uUnifiedGlow,0.,1.);
+      radiance+=(1.-alpha)*colour(heat)*uEmission*(1.+innerHeat*1.2*uUnifiedGlow)*absorb;
       alpha+=(1.-alpha)*absorb;
     }
   }
@@ -137,7 +151,7 @@ export async function loadNativeVolumes(){
     if(data.sourceImageUsed!==false)throw new Error('Unexpected space material source');
     return data;
   }));
-  const [volumes,ground,optics]=await Promise.all([Promise.all([...manifest.volumes,...spaceManifest.volumes].map(async spec=>{
+  const [volumes,ground,optics,corona]=await Promise.all([Promise.all([...manifest.volumes,...spaceManifest.volumes].map(async spec=>{
     const response=await fetch('./assets/'+spec.file);
     if(!response.ok||!response.body)throw new Error('Native gas field unavailable: '+spec.id);
     const stream=response.body.pipeThrough(new DecompressionStream('gzip'));
@@ -149,8 +163,8 @@ export async function loadNativeVolumes(){
     texture.wrapT=THREE.RepeatWrapping;
     texture.unpackAlignment=1;texture.needsUpdate=true;
     return {spec,texture};
-  })),new GLTFLoader().loadAsync('./assets/native-horizon-ground.glb'),loadNativeOptics()]);
-  return {volumes,ground,optics,particles};
+  })),new GLTFLoader().loadAsync('./assets/native-horizon-ground.glb'),loadNativeOptics(),loadContinuousCorona()]);
+  return {volumes,ground,optics,corona,particles};
 }
 
 export function createNativeVolume({spec,texture}){
@@ -171,14 +185,41 @@ export function createNativeVolume({spec,texture}){
       uPlaneOffset:{value:spec.planeOffset},uPlaneSlope:{value:spec.planeSlope},
       uHalfHeight:{value:spec.halfHeight},
       uDensityScale:{value:spec.densityScale*.8},uEmission:{value:spec.emissionStrength*.68},
+      uHeatBias:{value:0},
+      uUnifiedGlow:{value:0},
+      uRadialStretch:{value:1},
+      uOuterAura:{value:0},
       uTime:{value:0},uLocalToClip:{value:new THREE.Matrix4()}},
     side:THREE.BackSide,transparent:true,depthTest:true,depthWrite:false,toneMapped:false
   });
   const mesh=new THREE.Mesh(geometry,material);
+  mesh.userData.nativeBounds={min:min.clone(),max:max.clone(),support:material.uniforms.uSupportRadius.value.clone()};
+  mesh.userData.nativeGeometry=geometry;
   mesh.name='Native Blender '+spec.id+' gas volume';
   mesh.frustumCulled=false;mesh.renderOrder=-20;
   mesh.onBeforeRender=(_renderer,_scene,camera)=>{
     material.uniforms.uLocalToClip.value.multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse).multiply(mesh.matrixWorld);
   };
   return mesh;
+}
+
+export function setNativeVolumeExtent(mesh,stretch){
+  const u=mesh.material.uniforms;
+  if(u.uRadialStretch.value===stretch)return;
+  const base=mesh.userData.nativeBounds;
+  u.uRadialStretch.value=stretch;
+  u.uMin.value.copy(base.min);u.uMax.value.copy(base.max);
+  u.uSupportRadius.value.copy(base.support);
+  if(stretch===1){mesh.geometry=mesh.userData.nativeGeometry;return;}
+  const extent=v=>Math.sign(v)*(1.+(Math.abs(v)-1.)*stretch);
+  for(const axis of ['x','z']){u.uMin.value[axis]=extent(base.min[axis]);u.uMax.value[axis]=extent(base.max[axis]);}
+  const extra=Math.abs(u.uPlaneSlope.value)*(u.uMax.value.z-base.max.z);
+  u.uMin.value.y-=extra;u.uMax.value.y+=extra;
+  u.uSupportRadius.value.set(1.+(base.support.x-1.)*stretch,1.+(base.support.y-1.)*stretch);
+  if(!mesh.userData.expandedGeometry){
+    const size=u.uMax.value.clone().sub(u.uMin.value),centre=u.uMin.value.clone().add(u.uMax.value).multiplyScalar(.5);
+    mesh.userData.expandedGeometry=new THREE.BoxGeometry(size.x,size.y,size.z);
+    mesh.userData.expandedGeometry.translate(centre.x,centre.y,centre.z);
+  }
+  mesh.geometry=mesh.userData.expandedGeometry;
 }

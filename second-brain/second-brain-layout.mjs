@@ -1,21 +1,19 @@
 import {layoutNames as originalNames,layoutDescriptions as originalDescriptions,makeLayout as originalLayout} from './rendering/graph-layouts.mjs';
 import {prepareNodes,hash} from './rendering/graph-physics.mjs';
 export const sources=[
-  {id:'notes',name:'Notes & guidance',colour:'#61cae3',centre:[-170,205,25]},
-  {id:'memory',name:'Saved memory',colour:'#e7ba6e',centre:[90,235,60]},
-  {id:'conversations',name:'Conversations',colour:'#e49bbb',centre:[255,45,0]},
-  {id:'sessions',name:'Sessions',colour:'#9eabde',centre:[185,-190,-80]},
-  {id:'graph',name:'Knowledge graph',colour:'#a5d4a8',centre:[-280,-50,35]},
-  {id:'mirrors',name:'Generated mirrors',colour:'#7688ac',centre:[-65,-145,-190]},
-  {id:'agents',name:'Agents',colour:'#b9a4eb',centre:[-325,150,85]},
-  {id:'archive',name:'Archive & tests',colour:'#b7aaa0',centre:[-70,-325,90]}
+  {id:'notes',name:'Routines',colour:'#61cae3',centre:[-190,210,25]},
+  {id:'memory',name:'Memory',colour:'#e7ba6e',centre:[85,235,60]},
+  {id:'conversations',name:'Conversations',colour:'#e49bbb',centre:[250,40,-20]},
+  {id:'graph',name:'Library',colour:'#a5d4a8',centre:[-275,-75,35]},
+  {id:'mirrors',name:'Files',colour:'#7688ac',centre:[-55,-165,-190]},
+  {id:'agents',name:'Activity',colour:'#b9a4eb',centre:[-325,135,85]},
+  {id:'archive',name:'Settings',colour:'#b7aaa0',centre:[-80,-325,90]}
 ];
 const sourceLookup=Object.fromEntries(sources.map(s=>[s.id,s]));
 export function sourceId(n){
   if(['note','builtin'].includes(n.kind))return 'notes';
   if(['fact','summary','lesson','crystal','semantic','procedure'].includes(n.kind))return 'memory';
-  if(n.kind==='observation')return 'conversations';
-  if(n.kind==='session')return 'sessions';
+  if(['observation','session'].includes(n.kind))return 'conversations';
   if(['graph-node','graph-edge','memory-relation'].includes(n.kind))return 'graph';
   if(n.kind==='mirror')return 'mirrors';
   if(n.kind==='agent')return 'agents';
@@ -41,10 +39,12 @@ export function viewLayout(data,baseline,key,saved){
     }
     result=baseline.map(n=>placed.get(n.id));
   }
-  if(key==='atlas')result=result.map(n=>({...n,radius:n.kind==='mirror'?(n.degree>200?4.4:1.25):n.kind==='agent'?5:n.tier==='yellow'?4.4:n.tier==='white'?2.8:1.9}));
+  if(key==='atlas')result=result.map(n=>({...n,sourceGroup:sourceId(n),radius:n.kind==='mirror'?(n.degree>200?4.4:1.25):n.kind==='agent'?5:n.tier==='yellow'?4.4:n.tier==='white'?2.8:1.9}));
   return result;
 }
-// A spanning forest selects existing links; it never invents a relationship.
+// A spanning forest plus a bounded set of local cycles selects existing links;
+// it never invents a relationship. The extra cycles make a legible structural
+// web around each parent without rendering every possible cross-reference.
 export function keyConnections(nodes,data){
   const index=new Map(nodes.map((n,i)=>[n.id,i])),parent=nodes.map((_,i)=>i);
   const root=i=>{while(parent[i]!==i){parent[i]=parent[parent[i]];i=parent[i];}return i;};
@@ -62,6 +62,14 @@ export function keyConnections(nodes,data){
     }
     if(from!==to){const pair=[from,to].sort().join(':');if((bridges.get(pair)||0)>=2)continue;bridges.set(pair,(bridges.get(pair)||0)+1);}
     parent[a]=b;result.add(e.i);
+  }
+  const degree=new Uint16Array(nodes.length);
+  for(const i of result){const e=data.edges[i];degree[index.get(e.from)]++;degree[index.get(e.to)]++;}
+  let extras=0;const extraLimit=Math.ceil(nodes.length*.6);
+  for(const e of sorted){
+    if(extras>=extraLimit||result.has(e.i)||sourceId(nodes[e.a])!==sourceId(nodes[e.b]))continue;
+    if(degree[e.a]>=3||degree[e.b]>=3)continue;
+    result.add(e.i);degree[e.a]++;degree[e.b]++;extras++;
   }
   return result;
 }

@@ -1,0 +1,180 @@
+{
+  "sourceImageUsed": true,
+  "referenceImageUsed": false,
+  "densityTextureSource": "Poly Haven aerial_rocks_02 displacement, CC0; transformed in native Blender nodes",
+  "file": "continuous-corona.glb",
+  "photon": {
+    "enabled": true,
+    "implementation": "Brightest antialiased inner rim with three softer surrounding contours in shared white-gold and amber gas"
+  },
+  "halo": {
+    "strength": 4.2,
+    "flowSpeed": 0.009,
+    "dimensions": [
+      2048,
+      512
+    ],
+    "innerRadius": 1.003,
+    "radialSpan": 0.82,
+    "file": "continuous-corona-field.bin.gz",
+    "bytes": 2097152,
+    "compressedBytes": 1087136,
+    "sha256": "d68eda61c8ef6ec321bf414de0505e8b840bbf5f288f7a456291a0dde97b10c9",
+    "channels": [
+      "native emission density",
+      "native heat"
+    ],
+    "sideSpan": 5.2,
+    "tilt": 0.25,
+    "verticalSpread": 0.2,
+    "bodyLightGain": 3.5
+  },
+  "generator": "Blender Cycles evaluation of continuous corona material through official Blender MCP",
+  "source": "horizon-assets/continuous-horizon.blend",
+  "lensing": "Art-directed light sculpture with real surface depth; not a general-relativistic simulation",
+  "shape": "Closed 360-degree curved body tightened vertically around the unchanged core and extended radially, with layered reference colours and distinct angular colour regions",
+  "geometry": {
+    "cameraFacing": false,
+    "layers": 192,
+    "segments": 128,
+    "bands": 128,
+    "innerShells": 3,
+    "fullSurroundDegrees": 360,
+    "closedSurfaces": true,
+    "originalFieldPreserved": true
+  },
+  "flares": [
+    {
+      "size": [
+        0.26,
+        0.22
+      ],
+      "angle": 2.48,
+      "radius": 1.38,
+      "auraAngle": 3.02,
+      "auraRadius": 0.14
+    },
+    {
+      "size": [
+        0.2,
+        0.18
+      ],
+      "angle": 2.32,
+      "radius": 1.86,
+      "auraAngle": 3.27,
+      "auraRadius": 0.22
+    },
+    {
+      "size": [
+        0.18,
+        0.16
+      ],
+      "angle": 0.64,
+      "radius": 1.57,
+      "auraAngle": 0.17,
+      "auraRadius": 0.17
+    },
+    {
+      "size": [
+        0.15,
+        0.13
+      ],
+      "angle": 3.42,
+      "radius": 2.12,
+      "auraAngle": -0.16,
+      "auraRadius": 0.25
+    }
+  ],
+  "diskRadialStretch": 2.2,
+  "oldHorizontalRingVisible": false,
+  "outerAura": {
+    "visible": false,
+    "purpose": "Retained reference only; a new darker outer layer is deferred",
+    "radialStretch": 3.0,
+    "description": "Hidden orange annulus retained as a colour and shape reference; no new darker outer layer has been created"
+  },
+  "colourDirection": {
+    "palette": [
+      "ivory",
+      "champagne gold",
+      "honey amber",
+      "peach",
+      "copper",
+      "dusty rose",
+      "smoky umber",
+      "periwinkle blue",
+      "cyan"
+    ],
+    "regions": "Concentric warm bands with distinct fore-left blue and cyan regions, rose/copper rear regions and stronger champagne on the right",
+    "referenceView": {
+      "nativeEye": [
+        -0.350660831,
+        -18.393335342,
+        1.178661227
+      ],
+      "nativeRotation": [
+        0.729375362,
+        0.684054613,
+        -0.00615094,
+        -0.006557948
+      ],
+      "nativeTarget": [
+        -0.020693248,
+        -0.04602547,
+        0.000669431
+      ],
+      "lens": 50
+    },
+    "radialStops": [
+      {
+        "at": 0,
+        "colour": "#fff3df"
+      },
+      {
+        "at": 0.04,
+        "colour": "#f3d5a4"
+      },
+      {
+        "at": 0.1,
+        "colour": "#d99956"
+      },
+      {
+        "at": 0.18,
+        "colour": "#ba6041"
+      },
+      {
+        "at": 0.26,
+        "colour": "#efb393"
+      },
+      {
+        "at": 0.36,
+        "colour": "#b67768"
+      },
+      {
+        "at": 0.55,
+        "colour": "#8a4736"
+      },
+      {
+        "at": 0.72,
+        "colour": "#5d322c"
+      },
+      {
+        "at": 0.9,
+        "colour": "#321e22"
+      },
+      {
+        "at": 1,
+        "colour": "#140e16"
+      }
+    ],
+    "gold": "#efb571",
+    "rose": "#b96e78",
+    "blue": "#6d9fe5",
+    "cyan": "#a9e5f2",
+    "innerShellColours": [
+      "#fff4de",
+      "#ffc787",
+      "#e98b60"
+    ]
+  }
+}
