@@ -1,0 +1,8 @@
+{
+  "kind": "pre-existing native Blender render",
+  "source": "native-space-haze-preview.png from the owner's prior horizon material study",
+  "purpose": "Static representation only for the workspace UI preview",
+  "containsKnowledgeNodes": false,
+  "edited": false,
+  "note": "This still is not a new graph design and does not supersede the graphics branch."
+}

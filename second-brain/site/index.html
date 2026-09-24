@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>2nd Brain · knowledge universe</title>
+  <link rel="stylesheet" href="./graph-3d.css"><link rel="stylesheet" href="./memory.css"><link rel="stylesheet" href="./second-brain.css">
+  <script src="./vendor/graph-3d.js" defer></script>
+</head>
+<body>
+
+  <main id="graph-stage" aria-label="Interactive 3D constellation">
+    <div id="astral-background" aria-hidden="true" data-preset="universe"></div>
+    <div id="graph-3d" tabindex="0" aria-label="3D graph. Drag empty space to orbit, scroll to zoom, drag a node to push it. Arrow keys orbit; plus and minus zoom."></div>
+    <nav id="view-controls" aria-label="Graph controls">
+      <a href="./graph.html?v=2">Original 2D</a>
+      <button id="replay-entrance" type="button" disabled>Replay entrance</button>
+      <button id="motion-toggle" type="button">Pause motion</button>
+      <button id="fit-view" type="button">Fit graph</button>
+      <button id="all-links" type="button" aria-pressed="false">Show all links</button>
+      <button id="export-view" type="button" title="Download your positions, pins, camera and appearance settings">Export view</button>
+    </nav>
+    <div id="entrance-controls"><span id="entrance-status" aria-live="off"></span><button id="skip-entrance" type="button" hidden>Show all now</button></div>
+    <div id="loading" role="status">Preparing 3D collisions…</div>
+    <div id="hover-label" hidden></div>
+    <p id="navigation-hint">Drag space to orbit · scroll to zoom · right-drag to pan · drag a node to push</p>
+  </main>
+  <aside aria-label="Graph information and settings">
+    <h1>Memory constellation</h1>
+    <p class="muted">Lucy, Kiwi and the team’s saved knowledge. Select a star to inspect its source.</p>
+    <div id="memory-inventory"></div>
+    <div id="connection-panel"><strong id="connection-label">Checking source status…</strong><p id="connection-detail"></p><button id="check-connection">Check live connection</button><p id="connection-time" class="small muted"></p></div>
+    <div id="graph-counts">Loading graph…</div>
+    <div id="motion-status" aria-live="off">Starting physics…</div>
+    <div id="collision-status">Solid sphere collisions on</div>
+    <section aria-label="Find nodes">
+      <label for="record-scope">Show</label>
+      <select id="record-scope"><option value="all">Everything · source records</option><option value="knowledge">Obsidian notes and compact memory</option><option value="recall">AgentMemory recall and model summaries</option><option value="graph">Stored concept graph and relationships</option><option value="summary">Model summaries</option><option value="team">Team and direct references</option><option value="session">AgentMemory session records</option><option value="mirror">Generated Obsidian mirrors</option></select>
+      <label for="search">Find a memory or agent</label>
+      <input id="search" type="search" placeholder="Try Kiwi, memory architecture, approval…" autocomplete="off">
+      <p id="results-caption" class="muted small">Main hubs</p>
+      <div id="search-results"></div>
+    </section>
+    <section id="node-info" aria-label="Selected node" hidden>
+      <h2 id="node-name"></h2>
+      <p id="node-kind"></p>
+      <div id="node-group"></div>
+      <p id="node-anchor" class="small"></p>
+      <p id="node-source" class="small"></p>
+      <a id="open-source" href="./index.html" >Open complete source text</a>
+      <p id="node-detail" class="small"></p>
+      <p id="node-state"></p>
+      <div class="button-row"><button id="focus-node" type="button">Focus node</button><button id="pin-node" type="button">Pin node</button></div>
+      <h3 id="neighbours-title">Connections</h3>
+      <div id="neighbours"></div>
+    </section>
+
+    <details class="settings-details"><summary>Team memory access</summary><div id="team-access"></div></details>
+    <details class="settings-details"><summary>Trace a connection</summary>
+      <p class="muted small">Links come from source references and record IDs. A path is evidence to read, not proof that an agent automatically reads it.</p>
+      <label for="path-from">From</label><select id="path-from"></select>
+      <label for="path-to">To</label><select id="path-to"></select>
+      <button id="trace-path">Trace path</button><button id="trace-kiwi">Kiwi → memory architecture</button><div id="path-result" aria-live="polite"></div>
+    </details>
+    <details class="settings-details"><summary>Source checks and counting rules</summary><div id="source-checks"></div></details>
+    <details class="settings-details"><summary>Appearance and movement</summary>    <section aria-label="Layout and appearance">
+      <label for="layout-preset">Layout</label>
+      <select id="layout-preset"><option value="saved">My layout</option><option value="constellation">Constellation</option><option value="galaxy">Galaxy</option><option value="globe">Globe</option><option value="helix">Helix</option></select>
+      <p id="layout-description" class="muted small"></p>
+      <label for="design-preset">Design</label>
+      <select id="design-preset"><option value="starlight">Starlight</option><option value="crystal">Crystal</option><option value="orbital">Orbital</option><option value="minimal">Minimal</option></select>
+      <label for="palette-preset">Colours</label>
+      <select id="palette-preset"><option value="celestial">Celestial · ice and gold</option><option value="aurora">Aurora · mint and pearl</option><option value="ember">Ember · coral and amber</option><option value="amethyst">Amethyst · lilac and rose</option><option value="silver">Silver · cool monochrome</option></select>
+      <label class="row" for="glow">Star glow <output id="glow-value">1.0</output></label>
+      <input id="glow" type="range" min="0" max="2" step="0.1" value="1">
+    </section>
+    <section aria-label="Surrounding universe">
+      <label for="environment-design">Universe design</label>
+      <select id="environment-design"><option value="cosmic">Cosmic nebula</option><option value="gradient">Soft gradient</option></select>
+      <label for="background-preset">3D universe colours</label>
+      <select id="background-preset"><option value="nightyNight">Nighty night</option><option value="universe">Universe</option><option value="pensive">Pensive</option><option value="violaOrientalis">Viola</option><option value="sunset">Sunset</option><option value="interstella">Interstella</option><option value="off">Off</option></select>
+      <p id="background-status" class="muted"></p>
+      <label class="row" for="shaderSpeed">Universe speed <output id="shaderSpeed-value">0.2</output></label>
+      <input id="shaderSpeed" type="range" min="0" max="1" step="0.05" value="0.2">
+      <label class="check"><input id="surround-stars" type="checkbox" checked> Surrounding stars</label>
+      <p class="muted small">This space shares the graph's camera. Orbit or pan to look through it; set its speed to zero to hold the colours still.</p>
+    </section>
+    <details class="settings-details">
+      <summary>Motion and physics</summary>
+      <div class="settings-body">
+      <label for="animation-mode">Group movement</label>
+      <select id="animation-mode"><option value="depth">3D orbital flow</option><option value="float">Float</option><option value="breathe">Breathe</option></select>
+      <label class="row" for="speed">Motion speed <output id="speed-value">1.0</output></label>
+      <input id="speed" type="range" min="0.2" max="2" step="0.1" value="1">
+      <label class="row" for="star-pull">Gravity toward hubs <output id="star-pull-value">1.0</output></label>
+      <input id="star-pull" type="range" min="0" max="2" step="0.1" value="1">
+      <label class="row" for="orbit">Orbit / movement strength <output id="orbit-value">1.0</output></label>
+      <input id="orbit" type="range" min="0" max="2" step="0.1" value="1">
+      <label class="row" for="rebound">Collision bounce <output id="rebound-value">0.5</output></label>
+      <input id="rebound" type="range" min="0" max="1" step="0.1" value="0.5">
+      <label class="check"><input id="pin-on-drop" type="checkbox" checked> Pin nodes after dragging</label>
+      <label class="check"><input id="auto-orbit" type="checkbox"> Slowly orbit the graph</label>
+      <p class="muted small">Drag a hub to draw its group after it. Solid cores reject each other; light halos can overlap. Hover or select a star to recognise its node and connections.</p>
+      </div>
+    </details>
+</details>
+    <p class="muted small">Demonstration data only. Every record and relationship is invented. Changes stay in your browser.</p>
+  </aside>
+</body>
+</html>

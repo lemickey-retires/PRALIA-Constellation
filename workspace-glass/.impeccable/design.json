@@ -1,0 +1,420 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-10T06:29:26.904Z",
+  "title": "Design System: 2nd Brain Glass Workspace",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "Graphite",
+        "tonalRamp": [
+          "oklch(15% 0.004 110)",
+          "oklch(26% 0.004 110)",
+          "oklch(38% 0.004 110)",
+          "oklch(49% 0.004 110)",
+          "oklch(61% 0.004 110)",
+          "oklch(72% 0.004 110)",
+          "oklch(84% 0.004 110)",
+          "oklch(95% 0.004 110)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "accent-hover": {
+        "role": "primary",
+        "displayName": "Graphite hover",
+        "tonalRamp": [
+          "oklch(15% 0.004 110)",
+          "oklch(26% 0.004 110)",
+          "oklch(38% 0.004 110)",
+          "oklch(49% 0.004 110)",
+          "oklch(61% 0.004 110)",
+          "oklch(72% 0.004 110)",
+          "oklch(84% 0.004 110)",
+          "oklch(95% 0.004 110)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "moss-accent": {
+        "role": "primary",
+        "displayName": "Moss",
+        "tonalRamp": [
+          "oklch(15% 0.04 135)",
+          "oklch(26% 0.04 135)",
+          "oklch(38% 0.04 135)",
+          "oklch(49% 0.04 135)",
+          "oklch(61% 0.04 135)",
+          "oklch(72% 0.04 135)",
+          "oklch(84% 0.04 135)",
+          "oklch(95% 0.04 135)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "copper-accent": {
+        "role": "primary",
+        "displayName": "Copper",
+        "tonalRamp": [
+          "oklch(15% 0.065 60)",
+          "oklch(26% 0.065 60)",
+          "oklch(38% 0.065 60)",
+          "oklch(49% 0.065 60)",
+          "oklch(61% 0.065 60)",
+          "oklch(72% 0.065 60)",
+          "oklch(84% 0.065 60)",
+          "oklch(95% 0.065 60)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "steel-accent": {
+        "role": "primary",
+        "displayName": "Steel",
+        "tonalRamp": [
+          "oklch(15% 0.035 240)",
+          "oklch(26% 0.035 240)",
+          "oklch(38% 0.035 240)",
+          "oklch(49% 0.035 240)",
+          "oklch(61% 0.035 240)",
+          "oklch(72% 0.035 240)",
+          "oklch(84% 0.035 240)",
+          "oklch(95% 0.035 240)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas",
+        "tonalRamp": [
+          "oklch(15% 0.002 285)",
+          "oklch(26% 0.002 285)",
+          "oklch(38% 0.002 285)",
+          "oklch(49% 0.002 285)",
+          "oklch(61% 0.002 285)",
+          "oklch(72% 0.002 285)",
+          "oklch(84% 0.002 285)",
+          "oklch(95% 0.002 285)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15% 0.006 110)",
+          "oklch(26% 0.006 110)",
+          "oklch(38% 0.006 110)",
+          "oklch(49% 0.006 110)",
+          "oklch(61% 0.006 110)",
+          "oklch(72% 0.006 110)",
+          "oklch(84% 0.006 110)",
+          "oklch(95% 0.006 110)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15% 0.007 125)",
+          "oklch(26% 0.007 125)",
+          "oklch(38% 0.007 125)",
+          "oklch(49% 0.007 125)",
+          "oklch(61% 0.007 125)",
+          "oklch(72% 0.007 125)",
+          "oklch(84% 0.007 125)",
+          "oklch(95% 0.007 125)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "subtle": {
+        "role": "neutral",
+        "displayName": "Subtle",
+        "tonalRamp": [
+          "oklch(15% 0.012 120)",
+          "oklch(26% 0.012 120)",
+          "oklch(38% 0.012 120)",
+          "oklch(49% 0.012 120)",
+          "oklch(61% 0.012 120)",
+          "oklch(72% 0.012 120)",
+          "oklch(84% 0.012 120)",
+          "oklch(95% 0.012 120)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "tonalRamp": [
+          "oklch(15% 0.008 140)",
+          "oklch(26% 0.008 140)",
+          "oklch(38% 0.008 140)",
+          "oklch(49% 0.008 140)",
+          "oklch(61% 0.008 140)",
+          "oklch(72% 0.008 140)",
+          "oklch(84% 0.008 140)",
+          "oklch(95% 0.008 140)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "surface-2": {
+        "role": "neutral",
+        "displayName": "Raised surface",
+        "tonalRamp": [
+          "oklch(15% 0.014 130)",
+          "oklch(26% 0.014 130)",
+          "oklch(38% 0.014 130)",
+          "oklch(49% 0.014 130)",
+          "oklch(61% 0.014 130)",
+          "oklch(72% 0.014 130)",
+          "oklch(84% 0.014 130)",
+          "oklch(95% 0.014 130)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "surface-3": {
+        "role": "neutral",
+        "displayName": "Control surface",
+        "tonalRamp": [
+          "oklch(15% 0.014 125)",
+          "oklch(26% 0.014 125)",
+          "oklch(38% 0.014 125)",
+          "oklch(49% 0.014 125)",
+          "oklch(61% 0.014 125)",
+          "oklch(72% 0.014 125)",
+          "oklch(84% 0.014 125)",
+          "oklch(95% 0.014 125)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Fine divider",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Strong divider",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ],
+        "rampPurpose": "Synthesised preview metadata only; not additional source tokens."
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Inspector headline",
+        "purpose": "Compact panel heading."
+      },
+      "title": {
+        "displayName": "View title",
+        "purpose": "Current view in the floating dock."
+      },
+      "body": {
+        "displayName": "Inherited body",
+        "purpose": "Base interface text."
+      },
+      "label": {
+        "displayName": "Control label",
+        "purpose": "Buttons and compact interface controls."
+      }
+    },
+    "shadows": [
+      {
+        "name": "surface",
+        "value": "0 18px 50px #0005",
+        "purpose": "Floating structural surfaces."
+      },
+      {
+        "name": "menu",
+        "value": "0 18px 45px #0005",
+        "purpose": "Menus and tooltips."
+      },
+      {
+        "name": "dialog",
+        "value": "0 24px 70px #0007",
+        "purpose": "Modal separation."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-transition",
+        "value": "150ms",
+        "purpose": "Background, colour and border changes; disabled for reduced motion."
+      },
+      {
+        "name": "material-refresh-debounce",
+        "value": "380ms",
+        "purpose": "Scheduled redraw after interface changes, not an animation."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "1100px"
+      },
+      {
+        "name": "overlay-panels",
+        "value": "960px"
+      },
+      {
+        "name": "mobile",
+        "value": "600px"
+      },
+      {
+        "name": "narrow-mobile",
+        "value": "370px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Save action foreground",
+      "kind": "button",
+      "refersTo": "button-save",
+      "description": "Native Save button CSS foreground; the live adapter adds decorative refraction.",
+      "html": "<button class=\"ds-save\">Save view</button>",
+      "css": ".ds-save{font:500 12px/1.5 Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;border:0;border-radius:22px;min-height:42px;padding:9px 17px;color:#eff7e8;background:#c3d0b93b;cursor:pointer;transition:background-color 150ms}.ds-save:hover{background:#c3d0b95e}.ds-save:focus-visible,.ds-quiet:focus-visible,.ds-secondary:focus-visible,.ds-nav button:focus-visible,.ds-field:focus-visible,.ds-tab:focus-visible{outline:2px solid var(--accent-hover,#eeefeb);outline-offset:3px}"
+    },
+    {
+      "name": "Quiet action",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Low-emphasis toolbar action.",
+      "html": "<button class=\"ds-quiet\">Focus view</button>",
+      "css": ".ds-quiet{font:500 12px/1.5 Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;border:0;border-radius:22px;min-height:42px;padding:9px 13px;color:#c7d3bd;background:transparent;cursor:pointer;transition:background-color 150ms}.ds-quiet:hover{background:#d3e2c61c}.ds-save:focus-visible,.ds-quiet:focus-visible,.ds-secondary:focus-visible,.ds-nav button:focus-visible,.ds-field:focus-visible,.ds-tab:focus-visible{outline:2px solid var(--accent-hover,#eeefeb);outline-offset:3px}"
+    },
+    {
+      "name": "Secondary action",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Dialog companion action.",
+      "html": "<button class=\"ds-secondary\">Cancel</button>",
+      "css": ".ds-secondary{font:500 12px/1.5 Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;border:1px solid #536246;border-radius:20px;min-height:40px;padding:6px 11px;background:#26301f;color:var(--muted,#d4d7d2);cursor:pointer;transition:background-color 150ms}.ds-secondary:hover{background:#35432b}.ds-save:focus-visible,.ds-quiet:focus-visible,.ds-secondary:focus-visible,.ds-nav button:focus-visible,.ds-field:focus-visible,.ds-tab:focus-visible{outline:2px solid var(--accent-hover,#eeefeb);outline-offset:3px}"
+    },
+    {
+      "name": "Text field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Rounded name field used by save dialogs.",
+      "html": "<input class=\"ds-field\" aria-label=\"View name\" placeholder=\"View name\">",
+      "css": ".ds-field{font:14px/1.5 Inter,sans-serif;border:1px solid #4a593e;border-radius:12px;background:#0d150a;color:var(--ink,#f2f3ef);padding:10px 12px;min-height:40px}.ds-field:focus{border-color:var(--accent-hover,#eeefeb);outline:1px solid var(--accent-hover,#eeefeb);outline-offset:0;background:#18191a}.ds-save:focus-visible,.ds-quiet:focus-visible,.ds-secondary:focus-visible,.ds-nav button:focus-visible,.ds-field:focus-visible,.ds-tab:focus-visible{outline:2px solid var(--accent-hover,#eeefeb);outline-offset:3px}"
+    },
+    {
+      "name": "Navigation rail",
+      "kind": "nav",
+      "description": "Circular semantic icon action inside a rounded floating rail.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Workspace\"><button aria-label=\"Search\"><svg viewBox=\"0 0 24 24\" width=\"19\" height=\"19\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"m16 16 4.5 4.5\"/></svg></button></nav>",
+      "css": ".ds-nav{display:inline-grid;padding:7px;border-radius:29px;background:#151c12e8;box-shadow:0 18px 50px #0005}.ds-nav button{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--muted,#d4d7d2);cursor:pointer}.ds-nav button:hover{background:#d1e1c132}.ds-save:focus-visible,.ds-quiet:focus-visible,.ds-secondary:focus-visible,.ds-nav button:focus-visible,.ds-field:focus-visible,.ds-tab:focus-visible{outline:2px solid var(--accent-hover,#eeefeb);outline-offset:3px}"
+    },
+    {
+      "name": "Inspector tabs",
+      "kind": "nav",
+      "description": "Selected capsule within a dark tab track.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\" aria-label=\"Inspector\"><button class=\"ds-tab\" role=\"tab\" aria-selected=\"true\">View</button><button class=\"ds-tab\" role=\"tab\" aria-selected=\"false\">Details</button></div>",
+      "css": ".ds-tabs{display:flex;gap:4px;height:36px;border-radius:20px;padding:3px;background:#0106015c}.ds-tab{font:500 12px/1.5 Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;flex:1;border:0;border-radius:18px;padding:0 12px;background:transparent;color:var(--muted,#d4d7d2);cursor:pointer}.ds-tab[aria-selected=true]{background:#d0dec129;color:#edf4e5}.ds-tab:hover{color:var(--ink,#f2f3ef)}.ds-save:focus-visible,.ds-quiet:focus-visible,.ds-secondary:focus-visible,.ds-nav button:focus-visible,.ds-field:focus-visible,.ds-tab:focus-visible{outline:2px solid var(--accent-hover,#eeefeb);outline-offset:3px}"
+    },
+    {
+      "name": "Static scene chip",
+      "kind": "chip",
+      "description": "Non-interactive preview status label.",
+      "html": "<span class=\"ds-chip\">Static scene</span>",
+      "css": ".ds-chip{display:inline-block;font:10px/1.5 Inter,sans-serif;background:#10160eb3;border:0;border-radius:14px;padding:5px 10px;color:#c8d1bf}"
+    },
+    {
+      "name": "Panel fallback",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Opaque fallback for a structural glass host; shader intentionally absent in a static snippet.",
+      "html": "<section class=\"ds-panel\" aria-label=\"Library\"><strong>Library</strong><p>Sample content \u00b7 no app connection</p></section>",
+      "css": ".ds-panel{padding:20px;border-radius:24px;background:#151c12e8;color:var(--ink,#f2f3ef);box-shadow:0 18px 50px #0005;font:14px/1.5 Inter,sans-serif}.ds-panel strong{font-weight:600}.ds-panel p{font-size:11px;color:var(--muted,#d4d7d2)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Floating tools over a still universe",
+    "overview": "Dark, green-neutral glass lets the existing golden universe still fill the window while compact tools float above it. The material belongs to the navigation rail, library, inspector and view dock; restrained type and clear selected states keep the controls readable.\n\nThis is a local sample-data UI preview. Its decorative refraction samples the bundled still, while native HTML retains interaction and accessibility. The original workspace UI and source component library remain separate and unchanged; this document describes the second version.",
+    "keyCharacteristics": [
+      "Full-viewport still with floating tools.",
+      "Green-neutral translucency and soft rounded silhouettes.",
+      "Compact Inter hierarchy and explicit selected states.",
+      "Event-driven material updates and a solid fallback."
+    ],
+    "rules": [
+      {
+        "name": "The Legible Glass Rule",
+        "body": "Place a dark translucent veil between refraction and foreground controls; material never replaces text contrast.",
+        "section": "colors"
+      },
+      {
+        "name": "The Quiet Hierarchy Rule",
+        "body": "Use compact size and weight differences to organise controls; do not introduce a marketing display scale into the workspace.",
+        "section": "typography"
+      },
+      {
+        "name": "The Still Texture Rule",
+        "body": "Refraction samples only the bundled still and redraws on scheduled interface changes; no continuous material render loop is part of this system.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Native Foreground Rule",
+        "body": "Keep semantic HTML controls above decorative, inert, aria-hidden material canvases.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do preserve visible sample-content and static-scene disclosures.",
+      "Do keep the rail, search and bottom dock reachable when panels collapse.",
+      "Do use the solid material mode and opaque fallback when refraction is unavailable.",
+      "Do retain keyboard focus, selected states and native control semantics."
+    ],
+    "donts": [
+      "Don't present the still or sample records as a live graph or connected app.",
+      "Don't extend refraction to every small control; reserve it for the implemented structural surfaces and Save action.",
+      "Don't add a continuously running scene or material animation.",
+      "Don't modify the original UI or read-only source library to extend this version."
+    ]
+  },
+  "materialModes": {
+    "initial": "soft",
+    "options": [
+      "clear",
+      "soft",
+      "liquid",
+      "frost",
+      "solid"
+    ],
+    "presetSource": "existing local Liquid Glass lab-config.js",
+    "continuousAnimation": false
+  },
+  "glassColourwayExtension": {
+    "initialTrial": "steel",
+    "roles": [
+      "--glass-rgb",
+      "--glass-text",
+      "--glass-muted",
+      "--glass-raised",
+      "--glass-control"
+    ],
+    "steel": [
+      "13 23 35",
+      "#e0eaf3",
+      "#b8c9da",
+      "#263748",
+      "#101e2d"
+    ]
+  }
+}

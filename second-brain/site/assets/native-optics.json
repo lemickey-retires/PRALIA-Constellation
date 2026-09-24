@@ -1,0 +1,51 @@
+{
+  "sourceImageUsed": false,
+  "file": "native-horizon-optics.glb",
+  "photon": {
+    "radius": 1.018,
+    "rings": [
+      [
+        0.9965,
+        0.00085,
+        1.0
+      ],
+      [
+        0.9883,
+        0.0011,
+        0.27
+      ],
+      [
+        0.9845,
+        0.0009,
+        0.09
+      ]
+    ],
+    "colour": [
+      1.0,
+      0.77,
+      0.43
+    ],
+    "strength": 3.4,
+    "planeOffset": 0.14,
+    "planeSlope": 0.035,
+    "enabled": false
+  },
+  "halo": {
+    "strength": 2.1,
+    "flowSpeed": 0.018,
+    "dimensions": [
+      1024,
+      1024
+    ],
+    "file": "native-halo-field.bin.gz",
+    "bytes": 2097152,
+    "compressedBytes": 1250091,
+    "sha256": "fa4e1c7d032aa739a4c93056ed2959edda52dbef71b82930d29e044200cf4fcf",
+    "channels": [
+      "native emission density",
+      "native colour factor"
+    ]
+  },
+  "generator": "Blender Cycles evaluation of native halo material and native photon sphere geometry",
+  "source": "horizon-assets/native-horizon.blend"
+}

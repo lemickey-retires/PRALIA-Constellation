@@ -1,5 +1,28 @@
 # PRALIA Constellation
 
+## Glass workspace preview
+
+The second [glass workspace](workspace-glass/README.md) floats real Liquid Glass
+components over the universe still. Run `python workspace-glass/run-preview.py`
+and open http://127.0.0.1:51423/workspace-glass/. The original UI remains alongside it.
+
+## Workspace UI preview
+
+The separate [workspace interface](workspace-ui/README.md) uses a static universe
+still for lightweight design review. Run `python workspace-ui/run-preview.py`,
+then open http://127.0.0.1:51422/. Its controls use invented sample records.
+
+## 2nd Brain Event horizon
+
+This branch adds the [2nd Brain viewer](second-brain/README.md): a native Blender
+black hole, detailed gas ring, camera-aligned halo, physical nodes and optional
+connecting lines. Its public dataset is entirely invented demonstration content.
+
+Run `python second-brain/run-preview.py` (Windows: `py -3 second-brain/run-preview.py`).
+The existing launchers and release below continue to open the original version.
+
+## Original constellation
+
 An interactive, glowing 3D snapshot of the PRALIA code graph, with the original
 2D viewer included. Everything needed to display the graph is bundled locally.
 

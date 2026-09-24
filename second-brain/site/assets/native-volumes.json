@@ -1,0 +1,113 @@
+{
+  "generator": "Blender Cycles evaluation of native procedural volume nodes",
+  "blender": "5.2.1 LTS",
+  "source": "horizon-assets/native-horizon.blend",
+  "sourceImageUsed": false,
+  "channels": [
+    "density / 16",
+    "native colour-ramp factor"
+  ],
+  "sampling": "cylindrical 3D interpolation: radius, wrapped angle, plane height",
+  "volumes": [
+    {
+      "id": "disk",
+      "file": "native-disk-volume.bin.gz",
+      "dimensions": [
+        2048,
+        768,
+        24
+      ],
+      "boundsMin": [
+        -2.799999952316284,
+        -2.799999952316284,
+        -0.3199999928474426
+      ],
+      "boundsMax": [
+        2.799999952316284,
+        2.799999952316284,
+        0.040000006556510925
+      ],
+      "fieldBoundsMin": [
+        1.0,
+        0,
+        -0.02
+      ],
+      "fieldBoundsMax": [
+        2.799999952316284,
+        6.283185307179586,
+        0.02
+      ],
+      "coordinateSpace": "cylindrical: radius, angle, height above tilted plane",
+      "planeOffset": 0.14,
+      "planeSlope": 0.035,
+      "halfHeight": 0.02,
+      "densityScale": 16,
+      "emissionStrength": 4.6,
+      "bytes": 75497472,
+      "compressedBytes": 18877516,
+      "nonzeroDensityCells": 14433026,
+      "groundClearance": "Native Blender terrain ray-cast; smooth 0.105-unit density fade",
+      "sha256": "3feb3652eec17599ecb2c3cf22c0db6c69004a76b9a17676bc5d7eda751211b6",
+      "support": {
+        "radius": [
+          1.0522949204896577,
+          2.7354003446525894
+        ],
+        "height": [
+          -0.014166666666666668,
+          0.014166666666666671
+        ]
+      }
+    },
+    {
+      "id": "stream",
+      "file": "native-stream-volume.bin.gz",
+      "dimensions": [
+        768,
+        768,
+        24
+      ],
+      "boundsMin": [
+        -1.9500000476837158,
+        -1.9500000476837158,
+        -0.19499999284744263
+      ],
+      "boundsMax": [
+        1.9500000476837158,
+        1.9500000476837158,
+        0.044999994337558746
+      ],
+      "fieldBoundsMin": [
+        0.9,
+        0,
+        -0.016
+      ],
+      "fieldBoundsMax": [
+        1.9500000476837158,
+        6.283185307179586,
+        0.016
+      ],
+      "coordinateSpace": "cylindrical: radius, angle, height above tilted plane",
+      "planeOffset": 0.075,
+      "planeSlope": 0.035,
+      "halfHeight": 0.016,
+      "densityScale": 16,
+      "emissionStrength": 5.2,
+      "bytes": 28311552,
+      "compressedBytes": 3658245,
+      "nonzeroDensityCells": 2802540,
+      "groundClearance": "Native Blender terrain ray-cast; smooth 0.105-unit density fade",
+      "sha256": "5f587dc49f13738e58087ae2acbc214fbf9f20404ce0a0f3bac82382f788e1a4",
+      "support": {
+        "radius": [
+          1.0483398504865666,
+          1.7483398822757106
+        ],
+        "height": [
+          -0.01,
+          0.009999999999999998
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "second-brain-horizon",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "gsap": "3.15.0"
+  },
+  "scripts": {
+    "build": "node build-view.mjs"
+  }
+}

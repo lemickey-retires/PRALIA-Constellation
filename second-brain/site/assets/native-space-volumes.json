@@ -1,0 +1,63 @@
+{
+  "generator": "Blender Cycles evaluation of native procedural volume nodes",
+  "blender": "5.2.1 LTS",
+  "source": "horizon-assets/native-horizon.blend",
+  "sourceImageUsed": false,
+  "channels": [
+    "density / 2",
+    "native colour-ramp factor"
+  ],
+  "sampling": "cylindrical 3D interpolation: radius, wrapped angle, plane height",
+  "volumes": [
+    {
+      "id": "haze",
+      "file": "native-haze-volume.bin.gz",
+      "dimensions": [
+        768,
+        512,
+        48
+      ],
+      "boundsMin": [
+        -3.1600000858306885,
+        -3.1600000858306885,
+        -0.3850000202655792
+      ],
+      "boundsMax": [
+        3.1600000858306885,
+        3.1600000858306885,
+        0.1550000011920929
+      ],
+      "fieldBoundsMin": [
+        0.9,
+        0,
+        -0.13
+      ],
+      "fieldBoundsMax": [
+        3.1600000858306885,
+        6.283185307179586,
+        0.13
+      ],
+      "coordinateSpace": "cylindrical: radius, angle, height above tilted plane",
+      "planeOffset": 0.115,
+      "planeSlope": 0.035,
+      "halfHeight": 0.13,
+      "densityScale": 2,
+      "emissionStrength": 2.0,
+      "bytes": 37748736,
+      "support": {
+        "radius": [
+          1.0780338609280686,
+          3.0996745627063014
+        ],
+        "height": [
+          -0.08395833333333333,
+          0.08395833333333333
+        ]
+      },
+      "compressedBytes": 6583954,
+      "nonzeroDensityCells": 4687013,
+      "groundClearance": "No ground clipping: open space",
+      "sha256": "b64eff442758b772c28b1a5552d8c8ae60ba8f2fa9c14412197b992fe5298484"
+    }
+  ]
+}
