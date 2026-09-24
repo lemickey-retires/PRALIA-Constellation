@@ -55,11 +55,29 @@ checks.push('Dragging a hub draws its child group after it in x, y and z.');phys
 // Gravity can be changed without moving pinned bodies.
 physics=new GraphPhysics([node('gravity',0),node('pinned',40,true)]);
 physics.bodies[0].setTranslation({x:20,y:0,z:0},true);
-for(let i=0;i<120;i++)physics.step({pull:0,drift:false});
+for(let i=0;i<120;i++)physics.step({pull:0,drift:false,repulsion:0,linkForce:0,cursor:0});
 assert.ok(physics.nodes[0].x>19);
-for(let i=0;i<240;i++)physics.step({pull:2,drift:false});
+for(let i=0;i<240;i++)physics.step({pull:2,drift:false,repulsion:0,linkForce:0,cursor:0});
 assert.ok(physics.nodes[0].x<10);assert.equal(physics.nodes[1].x,40);
 checks.push('Gravity restores displaced free nodes and preserves fixed pins.');physics.dispose();
+// The keep-apart setting must do visible work before solid cores collide.
+physics=new GraphPhysics([node('repel-left',-14),node('repel-right',14)]);
+const beforeRepulsion=Math.abs(physics.nodes[1].x-physics.nodes[0].x);
+for(let i=0;i<120;i++)physics.step({pull:0,drift:false,repulsion:12,spacing:1.4,cursor:0,linkForce:0});
+assert.ok(Math.abs(physics.nodes[1].x-physics.nodes[0].x)>beforeRepulsion+4);
+checks.push('Adjustable keep-apart force separates nearby free nodes before collision.');physics.dispose();
+// Link settings must be live forces, rather than static joints baked at startup.
+physics=new GraphPhysics([node('link-left',-120),node('link-right',120)],[{from:'link-left',to:'link-right'}]);
+const beforeLink=Math.abs(physics.nodes[1].x-physics.nodes[0].x);
+for(let i=0;i<120;i++)physics.step({pull:0,drift:false,repulsion:0,cursor:0,linkForce:1.4,linkDistance:45});
+assert.ok(Math.abs(physics.nodes[1].x-physics.nodes[0].x)<beforeLink-40);
+checks.push('Live link force and link distance pull a connected pair toward its selected spring length.');physics.dispose();
+// A cursor ray is a real physics field, not a screen-only hover effect.
+physics=new GraphPhysics([node('cursor-node',0)]);
+physics.setPointer({active:true,origin:{x:0,y:0,z:-70},direction:{x:0,y:0,z:1}});
+for(let i=0;i<24;i++){physics.setPointer({active:true,origin:{x:0,y:0,z:-70},direction:{x:0,y:0,z:1}});physics.step({pull:0,drift:false,repulsion:0,cursor:2,spacing:1,pointerReach:2,linkForce:0});}
+assert.ok(Math.hypot(physics.nodes[0].x,physics.nodes[0].y)>4);
+checks.push('Moving the cursor ray repels nearby free nodes in the physical simulation.');physics.dispose();
 // Test the complete actual graph, including every node and connected component.
 const data=JSON.parse(await readFile('../graphify-out/graph-3d-data.json','utf8'));
 const nodes=prepareNodes(data);
@@ -83,7 +101,7 @@ for(const animation of ['depth','float','breathe']) {
 const ms=(performance.now()-start)/stepTotal;
 assert.equal(nodes.length,3520);assert.equal(data.edges.length,14520);
 assert.equal(maxOverlap,0);assert.equal(physics.clearance().overlaps,0);
-checks.push('All 3,520 nodes move in three dimensions with zero sampled visible-core overlap in orbital, float and breathing modes.');
+checks.push('The solid drag-and-drop physics core moves in three dimensions with zero sampled visible-core overlap in orbital, float and breathing modes; all-star visual-field motion is checked separately.');
 const result={checkedAt:new Date().toISOString(),checks,nodes:nodes.length,edges:data.edges.length,
   physicalSprings:physics.jointCount,sampledOverlaps:maxOverlap,averageHeadlessStepMs:ms,
   note:'Native physics tests, not a browser FPS benchmark. Screen projection may occlude spheres at different depths.'};

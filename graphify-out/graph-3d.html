@@ -11,24 +11,24 @@
 <body>
   <main id="graph-stage" aria-label="Interactive 3D constellation">
     <div id="astral-background" aria-hidden="true" data-preset="universe"></div>
-    <div id="graph-3d" tabindex="0" aria-label="3D graph. Drag empty space to orbit, scroll to zoom, drag a node to push it. Arrow keys orbit; plus and minus zoom."></div>
+    <div id="graph-3d" tabindex="0" aria-label="3D graph. Drag empty space to orbit. Scroll expands or contracts the graph; Shift plus scroll zooms the camera. Drag a node to push it. Arrow keys orbit; plus and minus zoom."></div>
     <nav id="view-controls" aria-label="Graph controls">
       <a href="./graph.html?v=2">Original 2D</a>
       <button id="motion-toggle" type="button">Pause motion</button>
       <button id="fit-view" type="button">Fit graph</button>
-      <button id="all-links" type="button" aria-pressed="false">Show all links</button>
+      <button id="all-links" type="button" aria-pressed="false" title="Show a denser adaptive link view without turning the graph into a visual wall.">Show more links</button>
       <button id="export-view" type="button" title="Download your positions, pins, camera and appearance settings">Export view</button>
     </nav>
-    <div id="loading" role="status">Preparing 3D collisions…</div>
+    <div id="loading" role="status">Preparing the 3D graph…</div>
     <div id="hover-label" hidden></div>
-    <p id="navigation-hint">Drag space to orbit · scroll to zoom · right-drag to pan · drag a node to push</p>
+    <p id="navigation-hint">Drag space to orbit · scroll to spread the graph · Shift + scroll to zoom · right-drag to pan</p>
   </main>
   <aside aria-label="Graph information and settings">
     <h1>3D constellation</h1>
-    <p class="muted">Living groups of light, with real depth and solid collisions.</p>
+    <p class="muted">A live 3D star field: every visible node moves in the layout field; solid collision physics handles direct drag and drop.</p>
     <div id="graph-counts">Loading graph…</div>
-    <div id="motion-status" aria-live="off">Starting physics…</div>
-    <div id="collision-status">Solid sphere collisions on</div>
+    <div id="motion-status" aria-live="off">Starting live star field…</div>
+    <div id="collision-status">Preparing solid drag collisions…</div>
     <section aria-label="Layout and appearance">
       <label for="layout-preset">Layout</label>
       <select id="layout-preset"><option value="saved">My layout</option><option value="constellation">Constellation</option><option value="galaxy">Galaxy</option><option value="globe">Globe</option><option value="helix">Helix</option></select>
@@ -39,6 +39,9 @@
       <select id="palette-preset"><option value="celestial">Celestial · ice and gold</option><option value="aurora">Aurora · mint and pearl</option><option value="ember">Ember · coral and amber</option><option value="amethyst">Amethyst · lilac and rose</option><option value="silver">Silver · cool monochrome</option></select>
       <label class="row" for="glow">Star glow <output id="glow-value">1.0</output></label>
       <input id="glow" type="range" min="0" max="2" step="0.1" value="1">
+      <label class="row" for="graph-spread">Graph spread <output id="graph-spread-value">1.00×</output></label>
+      <input id="graph-spread" type="range" min="0.6" max="3" step="0.05" value="1">
+      <p class="muted small">Scroll over the graph to spread nodes apart or bring them closer. Hold Shift while scrolling to zoom the camera instead.</p>
     </section>
     <section aria-label="Surrounding universe">
       <label for="environment-design">Universe design</label>
@@ -58,15 +61,29 @@
       <select id="animation-mode"><option value="depth">3D orbital flow</option><option value="float">Float</option><option value="breathe">Breathe</option></select>
       <label class="row" for="speed">Motion speed <output id="speed-value">1.0</output></label>
       <input id="speed" type="range" min="0.2" max="2" step="0.1" value="1">
-      <label class="row" for="star-pull">Gravity toward hubs <output id="star-pull-value">1.0</output></label>
-      <input id="star-pull" type="range" min="0" max="2" step="0.1" value="1">
+      <label class="row" for="center-force">Center force <output id="center-force-value">0.6</output></label>
+      <input id="center-force" type="range" min="0" max="2" step="0.1" value="0.6">
       <label class="row" for="orbit">Orbit / movement strength <output id="orbit-value">1.0</output></label>
       <input id="orbit" type="range" min="0" max="2" step="0.1" value="1">
       <label class="row" for="rebound">Collision bounce <output id="rebound-value">0.5</output></label>
       <input id="rebound" type="range" min="0" max="1" step="0.1" value="0.5">
+      <label class="row" for="node-spacing">Node spacing <output id="node-spacing-value">1.0</output></label>
+      <input id="node-spacing" type="range" min="0.6" max="2.5" step="0.1" value="1">
+      <label class="row" for="group-cohesion">Relation tether <output id="group-cohesion-value">1.0</output></label>
+      <input id="group-cohesion" type="range" min="0" max="2" step="0.1" value="1">
+      <label class="row" for="repulsion">Repel force <output id="repulsion-value">8.0</output></label>
+      <input id="repulsion" type="range" min="0" max="20" step="0.5" value="8">
+      <label class="row" for="link-force">Link force <output id="link-force-value">0.5</output></label>
+      <input id="link-force" type="range" min="0" max="2" step="0.05" value="0.45">
+      <label class="row" for="link-distance">Link distance <output id="link-distance-value">75</output></label>
+      <input id="link-distance" type="range" min="20" max="250" step="5" value="75">
+      <label class="row" for="cursor-force">Pointer force <output id="cursor-force-value">1.2</output></label>
+      <input id="cursor-force" type="range" min="0" max="2" step="0.1" value="1.2">
+      <label class="row" for="pointer-reach">Pointer reach <output id="pointer-reach-value">1.5</output></label>
+      <input id="pointer-reach" type="range" min="0.5" max="3" step="0.1" value="1.5">
       <label class="check"><input id="pin-on-drop" type="checkbox" checked> Pin nodes after dragging</label>
       <label class="check"><input id="auto-orbit" type="checkbox"> Slowly orbit the graph</label>
-      <p class="muted small">Drag a hub to draw its group after it. Solid cores reject each other; light halos can overlap. Hover or select a star to recognise its node and connections.</p>
+      <p class="muted small">Motion starts on. Choosing a layout gathers the stars through the centre, then lets them squirm into the new form. The default Constellation is one continuous field—relationships stay available in links and selection, rather than becoming visual blobs. Centre pull, repel, relation tether, link tension and link distance act in the all-star visual field; move the pointer through the graph to deflect nearby stars. Solid collision physics runs for a direct drag and release.</p>
       </div>
     </details>
     <section aria-label="Find nodes">

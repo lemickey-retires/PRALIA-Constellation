@@ -28,8 +28,14 @@ export class WorkerPhysics {
     this.pendingTarget={x:target.x,y:target.y,z:target.z};
     if(!this.moveFrame)this.moveFrame=requestAnimationFrame(()=>{this.moveFrame=0;this.flushDrag();});
   }
+  setPointer(pointer){
+    this.pendingPointer=pointer;
+    if(!this.pointerFrame)this.pointerFrame=requestAnimationFrame(()=>{
+      this.pointerFrame=0;this.worker.postMessage({type:'pointer',pointer:this.pendingPointer});this.pendingPointer=undefined;
+    });
+  }
   flushDrag(){if(this.pendingTarget){this.worker.postMessage({type:'moveDrag',target:this.pendingTarget});this.pendingTarget=null;}}
   endDrag(pin){this.flushDrag();this.dragIndex=undefined;this.releasePending=true;this.worker.postMessage({type:'endDrag',pin});}
   clearance(){return this.metrics;}
-  dispose(){cancelAnimationFrame(this.moveFrame);this.worker.terminate();}
+  dispose(){cancelAnimationFrame(this.moveFrame);cancelAnimationFrame(this.pointerFrame);this.worker.terminate();}
 }

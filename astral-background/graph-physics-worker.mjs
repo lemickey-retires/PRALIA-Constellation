@@ -2,6 +2,7 @@ import { GraphPhysics, initPhysics } from './graph-physics.mjs';
 let physics,timer,last=0,accumulator=0,sample=0,totalMs=0,totalSteps=0,stepCount=0;
 let settings={running:true,visible:true,pull:1,drift:true};
 let metrics={overlaps:0,maxPenetration:0,nearContacts:0,physicsMs:0};
+const STEP_SECONDS=1/40,TICK_MS=1000/40;
 function sendState(initial=false,action=null) {
   const positions=new Float32Array(physics.nodes.length*3),pins=new Uint8Array(physics.nodes.length);
   physics.nodes.forEach((n,i)=>{positions.set([n.x,n.y,n.z],i*3);pins[i]=Number(n.pinned);});
@@ -14,15 +15,18 @@ function tick() {
     const wasDragging=!!physics.drag;
     accumulator+=Math.min(.05,(started-last)/1000);
     let count=0;
-    while(accumulator>=1/60&&count<3){
+    // Forty physics updates per second keep the optional movement visibly
+    // smooth while preserving headroom for camera interaction and transfers;
+    // the camera renders independently at the display refresh rate.
+    while(accumulator>=STEP_SECONDS&&count<2){
       const t=performance.now();physics.step({...settings,drift:settings.drift&&settings.running});
-      totalMs+=performance.now()-t;totalSteps++;stepCount++;count++;accumulator-=1/60;
+      totalMs+=performance.now()-t;totalSteps++;stepCount++;count++;accumulator-=STEP_SECONDS;
     }
     if(started-sample>1500){metrics={...physics.clearance(),physicsMs:totalMs/Math.max(1,totalSteps)};sample=started;totalMs=0;totalSteps=0;}
     if(count)sendState(false,wasDragging&&!physics.drag?'dragEnded':null);
   }else accumulator=0;
   last=started;
-  timer=setTimeout(tick,running?Math.max(1,16-(performance.now()-started)):150);
+  timer=setTimeout(tick,running?Math.max(1,TICK_MS-(performance.now()-started)):150);
 }
 self.onmessage=async({data})=>{
   try {
@@ -33,10 +37,11 @@ self.onmessage=async({data})=>{
       metrics={...physics.clearance(),physicsMs:0};sendState(true);tick();return;
     }
     if(!physics)return;
-    if(data.type==='settings')settings={...settings,...data.settings};
+    if(data.type==='settings'){settings={...settings,...data.settings};tick();return;}
     if(data.type==='pin')physics.pin(data.index,data.pinned);
     if(data.type==='startDrag')physics.startDrag(data.index);
     if(data.type==='moveDrag')physics.moveDrag(data.target);
+    if(data.type==='pointer'){physics.setPointer(data.pointer);tick();return;}
     if(data.type==='endDrag')physics.endDrag(data.pin);
     if(data.type==='dispose'){clearTimeout(timer);physics.dispose();close();return;}
     sendState(false,data.type);tick();
